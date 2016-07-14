@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kernel on ZeekHuge</title>
+    <link>http://zeekhuge.github.io/tags/kernel/</link>
+    <description>Recent content in Kernel on ZeekHuge</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 Jun 2016 23:37:09 +0530</lastBuildDate>
+    <atom:link href="http://zeekhuge.github.io/tags/kernel/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>In Kernel communication: PRUs@Beaglebone black</title>
+      <link>http://zeekhuge.github.io/post/In%20Kernel%20communication:%20PRUs@Beaglebone%20black/</link>
+      <pubDate>Thu, 09 Jun 2016 23:37:09 +0530</pubDate>
+      
+      <guid>http://zeekhuge.github.io/post/In%20Kernel%20communication:%20PRUs@Beaglebone%20black/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

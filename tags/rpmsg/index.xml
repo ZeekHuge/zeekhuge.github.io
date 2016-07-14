@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rpmsg on ZeekHuge</title>
+    <link>https://zeekhuge.github.io/tags/rpmsg/</link>
+    <description>Recent content in Rpmsg on ZeekHuge</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 16 Jun 2016 14:29:03 +0530</lastBuildDate>
+    <atom:link href="https://zeekhuge.github.io/tags/rpmsg/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Working with PRUs @BeagleBoneBlack : RPMsg framework</title>
+      <link>https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_rpmsg/</link>
+      <pubDate>Thu, 16 Jun 2016 14:29:03 +0530</pubDate>
+      
+      <guid>https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_rpmsg/</guid>
+      <description>&lt;p&gt;Working on this.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

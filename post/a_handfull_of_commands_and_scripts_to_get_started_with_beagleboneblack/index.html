@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="generator" content="Hugo 0.16-DEV" />
+        
+        <link rel="icon" type="image/png" href="https://zeekhuge.github.io/images/favicon.ico">
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="My thoughts and rambles">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>A handful of commands and scripts to get started with BeagleBone Black</title>
+        
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+        
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+        <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+        
+        <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+        <meta name="msapplication-TileColor" content="#3372DF">
+    
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"/>
+        <link rel="stylesheet" href="https://zeekhuge.github.io/css/ionicons.min.css"/>
+        <link rel="stylesheet" href="https://zeekhuge.github.io/css/material.grey-orange.min.css"/>
+        <link rel="stylesheet" href="https://zeekhuge.github.io/css/styles.css"/>
+          <link rel="stylesheet" href="https://zeekhuge.github.io/css/prism.css" />  
+</head>
+
+<body style="background-image: url('/images/back.jpg');">
+     
+         
+            <div class="hugo-blog hugo-blog--blogpost mdl-layout mdl-js-layout has-drawer is-upgraded">  
+        
+    
+        
+        
+    <header class="mdl-layout__header mdl-layout__header--transparent mdl-layout__header--scroll">
+        <div class="mdl-layout__header-row">
+            
+            
+            
+            <div class="mdl-layout-spacer"></div>
+            
+            <nav class="mdl-navigation">
+           	<a class='mdl-navigation__link ' href="https://zeekhuge.github.io/">Home</a>
+		<a class='mdl-navigation__link ' href="https://github.com/ZeekHuge/BeagleScope">BeagleScope</a>
+                <a class='mdl-navigation__link ' href="https://zeekhuge.github.io/post">Posts</a>
+	
+                <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">About</a>
+		<a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">Github</a>
+            </nav>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        
+        <nav class="mdl-navigation">
+            <a class='mdl-navigation__link ' href="https://zeekhuge.github.io/">Home</a>
+	    <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge/BeagleScope">BeagleScope</a>
+            <a class='mdl-navigation__link ' href="https://zeekhuge.github.io/post">Posts</a>
+
+            <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">About</a>
+	    <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">Github</a>
+        </nav>
+    </div>
+
+    
+    <main class="mdl-layout__content">
+
+<div class="hugo-blog__posts mdl-grid">
+    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+        
+        <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/images/commands.png'); background-color:#263238;">
+            <h3 >A Handful Of Commands And Scripts To Get Started With BeagleBone Black</h3>
+        </div>
+          
+        <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+            <div class="minilogo" style="background-image: url('/images/avatar-64x64.png');"></div>
+            <div>
+                <strong>ZeekHuge</strong>
+                <span>Jun 16, 2016</span>
+            </div>
+            
+            <div class="section-spacer"></div>
+            
+        </div>
+            
+        <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
+            
+
+<p>Here I have compiled a list of commands and some info to get you started with BeagleBone Black. I will keep updating this list of commands as I find something new .</p>
+
+<p>All of these commands are to be executed on the BeagleBone black (BBB for short) itself after you login as root, and are expected to work on kernel version 4.4.11+</p>
+
+<h3 id="starters:01d25bfd2399ec47b9c04f156786eab8"><strong><u><a href="#starters:01d25bfd2399ec47b9c04f156786eab8">Starters</a></u> :</strong></h3>
+
+<ul>
+<li><p><em>ssh</em> into your BBB and append your <em>bashrc</em> with following lines:
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">export </span><span class="nv">PINS</span><span class="o">=</span>/sys/kernel/debug/pinctrl/44e10800.pinmux
+<span class="nb">export </span><span class="nv">SLOTS</span><span class="o">=</span>/sys/devices/platform/bone_capemgr/slots
+<span class="nb">export </span><span class="nv">FW</span><span class="o">=</span>/lib/firmware
+</code></pre></div>
+</p></li>
+
+<li><p>To change the pinmux settings for a pin does not need device tree overlays now (4.4+ kernel), you can simply use &lsquo;config-pin&rsquo; utility. To configure the pin you just need to know its position on the board, so to change mux settings of pin at , for example , P8_46
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>config-pin -l P8_46
+</code></pre></div>
+
+The output shows space separated list of available pin-modes and will look like :
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>default gpio gpio_pu gpio_pd pruout pruin pwm
+</code></pre></div>
+
+Now to change pinmode, to, for example, pruout
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>config-pin P8_46 pruout
+</code></pre></div>
+
+This will configure pin at P8_46 to pru_output mode.
+Further status of the pin can be known using &lsquo;config-pin -i&rsquo;, which will give detailed output.
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>config-pin -i P8_46
+Pin name: P8_46
+Function <span class="k">if </span>no cape loaded: hdmi
+Function <span class="k">if </span>cape loaded: default gpio gpio_pu gpio_pd pruout pruin pwm
+Function information: lcd_data1 default gpio2_7 gpio2_7 gpio2_7 pr1_pru1_pru_r30_1 pr1_pru1_pru_r31_1 ehrpwm2B
+Cape: cape-universala cape-univ-hdmi
+Kernel GPIO id: 71
+PRU GPIO id: 103
+</code></pre></div>
+</p></li>
+
+<li><p>One of my favorite commands, rebooting your BBB when something goes wrong and it won&rsquo;t reboot the normal way ( Thanks to <a href="https://github.com/SJLC">Stephanie</a> for this).<br />
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo </span>b &gt;/proc/sysrq-trigger
+</code></pre></div>
+</p></li>
+
+<li><p>Sharing your Ubuntu system&rsquo;s Internet with BBB. Use the command <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ifconfig 
+</code></pre></div>
+ to determine the interface your system is using to connect to BBB (it will be mostly eth0) and to the Internet.</p>
+
+<ul>
+<li><p>Let the Internet interface and BBB interface be &lt;Internet-interface&gt; and &lt;BBB-interface&gt; respectively. Now on your system, execute following commands as root:<br />
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>iptables -t nat -A POSTROUTING -o &lt;Internet-interface&gt; -j MASQUERADE
+<span class="nv">$ </span>iptables -A FORWARD -i &lt;BBB-interface&gt; -j ACCEPT
+<span class="nv">$ </span>sysctl net.ipv4.ip_forward<span class="o">=</span>1
+</code></pre></div>
+
+Generally, these commands will look like :
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
+<span class="nv">$ </span>iptables -A FORWARD -i etch1 -j ACCEPT
+<span class="nv">$ </span>sysctl net.ipv4.ip_forward<span class="o">=</span>1
+</code></pre></div>
+</p></li>
+
+<li><p>On your BBB, execute this command after you login as root :
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>route add default gw 192.168.7.1
+</code></pre></div>
+</p></li>
+
+<li><p>To automate all this Internet connecting thing, just put all these commands in /etc/rc.local in their respective systems.</p></li>
+</ul></li>
+</ul>
+
+<h3 id="k_dev:01d25bfd2399ec47b9c04f156786eab8"><strong><u><a href="#k_dev:01d25bfd2399ec47b9c04f156786eab8">Kernel Development</a></u> :</strong></h3>
+
+<ul>
+<li><p>To install Linux kernel header files for your current Linux version:
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>apt-get install -y linux-headers-<span class="k">$(</span>uname -r<span class="k">)</span>
+</code></pre></div>
+</p></li>
+
+<li><p>To install a new version of kernel image <u><strong><em>for example</em></strong></u>: kernel image 4.4.11-ti-r29 ( Thanks to <a href="https://github.com/sarnold">Steve Arnold</a> for these ) :
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo apt-get update
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;4.4.11-ti-r29&quot;</span> 
+<span class="nv">$ </span>sudo apt-get install -y linux-firmware-image-<span class="nv">$NEW</span> linux-headers-<span class="nv">$NEW</span> linux-image-<span class="nv">$NEW</span> 
+</code></pre></div>
+</p></li>
+
+<li><p>To browse the kernel source of a particular version, go onto :<br />
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">https://github.com/RobertCNelson/linux-stable-rcn-ee/tree/&lt;kernel build number&gt;
+</code></pre></div>
+
+<u><strong><em>for example</em></strong></u> if you want to go to the 4.4.11-ti-r29 kernel, the link will be :
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">https://github.com/RobertCNelson/linux-stable-rcn-ee/tree/4.4.11-ti-r29
+</code></pre></div>
+</p></li>
+
+<li><p>To download a compressed kernel source, go onto:
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">https://github.com/RobertCNelson/linux-stable-rcn-ee/releases/tag/&lt;kernel build number&gt;
+</code></pre></div>
+
+<u><strong><em>for example</em></strong></u> if you want to go to download 4.4.11-ti-r29 kernel, the link will be :
+    <div class="highlight"><pre><code class="language-bash" data-lang="bash">https://github.com/RobertCNelson/linux-stable-rcn-ee/releases/tag/4.4.11-ti-r29
+</code></pre></div>
+</p></li>
+
+<li><p>To clone a kernel source ( Thanks to <a href="https://github.com/mwelling/">Michael Welling</a> and <a href="https://github.com/SJLC">Stephanie</a> for help on this )  :
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir KERNEL-&lt;kernel build number&gt;
+<span class="nv">$ </span>git clone --depth<span class="o">=</span>100 -b &lt;kernel build number&gt; https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&lt;kernel build number&gt;
+<span class="nv">$ </span>touch KERNEL-&lt;kernel build number&gt;/.ignore-&lt;kernel build number&gt;
+</code></pre></div>
+
+<u><strong><em>for example</em></strong></u> if you want to clone the 4.4.11-ti-r29 kernel, the commands will be :
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir KERNEL-4.4.11-ti-r29
+<span class="nv">$ </span>git clone --depth<span class="o">=</span>100 -b 4.4.11-ti-r29 https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&lt;kernel build number&gt;
+<span class="nv">$ </span>touch KERNEL-4.4.11-ti-r29/.ignore-4.4.11-ti-r29
+</code></pre></div>
+</p></li>
+
+<li><p>To download the latest version of cross-compiler tool-chain ( command source : <a href="https://eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC">eewiki</a> )
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
+<span class="nv">$ </span>tar xf gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">CC</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+</code></pre></div>
+</p></li>
+
+<li><p>To download .config file of a particular kernel build number:
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;&lt;kernel build number&gt;&quot;</span>
+<span class="nv">$ </span>wget -c http://rcn-ee.net/deb/jessie-armhf/v<span class="nv">$NEW</span>/defconfig -O config-<span class="nv">$NEW</span>
+</code></pre></div>
+
+<u><strong>for example</strong></u>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;4.4.11-ti-r29&quot;</span>
+<span class="nv">$ </span>wget -c http://rcn-ee.net/deb/jessie-armhf/v<span class="nv">$NEW</span>/defconfig -O config-<span class="nv">$NEW</span>
+</code></pre></div>
+</p></li>
+
+<li><p>To cross compile the source code, cd into the kernel source&rsquo;s root :
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">KERN_V</span><span class="o">=</span><span class="s2">&quot;&lt;kernel version&gt;&quot;</span>
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">BUILD_V</span><span class="o">=</span><span class="s2">&quot;&lt;build version&gt;&quot;</span>
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>path/to/your/cross/compiler/tool/chain
+</code></pre></div>
+
+<strong><u>for example</u></strong> for kernel - 4.4.11-ti-r29,
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">KERN_V</span><span class="o">=</span><span class="s2">&quot;4.4.11&quot;</span>
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">BUILD_V</span><span class="o">=</span><span class="s2">&quot;-ti-r29&quot;</span>
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>../../toolcahin/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+</code></pre></div>
+
+then after that:
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>make mrproper <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$BUILD_V</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>path/to/the/cross/compile/toolchain 
+<span class="nv">$ </span>wget -c http://rcn-ee.net/deb/jessie-armhf/v<span class="nv">$KERN_V$BUILD_V</span>/defconfig -O .config
+</code></pre></div>
+
+now each time you want to build your kernel
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>make <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$BUILD_V</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>path/to/the/cross/compile/toolchain 
+</code></pre></div>
+</p></li>
+
+<li><p>To cross compile particular drivers, you will have to go through complete kernel build process at-least once so that it generates that symbol version file, and only then will you be able to load the module. Follow above steps to build the kernel, then to compile one driver
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>make modules <span class="nv">SUB_DIRS</span><span class="o">=</span>path/to/the/driver <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$BUILD_V</span> 
+</code></pre></div>
+
+<strong><u>for example</u></strong> to compile rpmsg drivers :
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>make modules <span class="nv">SUB_DIRS</span><span class="o">=</span>drivers/rpmsg/ <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$BUILD_V</span> 
+</code></pre></div>
+</p></li>
+</ul>
+
+<h3 id="working_with_prus:01d25bfd2399ec47b9c04f156786eab8"><strong><u><a href="#working_with_prus:01d25bfd2399ec47b9c04f156786eab8">Working with PRUs</a></u> :</strong></h3>
+
+<ul>
+<li><p>Rebooting any PRU core (0 or 1) will result in reloading of the firmware that is at /lib/firmware/am335x-pruN-fw (pruN can be pru0 or pru1)</p></li>
+
+<li><p>To shutdown PRU0
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&quot;4a334000.pru0&quot;</span> &gt; /sys/bus/platform/drivers/pru-rproc/unbind
+</code></pre></div>
+
+and to boot it up
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&quot;4a334000.pru0&quot;</span> &gt; /sys/bus/platform/drivers/pru-rproc/bind
+</code></pre></div>
+</p></li>
+
+<li><p>To shutdown PRU1
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&quot;4a338000.pru1&quot;</span> &gt; /sys/bus/platform/drivers/pru-rproc/unbind
+</code></pre></div>
+
+and to boot it up
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&quot;4a338000.pru1&quot;</span> &gt; /sys/bus/platform/drivers/pru-rproc/bind
+</code></pre></div>
+</p></li>
+</ul>
+
+        </div>
+        
+        <div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments"> 
+            <a href=https://zeekhuge.github.io/>ZeekHuge</a>
+            <p></p>
+        </div>  
+    </div>
+
+    <nav class="hugo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <a href="https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_rpmsg/" class="hugo-nav__button">
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+           <i class="icon ion-android-arrow-back"></i>
+        </button>
+        Older
+    </a>
+    <div class="section-spacer"></div>
+    
+    <a href="https://zeekhuge.github.io/post/some_shots/" class="hugo-nav__button">Newer
+      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+           <i class="icon ion-android-arrow-forward"></i>
+      </button>
+    </a>
+</nav> 
+
+
+</div>
+
+            <footer class="mdl-mini-footer">
+                <div class="mdl-mini-footer--left-section">
+                    
+<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="mailto:me.zubeen3@gmail.com?subject=Hi">
+    <i class="material-icons_lg icon ion-email"></i>
+    <span class="visuallyhidden">Email</span>
+</a>
+
+
+<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="https://github.com/ZeekHuge/">
+    <i class="material-icons_lg icon ion-social-github"></i>
+    <span class="visuallyhidden">Github</span>
+</a>
+
+
+
+
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="https://www.facebook.com/zubeen.tolani">
+        <i class="material-icons_lg icon ion-social-facebook "></i>                        
+        <span class="visuallyhidden">Facebook</span>
+    </a>
+
+                </div>
+                <div class="mdl-mini-footer--right-section">
+                    <span>© 2016 ZeekHuge</span>
+                </div>
+            </footer>
+        </main>
+        <div class="mdl-layout__obfuscator"></div>
+    </div>
+    <script src="https://zeekhuge.github.io/js/material.min.js"></script>
+     <script src="https://zeekhuge.github.io/js/prism.js"></script>
+    
+</body>
+</html>
