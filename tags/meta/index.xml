@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Meta on ZeekHuge</title>
-    <link>https://zeekhuge.github.io/tags/meta/</link>
+    <link>https://www.zeekhuge.me/tags/meta/</link>
     <description>Recent content in Meta on ZeekHuge</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 10 Jul 2016 03:00:17 +0530</lastBuildDate>
-    <atom:link href="https://zeekhuge.github.io/tags/meta/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.zeekhuge.me/tags/meta/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>SomeShots</title>
-      <link>https://zeekhuge.github.io/post/some_shots/</link>
+      <link>https://www.zeekhuge.me/post/some_shots/</link>
       <pubDate>Sun, 10 Jul 2016 03:00:17 +0530</pubDate>
       
-      <guid>https://zeekhuge.github.io/post/some_shots/</guid>
+      <guid>https://www.zeekhuge.me/post/some_shots/</guid>
       <description>
 
 &lt;p&gt;BeagleScope project can be found &lt;a href=&#34;https://github.com/ZeekHuge/BeagleScope&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
@@ -26,7 +26,7 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;https://zeekhuge.github.io/images/pic1_bbb_power.jpg&#34; width=&#34;1000&#34; /&gt;
+        &lt;img src=&#34;https://www.zeekhuge.me/images/pic1_bbb_power.jpg&#34; width=&#34;1000&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -40,7 +40,7 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;https://zeekhuge.github.io/images/pic2_adc_power_cnnct.jpg&#34; width=&#34;1000&#34; /&gt;
+        &lt;img src=&#34;https://www.zeekhuge.me/images/pic2_adc_power_cnnct.jpg&#34; width=&#34;1000&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -54,7 +54,7 @@
 &lt;p&gt;
 &lt;figure &gt;
     
-        &lt;img src=&#34;https://zeekhuge.github.io/images/pic3_adc_power_src.jpg&#34; width=&#34;1000&#34; /&gt;
+        &lt;img src=&#34;https://www.zeekhuge.me/images/pic3_adc_power_src.jpg&#34; width=&#34;1000&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -68,7 +68,7 @@
 &lt;p&gt;
 &lt;figure &gt;
     
-        &lt;img src=&#34;https://zeekhuge.github.io/images/pic4_smthing_like_cape.jpg&#34; width=&#34;1000&#34; /&gt;
+        &lt;img src=&#34;https://www.zeekhuge.me/images/pic4_smthing_like_cape.jpg&#34; width=&#34;1000&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -82,7 +82,7 @@
 &lt;p&gt;
 &lt;figure &gt;
     
-        &lt;img src=&#34;https://zeekhuge.github.io/images/pic5_overlay_bbb.jpg&#34; width=&#34;1000&#34; /&gt;
+        &lt;img src=&#34;https://www.zeekhuge.me/images/pic5_overlay_bbb.jpg&#34; width=&#34;1000&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -96,7 +96,7 @@
 &lt;p&gt;
 &lt;figure &gt;
     
-        &lt;img src=&#34;https://zeekhuge.github.io/images/pic6_adc_connectors.jpg&#34; width=&#34;1000&#34; /&gt;
+        &lt;img src=&#34;https://www.zeekhuge.me/images/pic6_adc_connectors.jpg&#34; width=&#34;1000&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -110,7 +110,7 @@
 &lt;p&gt;
 &lt;figure &gt;
     
-        &lt;img src=&#34;https://zeekhuge.github.io/images/pic7_adc_connection.jpg&#34; width=&#34;1000&#34; /&gt;
+        &lt;img src=&#34;https://www.zeekhuge.me/images/pic7_adc_connection.jpg&#34; width=&#34;1000&#34; /&gt;
     
     
     &lt;figcaption&gt;
@@ -124,7 +124,7 @@
 &lt;p&gt;
 &lt;figure &gt;
     
-        &lt;img src=&#34;https://zeekhuge.github.io/images/pic8_jst_everything.jpg&#34; width=&#34;1000&#34; /&gt;
+        &lt;img src=&#34;https://www.zeekhuge.me/images/pic8_jst_everything.jpg&#34; width=&#34;1000&#34; /&gt;
     
     
     &lt;figcaption&gt;

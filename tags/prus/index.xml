@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Prus on ZeekHuge</title>
-    <link>https://zeekhuge.github.io/tags/prus/</link>
+    <link>https://www.zeekhuge.me/tags/prus/</link>
     <description>Recent content in Prus on ZeekHuge</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 16 Jun 2016 19:56:39 +0530</lastBuildDate>
-    <atom:link href="https://zeekhuge.github.io/tags/prus/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.zeekhuge.me/tags/prus/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>A handful of commands and scripts to get started with BeagleBone Black</title>
-      <link>https://zeekhuge.github.io/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/</link>
+      <link>https://www.zeekhuge.me/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/</link>
       <pubDate>Thu, 16 Jun 2016 19:56:39 +0530</pubDate>
       
-      <guid>https://zeekhuge.github.io/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/</guid>
+      <guid>https://www.zeekhuge.me/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/</guid>
       <description>
 
 &lt;p&gt;Here I have compiled a list of commands and some info to get you started with BeagleBone Black. I will keep updating this list of commands as I find something new .&lt;/p&gt;
@@ -212,42 +212,42 @@ and to boot it up
     
     <item>
       <title>Working with PRUs @BeagleBoneBlack : RPMsg framework</title>
-      <link>https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_rpmsg/</link>
+      <link>https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_rpmsg/</link>
       <pubDate>Thu, 16 Jun 2016 14:29:03 +0530</pubDate>
       
-      <guid>https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_rpmsg/</guid>
+      <guid>https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_rpmsg/</guid>
       <description>&lt;p&gt;Working on this.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Working with PRUs @BeagleBoneBlack : remoteproc</title>
-      <link>https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_remoteproc/</link>
+      <link>https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_remoteproc/</link>
       <pubDate>Thu, 16 Jun 2016 14:28:03 +0530</pubDate>
       
-      <guid>https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_remoteproc/</guid>
+      <guid>https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_remoteproc/</guid>
       <description>&lt;p&gt;Working on this&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Working with PRUs @BeagleBoneBlack : Introduction to PRUs</title>
-      <link>https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_introduction_to_prus/</link>
+      <link>https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_introduction_to_prus/</link>
       <pubDate>Thu, 16 Jun 2016 14:27:03 +0530</pubDate>
       
-      <guid>https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_introduction_to_prus/</guid>
+      <guid>https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_introduction_to_prus/</guid>
       <description>
 
 &lt;p&gt;This is the first in a series of posts to explain and provide with some basic examples to work on PRU cores in AM335x. The AM335x SoC can be found on famous embedded board &lt;em&gt;BeagleBone Black&lt;/em&gt;. The post are:&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_introduction_to_prus/&#34;&gt;Introduction to PRUs (this)&lt;/a&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_introduction_to_prus/&#34;&gt;Introduction to PRUs (this)&lt;/a&gt;
 To make you comfortable with the concept of realtime systems with PRUs, and basic introduction to various peripherals in the PRU-ICSS subsystem.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_remoteproc/&#34;&gt;Remoteproc&lt;/a&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_remoteproc/&#34;&gt;Remoteproc&lt;/a&gt;
 To explain the working of remoteproc Linux driver to manipulate remote processing unit ie PRU for AM335x SoC. This post will provide a logical framework first, and then will dive into the driver&amp;rsquo;s code.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_rpmsg/&#34;&gt;RPMsg Framework&lt;/a&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_rpmsg/&#34;&gt;RPMsg Framework&lt;/a&gt;
 Till this post, you will have understanding of how PRUs are booted up and start executing the firmware loaded onto them. This post will further explain the RPMsg way of communication between main processing unit and the PRUs.&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
@@ -266,7 +266,7 @@ Till this post, you will have understanding of how PRUs are booted up and start 
 
 &lt;p&gt;Texas Instruments has this series of processors based on ARM Cortex-A core they call &lt;em&gt;TI&amp;rsquo;s Sitara Processors&lt;/em&gt;. One of these processors that is used in the microcomputer board BeagleBone Black is AM335x . These processors have a very interesting subsystem called &lt;em&gt;PRU-ICSS&lt;/em&gt; as can be seen in top right in the figure below.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://zeekhuge.github.io/images/22965_am335x_diagram.png&#34; alt=&#34;AM335x&#34; title=&#34;AM335x&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.zeekhuge.me/images/22965_am335x_diagram.png&#34; alt=&#34;AM335x&#34; title=&#34;AM335x&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It can be thus said that AM335x has 3 processing cores. Two of them are enclosed in the PRU-ICSS subsystem and are called PRUs, operating at a clock speed of 200 MHz each. The other is the ARM Cortex A8 main processing unit or MPU for short, at 1GHz. This A8 MPU is a high end processor and can have an OS like ubuntu, debian or android running on it. The MPU with all high end processing stuff like caches and pipelines has a lot of limitations regarding to its realtime use. Comes to rescue, the &lt;em&gt;PRU&lt;/em&gt; aka &lt;em&gt;Programmable Realtime Units&lt;/em&gt; that are present on the same SoC.&lt;/p&gt;
 
@@ -281,7 +281,7 @@ Till this post, you will have understanding of how PRUs are booted up and start 
 &lt;p&gt;The two PRUs enclosed in the PRU-ICSS subsystem are specially designed for high speed, low latency, realtime processing. PRUs are basically 32 bit RISC processors that can work independent of the MPU. As is shown in the figure below, there are many more peripherals that are enclosed in the PRU-ICSS unit. Integration of all these peripherals in the PRU-ICSS aims to make realtime processing easy, reliable and fast. After all that &lt;em&gt;&amp;ldquo;realtime&amp;rdquo;&lt;/em&gt; stuff above, you may ask, &amp;ldquo;How does the PRUs make realtime thing possible ? after all they are yet another processing core.&amp;rdquo; Well, No, they are not &lt;em&gt;&amp;ldquo;yet another&amp;rdquo;&lt;/em&gt; processing unit, but are special kind of processing unit. They have very limited yet enough number of instructions to program with and almost all of them get executed in single cycle (ie 5 nSec). Each instruction has a perfectly deterministic latency (provided its accessing PRU-ICSS resources, more on this later), has no caches or pipelines and is equipped with enhanced GPIO unit. Using PRUs, you can toggle a GPO at about 50MHz, and believe me, thats a great thing for a SoC having a general purpose OS on it.&lt;br /&gt;
 This figure down here may look a bit complex, its rather simple and will be very useful once you understand it.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://zeekhuge.github.io/images/PRUSS.png&#34; alt=&#34;PRU-ICSS&#34; title=&#34;PRU-ICSS&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.zeekhuge.me/images/PRUSS.png&#34; alt=&#34;PRU-ICSS&#34; title=&#34;PRU-ICSS&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;[Note: This post is just to make you comfortable with PRUs for further experimenting and learning, so we are not going to go into deep details of various peripherals in PRU-ICSS. I am just going to give an overview of some of them. We will learn how to use various peripherals in later posts.]&lt;/em&gt;&lt;/p&gt;
 
@@ -315,11 +315,11 @@ One of the nifty features that PRUs have is the presence of scratch pad. Its a s
 The figure shows this arrangement of registers and scratch pad.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://zeekhuge.github.io/images/scratch_pad.png&#34; alt=&#34;Scratch Pad&#34; title=&#34;Scratch_pad&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.zeekhuge.me/images/scratch_pad.png&#34; alt=&#34;Scratch Pad&#34; title=&#34;Scratch_pad&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In addition to all this, PRU-ICSS unit also has MAC (Multiplier - Accumulator unit) for each of the PRUs, a CFG unit that contains various configuration registers and a few more peripherals. We will further see how to use PRUs and various in-PRU-ICSS peripherals to make a realtime system in posts ahead.&lt;/p&gt;
 
-&lt;p&gt;So thats all for this post. Next to it is this post explaining &lt;a href=&#34;https://zeekhuge.github.io/post/working_with_prus_beagleboneblack_remoteproc/&#34;&gt;&lt;em&gt;remoteproc&lt;/em&gt;&lt;/a&gt;, Linux way of working with PRU.&lt;/p&gt;
+&lt;p&gt;So thats all for this post. Next to it is this post explaining &lt;a href=&#34;https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_remoteproc/&#34;&gt;&lt;em&gt;remoteproc&lt;/em&gt;&lt;/a&gt;, Linux way of working with PRU.&lt;/p&gt;
 </description>
     </item>
     
