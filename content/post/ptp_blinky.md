@@ -49,7 +49,7 @@ However experienced an embedded programmer is, blinky can still be the most thri
 		+ The __delay_cycles() function
 	* [The linker file : PRU_gpioToggle/AM335x_PRU.cmd]({{< relref "#cmd" >}})
 	* [The deploy script : deploy.sh]({{< relref "#desh" >}})
-* Whats next ?
+* [Whats next ?]{{< relref "#nxt" >}}
 
 ### <u>Pointers</u>{#ptr}
 
@@ -324,5 +324,7 @@ MEMORY
 
 
 ### <u>Whats next ?</u>{#nxt}
-OK, so now you have a blinky ready and have got quite understanding of the PRUSS part. The next post will be about related to [Tools and Commands](/post/ptp_docs_commands_and_tools) that use while eperimenting with PRUs. They really make working with them easier. 
+OK, so now you have a blinky ready and have got quite understanding of the PRUSS part. The next post will be related to [Tools and Commands](/post/ptp_docs_commands_and_tools) that use while eperimenting with PRUs. They really make working with them easier. 
 
+
+{{ template "_internal/disqus.html" . }}
