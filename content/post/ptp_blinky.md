@@ -26,13 +26,32 @@ title: 'PTP - Programming The PRUs 1: Blinky'
 
 ---------------------------------------------------
 
+### <u>Preface</u>
+
 Some people may say, *"Really ? A blinky ? Are you kidding me ? If someone is trying to get started with PRUs, he/she's most probably well acquainted to the concept of embedded programming."*, to them, I would just say *"yes, a blinky."*
 
 However experienced an embedded programmer is, blinky can still be the most thrilling application that he develops. It is thrilling at least to me, and I just put my hands up in the air like I have won a war. Further, this post will help you get all the things at the right place to begin with more complex examples. If you still don't think its worth it, well, Its my post :P
 
 ----------------------------------------------------
 
-### <u>**Pointers**</u> :
+### <u>Content</u>
+* [Pointers - some random and important points]({{< relref "#ptr" >}})
+* [Setup]({{< relref "#stp" >}})
+	* [Get the repo]({{< relref "#repo" >}})
+	* [Disable the HDMI cape]({{< relref "#hdmi" >}})
+	* [Available pins]({{< relref "#pins" >}})
+	* [LEDs on P8_45]({{< relref "#leds" >}})
+	* [Setting up the PRU code generation tool]({{< relref "#pcgt" >}})
+	* [Get blinky]({{< relref "#blin" >}})
+* [Into the code]({{< relref "#code" >}})
+	* [The C code : PRU_gpioToggle]({{< relref "#ccode" >}})
+		+ The __R31 and __R30 variables
+		+ The __delay_cycles() function
+	* [The linker file : PRU_gpioToggle/AM335x_PRU.cmd]({{< relref "#cmd" >}})
+	* [The deploy script : deploy.sh]({{< relref "#desh" >}})
+* Whats next ?
+
+### <u>Pointers</u>{#ptr}
 
 * We will be dealing with latest kernels. The series of examples are expected to work on kernel version later than 4.4.12-ti-r31. To check what the latest kernel available is
 <pre class="prettyprint ">
@@ -63,8 +82,9 @@ picture credits : [xkcd.com](https://xkcd.com)
 -----------------------------------------------
 
 
-### <u>**Setup**</u>
-##### <u>Get the repo</u>
+### <u>Setup</u>{#stp}
+
+##### <u>Get the repo</u>{#repo}
 * My GSoC 2016 project BeagleScope required understanding of PRU programming and its kernel interfacing. Since most of the things were documented in form of large PDFs I had to go through them and experiment a bit. The experiments are collected in the BeagleScop repo along with some documentation. To get the repo
 <pre class="prettyprint ">
 $ git clone https://github.com/ZeekHuge/BeagleScope.git
@@ -74,7 +94,7 @@ $ git clone https://github.com/ZeekHuge/BeagleScope.git
 -------------------------------------------------
 
 
-##### <u>Disable the HDMI cape</u>
+##### <u>Disable the HDMI cape</u>{#hdmi}
 * Why disable the HDMI cape ? Well, not all the pins of the PRUs are routed to the boards header pins. The max number of PRU pins in any case you can get is about 28 out of 64 pins, and most of the output pins happen to be routed to P8 header and associated to PRU1. But then, by default HDMI cape is loaded, which actually uses these pins, making it unstable to be used for PRUs. This pic of the [BeagleScope/docs/BeagleboneBlackP8HeaderTable.pdf](https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/docs/BeagleboneBlackP8HeaderTable.pdf) shows the pin numbers that we get after we disable the HDMI cape:
 {{< figure src="/images/hdmi_pins.png" title="P8 pins : muxed to hdmi by default" width="1000" >}}
  So disabling it is the best option. To disable the cape, you need to edit your '/boot/uEnv.txt' file and uncomment 
@@ -101,7 +121,7 @@ the first few lines of your '/boot/uEnv.txt' would then look something like this
 ---------------------------------------------------
 
 
-##### <u>Available pins</u>
+##### <u>Available pins</u>{#pins}
 
 * So aftr disabling the HDMI cape, we have a few pins to use for PRU examples on P8 header. At this point you might want to note the pins that we can use the doc at [BeagleScope/docs/BeagleboneBlackP8HeaderTable.pdf](https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/docs/BeagleboneBlackP8HeaderTable.pdf):
 {{< figure src="/images/pru_pins_p8.png" title="P8 pins : Associated to PRU1" width="1000" >}}
@@ -110,7 +130,7 @@ the first few lines of your '/boot/uEnv.txt' would then look something like this
 ---------------------------------------------------
 
 
-##### <u>LEDs on P8_45</u>
+##### <u>LEDs on P8_45</u>{#leds}
 
 * ***Read this carefully****. The blinky we are aiming to get will be using an external LED. ***NOW, THIS EXTERNAL LED SHOULD NOT DRAIN A CURRENT MORE THAN ~8mA, AND FOR THIS, AT 3.3V, ***THE RESISTOR TO BE USED SHOULD BE GREATER THAN OR EQUAL TO 470 ohms***. If you would want to the get more current out of it, checkout [this link](http://www.thebrokendesk.com/post/blinking-an-led-with-the-beaglebone-black/). Connect this LED you have now, through a >=470 ohm resistor, to the p8_45 pin on the beaglebone black board.
 
@@ -118,7 +138,7 @@ the first few lines of your '/boot/uEnv.txt' would then look something like this
 ---------------------------------------------------
 
 
-##### <u>Setting up the PRU code generation tools.</u>
+##### <u>Setting up the PRU code generation tools</u>{#pcgt}
 1. The PRUs are not like the other standard processors. PRUs are based on TI's proprietor architecture, and therefore we need a compiler other than GCC to compile code for PRUs. To download the code generation tools on your BBB(recommended) :
 <pre class="prettyprint">
 $ wget -c http://software-dl.ti.com/codegen/esd/cgt_public_sw/PRU/2.1.2/ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh
@@ -153,7 +173,7 @@ And a list of help options would appear.
 ----------------------------------------------------
 
 
-##### <u>Get blinky</u>
+##### <u>Get blinky</u>{#blin}
 1. To get to the example we are going to use, you will have to get into the examples :
 $ cd BeagleScope/examples/firmware_exmples/pru_blinky/
 
@@ -167,14 +187,14 @@ $ ./deploy.sh
 ------------------------------------------------------
 
 
-### <u>**Into the code**</u>
+### <u>Into the code</u>{#code}
 * For this post, we will dive into the PRU_gpioToggle/PRU_gpioToggle.c, PRU_gpioToggle/AM335x_PRU.cmd file and the deploy.sh script. We will get into the Makefile and the resource table in next post.
 
 
 ------------------------------------------------------
 
 
-##### <u>The C code : PRU_gpioToggle.c</u>
+##### <u>The C code : PRU_gpioToggle.c</u>{#ccode}
 * So here is the [code](https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/PRU_gpioToggle.c) and its pretty straight forward .But there are two things I would like to discuss here :
 
 	+ The __R31 and __R30 variables
@@ -200,7 +220,7 @@ $ ./deploy.sh
 -----------------------------------------------------
 
 
-##### <u>The linker file : PRU_gpioToggle/AM335x_PRU.cmd</u>
+##### <u>The linker file : PRU_gpioToggle/AM335x_PRU.cmd</u>{#cmd}
 1. PRUs are pretty simple processing cores, but the PRUSS system is highly integrated and provides the PRU a rich set of peripherals. All these peripherals inside the PRUSS are at different address locations and they need to be configured by the linux kernel at the time of firmware loading onto the PRUs. The [AM335x_PRU.cmd file](https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/AM335x_PRU.cmd) provides a mapping to the compiler, from different sections of code, to different memory locations inside the PRUSS.
 
 * There are 2 sections inside the AM335x_PRU.cmd file :
@@ -257,7 +277,7 @@ MEMORY
 -----------------------
 
 
-##### <u>The deploy script : deploy.sh</u>
+##### <u>The deploy script : deploy.sh</u>{#desh}
 1. The deploy script, in this example does following things :
 	+ 'make's the pru code.
 	That is simple, the part of the script included below enters the PRU_gpioToggle and invokes the 'make' command to make the project.
@@ -303,6 +323,6 @@ MEMORY
 ------------------------------------------------
 
 
-### <u>**Whats next ?**</u>
+### <u>Whats next ?</u>{#nxt}
 OK, so now you have a blinky ready and have got quite understanding of the PRUSS part. The next post will be about related to [Tools and Commands](/post/ptp_docs_commands_and_tools) that use while eperimenting with PRUs. They really make working with them easier. 
 
