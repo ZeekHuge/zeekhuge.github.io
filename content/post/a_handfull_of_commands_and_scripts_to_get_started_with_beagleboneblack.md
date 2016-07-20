@@ -24,21 +24,49 @@ tags:
 title: 'A handful of commands and scripts to get started with BeagleBone Black'
 ---
 
-Here I have compiled a list of commands and some info to get you started with BeagleBone Black. I will keep updating this list of commands as I find something new .
+Here I have compiled a list of commands and some info to get you started with BeagleBone Black. I will keep updating this list of commands as I find something new . I hope that it will save you some time .
+
+![joke](/jokes/worth_time.png)
+
+picture credits: [xkcd.com](https://xkcd.com)
 
 All of these commands are to be executed on the BeagleBone black (BBB for short) itself after you login as root, and are expected to work on kernel version 4.4.11+
 
-### **<u>[Starters]({{<ref "#starters">}})</u> :**{#starters}
+### <u>Content</u>
+* [Starters]({{< relref "#strt" >}})
+	1. Environment Variables
+	+ Config-pin utility
+	+ Force rebooting
+	+ Sharing your Ubuntu system's Internet with BBB
+* [Kernel Development]({{< relref "#kdev" >}})
+	1. Linux Headers
+	+ Install latest kernel
+	+ BBB kernel source
+	+ BBB clone kernel source
+	+ Cross-compiler toolchain
+	+ Particular kernel config file
+	+ Cross compiling the kernel source
+	+ Cross compile a driver
+* [Working with PRUs]({{< relref "#wprus" >}})
+	1. Fact 1
+	+ To shutdown PRU0
+	+ To shutdown PRU1
+	+ More
+
+---
+---
+
+### <u>Starters</u> :{#strt}
 
 
-* *ssh* into your BBB and append your *bashrc* with following lines:
+1. **Environment Variables** - *ssh* into your BBB and append your *bashrc* with following lines:
 {{< highlight bash >}}
 export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux
 export SLOTS=/sys/devices/platform/bone_capemgr/slots
 export FW=/lib/firmware
 {{< /highlight >}}
 
-* To change the pinmux settings for a pin does not need device tree overlays now (4.4+ kernel), you can simply use 'config-pin' utility. To configure the pin you just need to know its position on the board, so to change mux settings of pin at , for example , P8_46
+* **Config-pin utility** - To change the pinmux settings for a pin does not need device tree overlays now (4.4+ kernel), you can simply use 'config-pin' utility. To configure the pin you just need to know its position on the board, so to change mux settings of pin at , for example , P8_46
 {{< highlight bash >}}
 $ config-pin -l P8_46
 {{< /highlight >}}
@@ -66,12 +94,12 @@ PRU GPIO id: 103
 
 
 
-* One of my favorite commands, rebooting your BBB when something goes wrong and it won't reboot the normal way ( Thanks to [Stephanie](https://github.com/SJLC) for this).  
+* **Force rebooting** -  One of my favorite commands, rebooting your BBB when something goes wrong and it won't reboot the normal way ( Thanks to [Stephanie](https://github.com/SJLC) for this).  
 {{< highlight bash >}}
 echo b >/proc/sysrq-trigger
 {{< /highlight >}}
 
-* Sharing your Ubuntu system's Internet with BBB. Use the command {{< highlight bash >}}$ ifconfig {{< /highlight >}} to determine the interface your system is using to connect to BBB (it will be mostly eth0) and to the Internet.
+* ** Sharing your Ubuntu system's Internet with BBB ** -  Use the command {{< highlight bash >}}$ ifconfig {{< /highlight >}} to determine the interface your system is using to connect to BBB (it will be mostly eth0) and to the Internet.
 	* Let the Internet interface and BBB interface be \<Internet-interface\> and \<BBB-interface\> respectively. Now on your system, execute following commands as root:		
 {{< highlight bash >}}
 $ iptables -t nat -A POSTROUTING -o <Internet-interface> -j MASQUERADE
@@ -91,16 +119,16 @@ $ route add default gw 192.168.7.1
 {{< /highlight >}}
 	* To automate all this Internet connecting thing, just put all these commands in /etc/rc.local in their respective systems. 
 
-### **<u>[Kernel Development]({{< ref "#k_dev" >}})</u> :**{#k_dev}
+### <u>Kernel Development</u>{#kdev}
 
 
-* To install Linux kernel header files for your current Linux version: 
+1. **Linux Headers** - To install Linux kernel header files for your current Linux version: 
 {{< highlight bash >}}
 $ apt-get install -y linux-headers-$(uname -r)
 {{</highlight>}}
 
 
-* To install a new version of kernel image <u>***for example***</u>: kernel image 4.4.11-ti-r29 ( Thanks to [Steve Arnold](https://github.com/sarnold) for these ) :
+* **Install latest kernel** - To install a new version of kernel image <u>***for example***</u>: kernel image 4.4.11-ti-r29 ( Thanks to [Steve Arnold](https://github.com/sarnold) for these ) :
 {{< highlight bash >}}
 $ sudo apt-get update
 $ export NEW="4.4.11-ti-r29" 
@@ -109,20 +137,13 @@ $ sudo apt-get install -y linux-firmware-image-$NEW linux-headers-$NEW linux-ima
 
 
 
-* To browse the kernel source of a particular version, go onto :	
+* **BBB kernel source** -  To browse the kernel source of a particular version, go onto :	
 {{< highlight bash >}}https://github.com/RobertCNelson/linux-stable-rcn-ee/tree/<kernel build number>{{< /highlight >}}
 <u>***for example***</u> if you want to go to the 4.4.11-ti-r29 kernel, the link will be :
 {{< highlight bash >}}https://github.com/RobertCNelson/linux-stable-rcn-ee/tree/4.4.11-ti-r29{{< /highlight >}}
 
 
-
-* To download a compressed kernel source, go onto:
-{{< highlight bash >}}https://github.com/RobertCNelson/linux-stable-rcn-ee/releases/tag/<kernel build number>{{< /highlight >}}
-<u>***for example***</u> if you want to go to download 4.4.11-ti-r29 kernel, the link will be :
-		{{< highlight bash >}}https://github.com/RobertCNelson/linux-stable-rcn-ee/releases/tag/4.4.11-ti-r29{{< /highlight >}}
-
-
-* To clone a kernel source ( Thanks to [Michael Welling](https://github.com/mwelling/) and [Stephanie](https://github.com/SJLC) for help on this )  :
+* **BBB clone kernel source** - To clone a kernel source ( Thanks to [Michael Welling](https://github.com/mwelling/) and [Stephanie](https://github.com/SJLC) for help on this )  :
 {{< highlight bash >}}
 $ mkdir KERNEL-<kernel build number>
 $ git clone --depth=100 -b <kernel build number> https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-<kernel build number>
@@ -137,14 +158,14 @@ $ touch KERNEL-4.4.11-ti-r29/.ignore-4.4.11-ti-r29
 
 
 
-* To download the latest version of cross-compiler tool-chain ( command source : [eewiki](https://eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC) )
+* **Cross-compiler toolchain** -  To download the latest version of cross-compiler tool-chain ( command source : [eewiki](https://eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC) )
 {{< highlight bash >}}
 $ wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
 $ tar xf gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
 $ export CC=`pwd`/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
 {{< /highlight >}}
 
-* To download .config file of a particular kernel build number:
+* **Particular kernel config file** - To download .config file of a particular kernel build number:
 {{< highlight bash >}}
 $ export NEW="<kernel build number>"
 $ wget -c http://rcn-ee.net/deb/jessie-armhf/v$NEW/defconfig -O config-$NEW
@@ -156,7 +177,7 @@ $ wget -c http://rcn-ee.net/deb/jessie-armhf/v$NEW/defconfig -O config-$NEW
 {{< /highlight >}}
 
 
-* To cross compile the source code, cd into the kernel source's root :
+* **Cross compiling the kernel source** - To cross compile the source code, cd into the kernel source's root :
 {{< highlight bash >}}
 $ export KERN_V="<kernel version>"
 $ export BUILD_V="<build version>"
@@ -178,7 +199,7 @@ now each time you want to build your kernel
 $ make ARCH=arm LOCALVERSION=$BUILD_V CROSS_COMPILE=path/to/the/cross/compile/toolchain 
 {{< /highlight>}}
 
-* To cross compile particular drivers, you will have to go through complete kernel build process at-least once so that it generates that symbol version file, and only then will you be able to load the module. Follow above steps to build the kernel, then to compile one driver
+* **Cross compile a driver** -  To cross compile particular drivers that is present in your kernel source, you will have to go through complete kernel build process at-least once so that it generates that symbol version file, and only then will you be able to load the module. Follow above steps to build the kernel, then to compile one driver
 {{< highlight bash >}}
 $ make modules SUB_DIRS=path/to/the/driver ARCH=arm LOCALVERSION=$BUILD_V 
 {{< /highlight>}}
@@ -188,11 +209,11 @@ $ make modules SUB_DIRS=drivers/rpmsg/ ARCH=arm LOCALVERSION=$BUILD_V
 {{< /highlight>}}
 
 
-### **<u>[Working with PRUs]({{< ref "#working_with_prus">}})</u> :**{#working_with_prus}
+### <u>Working with PRUs</u>{#wprus}
 
-* Rebooting any PRU core (0 or 1) will result in reloading of the firmware that is at /lib/firmware/am335x-pruN-fw (pruN can be pru0 or pru1)
+1. **Fact 1** - Rebooting any PRU core (0 or 1) will result in reloading of the firmware that is at /lib/firmware/am335x-pruN-fw (pruN can be pru0 or pru1)
 
-* To shutdown PRU0 
+* **To shutdown PRU0**
 {{< highlight bash >}}
 echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/unbind
 {{< /highlight>}}
@@ -201,7 +222,7 @@ and to boot it up
 echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/bind
 {{< /highlight>}}
 
-* To shutdown PRU1 
+* **To shutdown PRU1**
 {{< highlight bash >}}
 echo "4a338000.pru1" > /sys/bus/platform/drivers/pru-rproc/unbind
 {{< /highlight>}}
@@ -210,3 +231,4 @@ and to boot it up
 echo "4a338000.pru1" > /sys/bus/platform/drivers/pru-rproc/bind
 {{< /highlight>}}
 
+* **More** - Some more of them have been described in the [2nd post of PTP series](/post/ptp_docs_commands_and_tools)
