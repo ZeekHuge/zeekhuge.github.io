@@ -17,21 +17,62 @@
       <guid>https://www.zeekhuge.me/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/</guid>
       <description>
 
-&lt;p&gt;Here I have compiled a list of commands and some info to get you started with BeagleBone Black. I will keep updating this list of commands as I find something new .&lt;/p&gt;
+&lt;p&gt;Here I have compiled a list of commands and some info to get you started with BeagleBone Black. I will keep updating this list of commands as I find something new . I hope that it will save you some time .&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.zeekhuge.me/jokes/worth_time.png&#34; alt=&#34;joke&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;picture credits: &lt;a href=&#34;https://xkcd.com&#34;&gt;xkcd.com&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;All of these commands are to be executed on the BeagleBone black (BBB for short) itself after you login as root, and are expected to work on kernel version 4.4.11+&lt;/p&gt;
 
-&lt;h3 id=&#34;starters:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;&lt;strong&gt;&lt;u&gt;&lt;a href=&#34;#starters:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;Starters&lt;/a&gt;&lt;/u&gt; :&lt;/strong&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;u-content-u:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;&lt;u&gt;Content&lt;/u&gt;&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;em&gt;ssh&lt;/em&gt; into your BBB and append your &lt;em&gt;bashrc&lt;/em&gt; with following lines:
+&lt;li&gt;&lt;a href=&#34;#strt:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;Starters&lt;/a&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Environment Variables&lt;/li&gt;
+&lt;li&gt;Config-pin utility&lt;/li&gt;
+&lt;li&gt;Force rebooting&lt;/li&gt;
+&lt;li&gt;Sharing your Ubuntu system&amp;rsquo;s Internet with BBB&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#kdev:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;Kernel Development&lt;/a&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Linux Headers&lt;/li&gt;
+&lt;li&gt;Install latest kernel&lt;/li&gt;
+&lt;li&gt;BBB kernel source&lt;/li&gt;
+&lt;li&gt;BBB clone kernel source&lt;/li&gt;
+&lt;li&gt;Cross-compiler toolchain&lt;/li&gt;
+&lt;li&gt;Particular kernel config file&lt;/li&gt;
+&lt;li&gt;Cross compiling the kernel source&lt;/li&gt;
+&lt;li&gt;Cross compile a driver&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#wprus:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;Working with PRUs&lt;/a&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Fact 1&lt;/li&gt;
+&lt;li&gt;To shutdown PRU0&lt;/li&gt;
+&lt;li&gt;To shutdown PRU1&lt;/li&gt;
+&lt;li&gt;More&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;strt:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;&lt;u&gt;Starters&lt;/u&gt; :&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Environment Variables&lt;/strong&gt; - &lt;em&gt;ssh&lt;/em&gt; into your BBB and append your &lt;em&gt;bashrc&lt;/em&gt; with following lines:
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;PINS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/sys/kernel/debug/pinctrl/44e10800.pinmux
 &lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SLOTS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/sys/devices/platform/bone_capemgr/slots
 &lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;FW&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/lib/firmware
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To change the pinmux settings for a pin does not need device tree overlays now (4.4+ kernel), you can simply use &amp;lsquo;config-pin&amp;rsquo; utility. To configure the pin you just need to know its position on the board, so to change mux settings of pin at , for example , P8_46
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Config-pin utility&lt;/strong&gt; - To change the pinmux settings for a pin does not need device tree overlays now (4.4+ kernel), you can simply use &amp;lsquo;config-pin&amp;rsquo; utility. To configure the pin you just need to know its position on the board, so to change mux settings of pin at , for example , P8_46
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;config-pin -l P8_46
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -56,12 +97,12 @@ PRU GPIO id: 103
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;One of my favorite commands, rebooting your BBB when something goes wrong and it won&amp;rsquo;t reboot the normal way ( Thanks to &lt;a href=&#34;https://github.com/SJLC&#34;&gt;Stephanie&lt;/a&gt; for this).&lt;br /&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Force rebooting&lt;/strong&gt; -  One of my favorite commands, rebooting your BBB when something goes wrong and it won&amp;rsquo;t reboot the normal way ( Thanks to &lt;a href=&#34;https://github.com/SJLC&#34;&gt;Stephanie&lt;/a&gt; for this).&lt;br /&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo &lt;/span&gt;b &amp;gt;/proc/sysrq-trigger
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;Sharing your Ubuntu system&amp;rsquo;s Internet with BBB. Use the command &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;ifconfig 
+&lt;li&gt;&lt;p&gt;** Sharing your Ubuntu system&amp;rsquo;s Internet with BBB ** -  Use the command &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;ifconfig 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
  to determine the interface your system is using to connect to BBB (it will be mostly eth0) and to the Internet.&lt;/p&gt;
 
@@ -86,24 +127,24 @@ Generally, these commands will look like :
 
 &lt;li&gt;&lt;p&gt;To automate all this Internet connecting thing, just put all these commands in /etc/rc.local in their respective systems.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/ol&gt;
 
-&lt;h3 id=&#34;k_dev:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;&lt;strong&gt;&lt;u&gt;&lt;a href=&#34;#k_dev:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;Kernel Development&lt;/a&gt;&lt;/u&gt; :&lt;/strong&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;kdev:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;&lt;u&gt;Kernel Development&lt;/u&gt;&lt;/h3&gt;
 
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;To install Linux kernel header files for your current Linux version:
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Linux Headers&lt;/strong&gt; - To install Linux kernel header files for your current Linux version:
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;apt-get install -y linux-headers-&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;uname -r&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To install a new version of kernel image &lt;u&gt;&lt;strong&gt;&lt;em&gt;for example&lt;/em&gt;&lt;/strong&gt;&lt;/u&gt;: kernel image 4.4.11-ti-r29 ( Thanks to &lt;a href=&#34;https://github.com/sarnold&#34;&gt;Steve Arnold&lt;/a&gt; for these ) :
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install latest kernel&lt;/strong&gt; - To install a new version of kernel image &lt;u&gt;&lt;strong&gt;&lt;em&gt;for example&lt;/em&gt;&lt;/strong&gt;&lt;/u&gt;: kernel image 4.4.11-ti-r29 ( Thanks to &lt;a href=&#34;https://github.com/sarnold&#34;&gt;Steve Arnold&lt;/a&gt; for these ) :
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;sudo apt-get update
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;NEW&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;4.4.11-ti-r29&amp;quot;&lt;/span&gt; 
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;sudo apt-get install -y linux-firmware-image-&lt;span class=&#34;nv&#34;&gt;$NEW&lt;/span&gt; linux-headers-&lt;span class=&#34;nv&#34;&gt;$NEW&lt;/span&gt; linux-image-&lt;span class=&#34;nv&#34;&gt;$NEW&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To browse the kernel source of a particular version, go onto :&lt;br /&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;BBB kernel source&lt;/strong&gt; -  To browse the kernel source of a particular version, go onto :&lt;br /&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;https://github.com/RobertCNelson/linux-stable-rcn-ee/tree/&amp;lt;kernel build number&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -112,16 +153,7 @@ Generally, these commands will look like :
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To download a compressed kernel source, go onto:
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;https://github.com/RobertCNelson/linux-stable-rcn-ee/releases/tag/&amp;lt;kernel build number&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;u&gt;&lt;strong&gt;&lt;em&gt;for example&lt;/em&gt;&lt;/strong&gt;&lt;/u&gt; if you want to go to download 4.4.11-ti-r29 kernel, the link will be :
-    &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;https://github.com/RobertCNelson/linux-stable-rcn-ee/releases/tag/4.4.11-ti-r29
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;To clone a kernel source ( Thanks to &lt;a href=&#34;https://github.com/mwelling/&#34;&gt;Michael Welling&lt;/a&gt; and &lt;a href=&#34;https://github.com/SJLC&#34;&gt;Stephanie&lt;/a&gt; for help on this )  :
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;BBB clone kernel source&lt;/strong&gt; - To clone a kernel source ( Thanks to &lt;a href=&#34;https://github.com/mwelling/&#34;&gt;Michael Welling&lt;/a&gt; and &lt;a href=&#34;https://github.com/SJLC&#34;&gt;Stephanie&lt;/a&gt; for help on this )  :
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;mkdir KERNEL-&amp;lt;kernel build number&amp;gt;
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;100 -b &amp;lt;kernel build number&amp;gt; https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&amp;lt;kernel build number&amp;gt;
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;touch KERNEL-&amp;lt;kernel build number&amp;gt;/.ignore-&amp;lt;kernel build number&amp;gt;
@@ -134,14 +166,14 @@ Generally, these commands will look like :
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To download the latest version of cross-compiler tool-chain ( command source : &lt;a href=&#34;https://eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC&#34;&gt;eewiki&lt;/a&gt; )
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Cross-compiler toolchain&lt;/strong&gt; -  To download the latest version of cross-compiler tool-chain ( command source : &lt;a href=&#34;https://eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC&#34;&gt;eewiki&lt;/a&gt; )
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;tar xf gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CC&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To download .config file of a particular kernel build number:
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Particular kernel config file&lt;/strong&gt; - To download .config file of a particular kernel build number:
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;NEW&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;kernel build number&amp;gt;&amp;quot;&lt;/span&gt;
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;wget -c http://rcn-ee.net/deb/jessie-armhf/v&lt;span class=&#34;nv&#34;&gt;$NEW&lt;/span&gt;/defconfig -O config-&lt;span class=&#34;nv&#34;&gt;$NEW&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -152,7 +184,7 @@ Generally, these commands will look like :
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To cross compile the source code, cd into the kernel source&amp;rsquo;s root :
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Cross compiling the kernel source&lt;/strong&gt; - To cross compile the source code, cd into the kernel source&amp;rsquo;s root :
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;KERN_V&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;kernel version&amp;gt;&amp;quot;&lt;/span&gt;
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;BUILD_V&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;lt;build version&amp;gt;&amp;quot;&lt;/span&gt;
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CROSS_COMPILE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;path/to/your/cross/compiler/tool/chain
@@ -174,7 +206,7 @@ now each time you want to build your kernel
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To cross compile particular drivers, you will have to go through complete kernel build process at-least once so that it generates that symbol version file, and only then will you be able to load the module. Follow above steps to build the kernel, then to compile one driver
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Cross compile a driver&lt;/strong&gt; -  To cross compile particular drivers that is present in your kernel source, you will have to go through complete kernel build process at-least once so that it generates that symbol version file, and only then will you be able to load the module. Follow above steps to build the kernel, then to compile one driver
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;make modules &lt;span class=&#34;nv&#34;&gt;SUB_DIRS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;path/to/the/driver &lt;span class=&#34;nv&#34;&gt;ARCH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;arm &lt;span class=&#34;nv&#34;&gt;LOCALVERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$BUILD_V&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -182,14 +214,14 @@ now each time you want to build your kernel
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;make modules &lt;span class=&#34;nv&#34;&gt;SUB_DIRS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;drivers/rpmsg/ &lt;span class=&#34;nv&#34;&gt;ARCH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;arm &lt;span class=&#34;nv&#34;&gt;LOCALVERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$BUILD_V&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/ol&gt;
 
-&lt;h3 id=&#34;working_with_prus:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;&lt;strong&gt;&lt;u&gt;&lt;a href=&#34;#working_with_prus:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;Working with PRUs&lt;/a&gt;&lt;/u&gt; :&lt;/strong&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;wprus:01d25bfd2399ec47b9c04f156786eab8&#34;&gt;&lt;u&gt;Working with PRUs&lt;/u&gt;&lt;/h3&gt;
 
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Rebooting any PRU core (0 or 1) will result in reloading of the firmware that is at /lib/firmware/am335x-pruN-fw (pruN can be pru0 or pru1)&lt;/p&gt;&lt;/li&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Fact 1&lt;/strong&gt; - Rebooting any PRU core (0 or 1) will result in reloading of the firmware that is at /lib/firmware/am335x-pruN-fw (pruN can be pru0 or pru1)&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To shutdown PRU0
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;To shutdown PRU0&lt;/strong&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;4a334000.pru0&amp;quot;&lt;/span&gt; &amp;gt; /sys/bus/platform/drivers/pru-rproc/unbind
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -198,7 +230,7 @@ and to boot it up
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;To shutdown PRU1
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;To shutdown PRU1&lt;/strong&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;4a338000.pru1&amp;quot;&lt;/span&gt; &amp;gt; /sys/bus/platform/drivers/pru-rproc/unbind
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -206,7 +238,9 @@ and to boot it up
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;4a338000.pru1&amp;quot;&lt;/span&gt; &amp;gt; /sys/bus/platform/drivers/pru-rproc/bind
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;More&lt;/strong&gt; - Some more of them have been described in the &lt;a href=&#34;https://www.zeekhuge.me/post/ptp_docs_commands_and_tools&#34;&gt;2nd post of PTP series&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
     </item>
     
