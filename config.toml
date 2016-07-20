@@ -5,6 +5,7 @@ languageCode = "en-us"
 title = "ZeekHuge"
 theme = "HugoMDL"
 disqusShortname = "zeekhuge"
+disqus_identifier = "ZeekHuge"
 MetaDataFormat = "yaml"
 [permalinks]
 
