@@ -434,7 +434,7 @@ first four sharpening the axe&amp;rdquo;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;#cmd:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;The linker file : PRU_gpioToggle/AM335x_PRU.cmd&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#desh:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;The deploy script : deploy.sh&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Whats next ?&lt;/li&gt;
+&lt;li&gt;[Whats next ?]#nxt:a6dc26714d32df1ac6a7aa69d40ae020&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;ptr:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Pointers&lt;/u&gt;&lt;/h3&gt;
@@ -768,7 +768,9 @@ The script has two variables - 1) HEADER and 2) PIN_NUMBER. They together decide
 
 &lt;h3 id=&#34;nxt:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Whats next ?&lt;/u&gt;&lt;/h3&gt;
 
-&lt;p&gt;OK, so now you have a blinky ready and have got quite understanding of the PRUSS part. The next post will be about related to &lt;a href=&#34;https://www.zeekhuge.me/post/ptp_docs_commands_and_tools&#34;&gt;Tools and Commands&lt;/a&gt; that use while eperimenting with PRUs. They really make working with them easier.&lt;/p&gt;
+&lt;p&gt;OK, so now you have a blinky ready and have got quite understanding of the PRUSS part. The next post will be related to &lt;a href=&#34;https://www.zeekhuge.me/post/ptp_docs_commands_and_tools&#34;&gt;Tools and Commands&lt;/a&gt; that use while eperimenting with PRUs. They really make working with them easier.&lt;/p&gt;
+
+&lt;p&gt;{{ template &amp;ldquo;_internal/disqus.html&amp;rdquo; . }}&lt;/p&gt;
 </description>
     </item>
     
