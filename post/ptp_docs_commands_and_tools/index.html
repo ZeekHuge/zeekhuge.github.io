@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="generator" content="Hugo 0.16-DEV" />
+        
+        <link rel="icon" type="image/png" href="/images/favicon.ico">
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="My thoughts and rambles">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PTP - Programming The PRUs 2: Docs, Commands and Tools</title>
+        
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+        
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+        <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+        
+        <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+        <meta name="msapplication-TileColor" content="#3372DF">
+    
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"/>
+        <link rel="stylesheet" href="/css/ionicons.min.css"/>
+        <link rel="stylesheet" href="/css/material.grey-orange.min.css"/>
+        <link rel="stylesheet" href="/css/styles.css"/>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+          <link rel="stylesheet" href="/css/prism.css" />  
+</head>
+
+<body style="background-image: url('/images/back.jpg');">
+     
+         
+            <div class="hugo-blog hugo-blog--blogpost mdl-layout mdl-js-layout has-drawer is-upgraded">  
+        
+    
+        
+        
+    <header class="mdl-layout__header mdl-layout__header--transparent mdl-layout__header--scroll">
+        <div class="mdl-layout__header-row">
+            
+            
+            
+            <div class="mdl-layout-spacer"></div>
+            
+            <nav class="mdl-navigation">
+
+		<iframe src="http://ghbtns.com/github-btn.html?user=zeekhuge&size=large&type=follow"
+			allowtransparency="true" frameborder="0"  scrolling="0" width="150" height="30"></iframe>
+
+           	<a class='mdl-navigation__link ' href="/">Home</a>
+		<a class='mdl-navigation__link ' href="https://github.com/ZeekHuge/BeagleScope">BeagleScope</a>
+                <a class='mdl-navigation__link ' href="/post">Posts</a>
+	
+                <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">About</a>
+		<a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">Github</a>
+            </nav>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        
+        <nav class="mdl-navigation">
+            <a class='mdl-navigation__link ' href="/">Home</a>
+	    <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge/BeagleScope">BeagleScope</a>
+            <a class='mdl-navigation__link ' href="/post">Posts</a>
+
+            <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">About</a>
+	    <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">Github</a>
+        </nav></div>
+
+    
+    <main class="mdl-layout__content">
+
+
+<div class="hugo-blog__posts mdl-grid">
+    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+        
+        <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/cardheaderimages/rproc_dmesg.png'); background-color:#263238;">
+            <h3 style="color:#ffffff;">
+<div style="padding: 5px; background-color: black;">
+	 PTP - Programming The PRUs 2: Docs, Commands And Tools</div></h3>
+        </div>
+          
+        <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+            <div class="minilogo" style="background-image: url('https://avatars1.githubusercontent.com/u/8711218?v=3&amp;s=460');"></div>
+            <div>
+                <strong>ZeekHuge</strong>
+                <span>Jul 17, 2016</span>
+            </div>
+            
+            <div class="section-spacer"></div>
+            
+        </div>
+            
+        <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
+            
+
+<p><img src="/jokes/tools.png" alt="Tools" /></p>
+
+<p>picture credits : <a href="https://xkcd.com">xkcd.com</a></p>
+
+<hr />
+
+<hr />
+
+<h3 id="u-preface-u:de018d5265887708b1682007c1f4431a"><u>Preface:</u></h3>
+
+<p>If the content here seems to be out of context, you&rsquo;ll probably want to start from <a href="/post/ptp_blinky">here</a>.</p>
+
+<p>So you have decided to play with PRUs and after this <a href="/post/ptp_blinky">blinky</a> post, you have some understanding about how to work with PRUs. Cool ! Thats a courageous decision, as PRUs are quite challenging. To make life easier, we need some tools to work along. This post will help you make some of your own tools, using mostly bash scripts/aliases, and explain how to use other known tools with PRUs. Please note that some of the tools/use-cases will not make sense as of now, but I will still include them in the post for future reference. Some of these tools might seem very trivial, but I would still like to mention them (it may give hope to someone :) )</p>
+
+<hr />
+
+<h3 id="u-contents-u:de018d5265887708b1682007c1f4431a"><u>Contents</u></h3>
+
+<ul>
+<li><a href="#docs:de018d5265887708b1682007c1f4431a">Documents</a>
+
+<ul>
+<li>AM335x PRU-ICSS Reference Guide</li>
+</ul></li>
+<li><a href="#cmd:de018d5265887708b1682007c1f4431a">Commands</a>
+
+<ul>
+<li><a href="#pmd:de018d5265887708b1682007c1f4431a">Power management : PRUs : Details</a></li>
+<li><a href="#pmc:de018d5265887708b1682007c1f4431a">Power management : PRUs : Commands</a>
+
+<ul>
+<li>To shut PRU core 1</li>
+<li>To shut PRU core 0</li>
+<li>To boot PRU core 1</li>
+<li>To boot PRU core 0</li>
+<li>To reboot both PRU cores</li>
+</ul></li>
+<li><a href="#pdd:de018d5265887708b1682007c1f4431a">PRU debug : Details</a></li>
+<li><a href="#pdc:de018d5265887708b1682007c1f4431a">PRU debug : Commands</a>
+
+<ul>
+<li>ppause1 and ppause0 - to pause the PRUs</li>
+<li>presume1 and presume0 - to resume the PRUs</li>
+<li>pnext1 and pnext0 - to execute the next step</li>
+<li>pregs1 and pregs0 - to read the debug register content of the PRUs</li>
+</ul></li>
+</ul></li>
+<li><a href="#tools:de018d5265887708b1682007c1f4431a">Tools</a>
+
+<ul>
+<li><a href="#dmesg:de018d5265887708b1682007c1f4431a">dmesg : kernel logs and the PRU</a></li>
+</ul></li>
+<li><a href="#fin:de018d5265887708b1682007c1f4431a">fin</a></li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h3 id="docs:de018d5265887708b1682007c1f4431a"><u>Documents</u></h3>
+
+<ul>
+<li>You definitely know that the AM335x processor is manufactured by TI, and only they know what actually is inside the semiconductor. To tell this to the world, every semiconductor device, open to the world, comes with some kind of document explaining its internal working. For PRUs, I found the document at <a href="https://github.com/beagleboard/am335x_pru_package/">https://github.com/beagleboard/am335x_pru_package/</a>. The pdf named am335xPruReferenceGuide.pdf is the one I am talking about. Its an ultimately important and nice document to keep with you. I use it all the time, when I am working with PRUs. If you want to download this click <a href="https://github.com/beagleboard/am335x_pru_package/raw/master/am335xPruReferenceGuide.pdf">here</a>.</li>
+</ul>
+
+<hr />
+
+<h3 id="cmd:de018d5265887708b1682007c1f4431a"><u>Commands</u></h3>
+
+<ul>
+<li>In this section, we will add some commands to use them as our tools. <strong>Please note that these commands may not be very clean, but they definitely server the purpose. When you will execute them, they might produce some output, but dont worry much about it, we can use &lsquo;dmesg&rsquo; to do the real debugging and monitor what is happening as I have explained below in the post</strong>. There will be an explanation about the working of the commands also.</li>
+</ul>
+
+<hr />
+
+<h5 id="pmd:de018d5265887708b1682007c1f4431a"><u>Power management : PRUs : Details</u></h5>
+
+<ul>
+<li><p>This <a href="/post/ptp_blinky/">blinky post</a> demonstrated how the deploy.sh script reboots the PRU. Now if you are deciding to play with PRUs frequently, there needs to be a tool to shut them down and boot them up, when needed, without doing the force rmmod of the pru_rproc. Now the remoteproc driver for PRUs, pru_proc handles the PRU core. It further exposes sysfs entries to boot and shutdown PRUs. So for PRU0 you can shut it down like this :
+<pre class="prettyprint">
+$ echo &ldquo;4a334000.pru0&rdquo; &gt; /sys/bus/platform/drivers/pru-rproc/unbind
+</pre>
+and boot it up :
+<pre class="prettyprint">
+$ echo &ldquo;4a334000.pru0&rdquo; &gt; /sys/bus/platform/drivers/pru-rproc/bind
+</pre></p></li>
+
+<li><p>At this point, you would want to make this <strong>note that the device name of PRU core 0 is actually <u>4a334000.pru0</u> and that of the PRU core 1 is <u>4a338000.pru1</u>.</strong></p></li>
+
+<li><p>So writing the device name of any of the pru cores to the &lsquo;bind&rsquo; sysfs entry will make the remoteproc driver to boot that pru core. Similarly, writing a pru device name to &lsquo;unbind&rsquo; sysfs entry will make that pru core to shutdown.</p></li>
+</ul>
+
+<h5 id="pmc:de018d5265887708b1682007c1f4431a"><u>Power management : PRUs : Commands</u></h5>
+
+<ul>
+<li><p>While working, I really don&rsquo;t like to type this long instruction to shutdown or boot the PRU. What I do is, I have added some aliases to my ~/.bashrc script, and believe me, they really make things easy. Just open the ~/.bash.rc in your favorite editor and append it with following aliases.</p>
+
+<ul>
+<li><p><strong>pshut1 : To shut PRU core 1</strong>
+<pre class="prettyprint">
+alias pshut1=&lsquo;echo &ldquo;4a338000.pru1&rdquo;&gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;&amp; echo &ldquo;Core 1 is off&rdquo;&rsquo;
+</pre></p></li>
+
+<li><p><strong>pshut0 : To shut PRU core 0</strong>
+<pre class="prettyprint">
+alias pshut0=&lsquo;echo &ldquo;4a334000.pru0&rdquo; &gt; /sys/bus/platform/drivers/pru-rproc/unbind &amp;&amp; echo &ldquo;Core 0 is off&rdquo;&rsquo;
+</pre></p></li>
+
+<li><p><strong>pboot1 : To boot PRU core 1</strong>
+<pre class="prettyprint">
+alias pboot1=&lsquo;echo &ldquo;4a338000.pru1&rdquo;  &gt; /sys/bus/platform/drivers/pru-rproc/bind &amp;&amp; echo &ldquo;Core 1 is on&rdquo;&rsquo;
+</pre></p></li>
+
+<li><p><strong>pboot0 : To boot PRU core 0</strong>
+<pre class="prettyprint">
+alias pboot0=&lsquo;echo &ldquo;4a334000.pru0&rdquo; &gt; /sys/bus/platform/drivers/pru-rproc/bind &amp;&amp; echo &ldquo;Core 0 is on&rdquo;&rsquo;
+</pre></p></li>
+
+<li><p><strong>preboot : To reboot both PRU cores</strong>
+<pre class="prettyprint">
+alias preboot=&lsquo;pshut1 &amp;&amp; pboot1 &amp;&amp; pshut0 &amp;&amp; pboot0&rsquo;
+</pre></p></li>
+</ul></li>
+</ul>
+
+<h5 id="pdd:de018d5265887708b1682007c1f4431a"><u>PRU debug : Details</u></h5>
+
+<ul>
+<li><p>Now here comes the interesting section. The PRUs are usually seen as these &lsquo;black boxes&rsquo; as no one knows what is happening inside it. With the latest remoteproc, this is not true. We can actually see the content of the PRU registers or we can pru execute one instruction at a time, and then wait for the user for a instruction to execute next instruction. The pru_rproc driver exposes these debugfs entries :
+<pre class="prettyprint">
+$ root@beaglebone:/sys/kernel/debug/remoteproc# tree remoteproc0
+remoteproc0
+|&ndash; name
+|&ndash; recovery
+|&ndash; state
+|&ndash; trace0
+<code>-- version
+</code>
+0 directories, 5 files
+root@beaglebone:/sys/kernel/debug/remoteproc# tree remoteproc1
+remoteproc1
+|&ndash; name
+|&ndash; recovery
+|&ndash; regs
+|&ndash; single_step
+|&ndash; state
+<code>-- version
+</code>
+0 directories, 6 files
+</pre></p></li>
+
+<li><p><strong>NOTE that all these entries will appear only when the associated PRU is properly booted.</strong> So remoteproc1 is associated with PRU1 and remoteproc0 is associated with PRU0.</p></li>
+
+<li><p>PRUs have this nice feature called the SINGLE_STEP mode. When activated in this mode, the PRU core executes one instruction, waits for a kind of flag from the user, executes the next instruction and this continues. To get PRU0 in the SINGLE_STEP mode, just :
+<pre class="prettyprint">
+$ echo 1 &gt; /sys/kernel/debug/remoteproc/remoteproc0/single_step
+</pre>
+and for PRU1 it will be
+<pre class="prettyprint">
+$ echo 1 &gt; /sys/kernel/debug/remoteproc/remoteproc1/single_step
+</pre>
+So basically, writing 0 to the single_step entry, changes the PRU mode to continuous mode and writing a non-zero value starts the single_step mode. Internally, writing to single_step entry writes to the SINGLE_STEP field of the CONTROL register in the PRU_CTRL register set.</p></li>
+
+<li><p>Like any other computing system, PRUs has got a set of register and data-structures, for various purposes. Some of these are:</p>
+
+<ul>
+<li><strong>General Purpose registers.</strong> So each PRU core has got this set of 32 general purpose register. While programming PRUs in C/C++, the compiler makes use of these registers for various purposes and one cant actually access a single register in C/C++, exception being the R31 and R30 register. But when programming them in Assembly, having something to peek into the contents of these register can be very useful tool. When the PRU is disabled, that is, it is not in continuous mode of fetching next instruction, the Kernel can actually read the content of these general purpose register.</li>
+<li><strong>PRU_CONTROL register.</strong> PRUs has this set of registers called PRU_CTRL (read it PRU control) registers. It consists of CONTROL, STATUS, WAKEUP_EN, CYCLE, STALL, CTBIR0, CTBIR1, CTPPR0 and CTPPR1 register. The control various subsystems and accesses. The kernel can, at anytime read the content of these registers. By &lsquo;anytime&rsquo; I mean that the PRU does not need to be disabled to read this register set.</li>
+<li><strong>PRU constant table.</strong> This data structure contains the address of various subsystem that are most commonly used by the PRUs. Some of its entries can also be configured using the PRU_CTR registers. Programming in C/C++ removes the need of any access to this structure, it internally manages everything (except in a few cases). But if needed, the kernel can read the content of the constant table too, provided, the pru is disabled.</li>
+</ul></li>
+
+<li><p>To disable the PRUs, what one can do from userspace is, just write a non-zero value to the single_step debugfs entry, the PRU will execute one instruction and then will disable itself until you again write a value to the entry. In fact this is how the single_step mode works.</p></li>
+
+<li><p>After disabling the PRU, you can use the &lsquo;regs&rsquo; entry to read the register content values.
+<pre class="prettyprint">
+$ cat /sys/kernel/debug/remoteproc/remoteproc1/regs
+============== Control Registers ==============
+CTRL      := 0x00000101
+STS (PC)  := 0x00000028 (0x000000a0)
+WAKEUP_EN := 0x00000000
+CYCLE     := 0x00000000
+STALL     := 0x00000000
+CTBIR0    := 0x00000000
+CTBIR1    := 0x00000000
+CTPPR0    := 0x00000000
+CTPPR1    := 0x00000000
+=============== Debug Registers ===============
+GPREG0  := 0x7fff8000   CT_REG0  := 0x00020000
+GPREG1  := 0x9e103100   CT_REG1  := 0x48040000
+GPREG2  := 0x000002ac   CT_REG2  := 0x4802a000
+GPREG3  := 0x0035003b   CT_REG3  := 0x00030000
+GPREG4  := 0x00020024   CT_REG4  := 0x00026000
+GPREG5  := 0x00000300   CT_REG5  := 0x48060000
+GPREG6  := 0xdfd3df83   CT_REG6  := 0x48030000
+GPREG7  := 0xf9c1a30b   CT_REG7  := 0x00028000
+GPREG8  := 0x215e3af4   CT_REG8  := 0x46000000
+GPREG9  := 0x2868c478   CT_REG9  := 0x4a100000
+GPREG10 := 0x26e01c54   CT_REG10 := 0x48318000
+GPREG11 := 0xaf704e74   CT_REG11 := 0x48022000
+GPREG12 := 0x51588e6f   CT_REG12 := 0x48024000
+GPREG13 := 0x667bc7c2   CT_REG13 := 0x48310000
+GPREG14 := 0x0000ffff   CT_REG14 := 0x481cc000
+GPREG15 := 0x00000290   CT_REG15 := 0x481d0000
+GPREG16 := 0x0000028c   CT_REG16 := 0x481a0000
+GPREG17 := 0x00000000   CT_REG17 := 0x4819c000
+GPREG18 := 0x000002ac   CT_REG18 := 0x48300000
+GPREG19 := 0x000a6465   CT_REG19 := 0x48302000
+GPREG20 := 0x02100000   CT_REG20 := 0x48304000
+GPREG21 := 0x01120011   CT_REG21 := 0x00032400
+GPREG22 := 0x0000001e   CT_REG22 := 0x480c8000
+GPREG23 := 0x00000000   CT_REG23 := 0x480ca000
+GPREG24 := 0x75727265   CT_REG24 := 0x00000000
+GPREG25 := 0x64657470   CT_REG25 := 0x00002000
+GPREG26 := 0x6e616843   CT_REG26 := 0x0002e000
+GPREG27 := 0x206c656e   CT_REG27 := 0x00032000
+GPREG28 := 0x49003033   CT_REG28 := 0x00000000
+GPREG29 := 0x7265746e   CT_REG29 := 0x49000000
+GPREG30 := 0xe5e2782f   CT_REG30 := 0x40000000
+GPREG31 := 0x80000000   CT_REG31 := 0x80000000
+</pre>
+In the above output</p>
+
+<ul>
+<li>GPREGn refers to the nth general prupose register</li>
+<li>CT_REGn refers to the nth content of the constant table.</li>
+<li>And the &lsquo;Control Registers&rsquo; section displays the content of the PRU_CTRL registers.</li>
+</ul></li>
+</ul>
+
+<h5 id="pdc:de018d5265887708b1682007c1f4431a"><u>PRU debug : Commands</u></h5>
+
+<ul>
+<li><p>So here comes the set of aliases that I use to control PRUs for debugging. Just append them to your ~/.bashrc file and the will be in effect you login next time.</p>
+
+<ul>
+<li><p><strong>ppause1 and ppause0 - to pause the PRUs.</strong> This basically changes the mode of the PRUs to single_step mode. PRUs execute one instruction and then gets paused
+<pre class="prettyprint">
+alias ppause1=&lsquo;echo 1 &gt; /sys/kernel/debug/remoteproc/remoteproc1/single_step&rsquo;
+alias ppause0=&lsquo;echo 1 &gt; /sys/kernel/debug/remoteproc/remoteproc0/single_step&rsquo;
+</pre></p></li>
+
+<li><p><strong>presume1 and presume0 - to resume the PRUs.</strong> Internally this brings back the PRU to continuous mode of operation.
+<pre class="prettyprint">
+alias presume1=&lsquo;echo 0 &gt; /sys/kernel/debug/remoteproc/remoteproc1/single_step&rsquo;
+alias presume0=&lsquo;echo 0 &gt; /sys/kernel/debug/remoteproc/remoteproc0/single_step&rsquo;
+</pre></p></li>
+
+<li><p><strong>pnext1 and pnext0 - to execute the next step.</strong> This starts the single_step mode of the PRUs and execute one next step each time invoked.
+<pre class="prettyprint">
+alias pnext1=&lsquo;echo 1 &gt; /sys/kernel/debug/remoteproc/remoteproc1/single_step&rsquo;
+alias pnext0=&lsquo;echo 1 &gt; /sys/kernel/debug/remoteproc/remoteproc0/single_step&rsquo;
+</pre></p></li>
+
+<li><p><strong>pregs1 and pregs0 - to read the debug register content of the PRUs.</strong> If you want to read all the register content, the PRU need to paused before the call to this alias. If it is not paused, only the PRU_CONTROL register content will be printed out.
+<pre class="prettyprint">
+alias pregs1=&lsquo;cat /sys/kernel/debug/remoteproc/remoteproc1/regs&rsquo;
+alias pregs0=&lsquo;cat /sys/kernel/debug/remoteproc/remoteproc0/regs&rsquo;
+</pre></p></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<hr />
+
+<h3 id="tools:de018d5265887708b1682007c1f4431a"><u>Tools</u></h3>
+
+<ul>
+<li>Well, after all these commands/aliases we just added in the above section, I have one tool left for you that is &lsquo;dmesg&rsquo;.</li>
+</ul>
+
+<h5 id="dmesg:de018d5265887708b1682007c1f4431a"><u>dmesg : kernel logs and the PRU</u></h5>
+
+<ul>
+<li><p>Yeah, I know that you already know this, but believe me, this &lsquo;dmesg&rsquo; point this blog can prove to save many hours(and probably lives). OK so you think I am just wasting up space mentioning this point here ? really ? well, then just let me use some more of it :P</p></li>
+
+<li><p>Whenever I start working with the PRUs, what I usually do is, open up a new terminal, ssh into the BBB, change the title of the terminal to &lsquo;BBB dmesg&rsquo; to make it easy to switch between 10-12 terminals, and then execute this command :
+<pre class="prettyprint">
+$ dmesg -Hw
+</pre>
+What it does is that it waits for new kernel log messages and prints them as they arrive. It also makes the output a bit colorful.</p></li>
+
+<li><p>On booting or shutting down the PRUs, the remoteproc drivers print some kernel logs. These kernel log messages can be used to check if the firmware gets loaded on the PRU.</p>
+
+<ul>
+<li><p>Kernel log messages when the PRUs are booted up :
+<pre class="prettyprint linenums">
+[  +5.822834]  remoteproc1: 4a334000.pru0 is available
+[  +0.005249]  remoteproc1: Note: remoteproc is still under development and considered experimental.
+[  +0.009165]  remoteproc1: THE BINARY FORMAT IS NOT YET FINALIZED, and backward compatibility isn&rsquo;t yet guaranteed.
+[  +0.019388] pru-rproc 4a334000.pru0: booting the PRU core manually
+[  +0.006738]  remoteproc1: powering up 4a334000.pru0
+[  +0.011898]  remoteproc1: Booting fw image am335x-pru0-fw, size 32292
+[  +0.006832]  remoteproc1: remote processor 4a334000.pru0 is now up
+[  +0.006434] pru-rproc 4a334000.pru0: PRU rproc node /ocp/pruss@4a300000/pru0@4a334000 probed successfully
+[  +0.022337]  remoteproc2: 4a338000.pru1 is available
+[  +0.005196]  remoteproc2: Note: remoteproc is still under development and considered experimental.
+[  +0.009167]  remoteproc2: THE BINARY FORMAT IS NOT YET FINALIZED, and backward compatibility isn&rsquo;t yet guaranteed.
+[  +0.017694] pru-rproc 4a338000.pru1: booting the PRU core manually
+[  +0.006884]  remoteproc2: powering up 4a338000.pru1
+[  +0.011585]  remoteproc2: Booting fw image am335x-pru1-fw, size 32292
+[  +0.006809]  remoteproc2: remote processor 4a338000.pru1 is now up
+[  +0.006440] pru-rproc 4a338000.pru1: PRU rproc node /ocp/pruss@4a300000/pru1@4a338000 probed successfully
+</pre>
+This message can be a bit different for complex and different firmwares, but the important point to note here is the loading of the firmware onto the PRUs. The line in the dmesg that shows this is:
+<pre class="prettyprint ">
+[  +0.006832]  remoteproc1: remote processor 4a334000.pru0 is now up
+[  +0.006434] pru-rproc 4a334000.pru0: PRU rproc node /ocp/pruss@4a300000/pru0@4a334000 probed successfully
+</pre>
+and
+<pre class="prettyprint ">
+[  +0.006884]  remoteproc2: powering up 4a338000.pru1
+[  +0.011585]  remoteproc2: Booting fw image am335x-pru1-fw, size 32292
+</pre></p></li>
+
+<li><p>Kernel log message when the PRUs get shutdown :
+<pre class="prettyprint linenums">
+[Jul17 15:40] pru-rproc 4a334000.pru0: pru_rproc_remove: removing rproc 4a334000.pru0
+[  +0.007909] pru-rproc 4a334000.pru0: stopping the manually booted PRU core
+[  +0.017800] ti-pruss 4a300000.pruss: unconfigured system_events = 0xffffffffffffffff host_intr = 0x00000001
+[  +0.010081]  remoteproc1: stopped remote processor 4a334000.pru0
+[  +0.012963]  remoteproc1: releasing 4a334000.pru0
+[  +0.010409] pru-rproc 4a338000.pru1: pru_rproc_remove: removing rproc 4a338000.pru1
+[  +0.007950] pru-rproc 4a338000.pru1: stopping the manually booted PRU core
+[  +0.015339] ti-pruss 4a300000.pruss: unconfigured system_events = 0xffffffffffffffff host_intr = 0x00000001
+[  +0.010043]  remoteproc2: stopped remote processor 4a338000.pru1
+[  +0.012716]  remoteproc2: releasing 4a338000.pru1
+</pre></p></li>
+
+<li><p>Kernel log messages when the firmware could not be loaded onto the PRUs :
+<pre class="prettyprint linenums">
+[Jul17 15:45]  remoteproc1: 4a334000.pru0 is available
+[  +0.005235]  remoteproc1: Note: remoteproc is still under development and considered experimental.
+[  +0.009203]  remoteproc1: THE BINARY FORMAT IS NOT YET FINALIZED, and backward compatibility isn&rsquo;t yet guaranteed.
+[  +0.019418]  remoteproc1: Direct firmware load for am335x-pru0-fw failed with error -2
+[  +0.008195]  remoteproc1: failed to load am335x-pru0-fw
+[  +0.010259] pru-rproc 4a334000.pru0: booting the PRU core manually
+[  +0.006529]  remoteproc1: powering up 4a334000.pru0
+[  +0.013469]  remoteproc1: Direct firmware load for am335x-pru0-fw failed with error -2
+[  +0.008150]  remoteproc1: request_firmware failed: -2
+[  +0.005235] pru-rproc 4a334000.pru0: rproc_boot failed
+[  +0.012949]  remoteproc1: releasing 4a334000.pru0
+[  +0.005070] pru-rproc: probe of 4a334000.pru0 failed with error -2
+[  +0.012818]  remoteproc1: 4a338000.pru1 is available
+[  +0.005158]  remoteproc1: Note: remoteproc is still under development and considered experimental.
+[  +0.009091]  remoteproc1: THE BINARY FORMAT IS NOT YET FINALIZED, and backward compatibility isn&rsquo;t yet guaranteed.
+[  +0.014271]  remoteproc1: Direct firmware load for am335x-pru1-fw failed with error -2
+[  +0.008084]  remoteproc1: failed to load am335x-pru1-fw
+[  +0.007755] pru-rproc 4a338000.pru1: booting the PRU core manually
+[  +0.009969]  remoteproc1: powering up 4a338000.pru1
+[  +0.005178]  remoteproc1: Direct firmware load for am335x-pru1-fw failed with error -2
+[  +0.008057]  remoteproc1: request_firmware failed: -2
+[  +0.005121] pru-rproc 4a338000.pru1: rproc_boot failed
+[  +0.009849]  remoteproc1: releasing 4a338000.pru1
+[  +0.005094] pru-rproc: probe of 4a338000.pru1 failed with error -2
+</pre>
+This is mostly when there is no file like am335x-pru1-fw or am335x-pru0-fw available inside the /lib/firmware/ directory.</p></li>
+</ul></li>
+</ul>
+
+<h3 id="fin:de018d5265887708b1682007c1f4431a"><u>fin</u></h3>
+
+<ul>
+<li>So, with these tools, I hope that that your learning speed gets faster and the process gets much easier. I would close this post with these lines of Abraham Lincoln</li>
+</ul>
+
+<p><strong><em>&ldquo;Give me Six hours to chop down a tree and I will spend
+first four sharpening the axe&rdquo;</em></strong></p>
+
+        </div>
+        
+        <div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments"> 
+            <a href=https://zeekhuge.github.io/>ZeekHuge</a>
+            <p></p>
+        </div>  
+    </div>
+
+    <nav class="hugo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <a href="/post/ptp_blinky/" class="hugo-nav__button">
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+           <i class="icon ion-android-arrow-back"></i>
+        </button>
+        Older
+    </a>
+    <div class="section-spacer"></div>
+    
+</nav> 
+
+
+</div>
+
+            <footer class="mdl-mini-footer">
+                <div class="mdl-mini-footer--left-section">
+                    
+<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="mailto:zeekhuge@gmail.com?subject=Hi">
+    <i class="material-icons_lg icon ion-email"></i>
+    <span class="visuallyhidden">Email</span>
+</a>
+
+
+<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="https://github.com/ZeekHuge/">
+    <i class="material-icons_lg icon ion-social-github"></i>
+    <span class="visuallyhidden">Github</span>
+</a>
+
+
+
+
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="https://www.facebook.com/zubeen.tolani">
+        <i class="material-icons_lg icon ion-social-facebook "></i>                        
+        <span class="visuallyhidden">Facebook</span>
+    </a>
+
+                </div>
+                <div class="mdl-mini-footer--right-section">
+                    <span>© 2016 ZeekHuge</span>
+                </div>
+            </footer>
+        </main>
+        <div class="mdl-layout__obfuscator"></div>
+    </div>
+    <script src="/js/material.min.js"></script>
+     <script src="/js/prism.js"></script>
+    
+</body>
+</html>
+

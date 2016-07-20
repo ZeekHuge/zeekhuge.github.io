@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="/css/ionicons.min.css"/>
         <link rel="stylesheet" href="/css/material.grey-orange.min.css"/>
         <link rel="stylesheet" href="/css/styles.css"/>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
         
 </head>
 
@@ -44,6 +45,10 @@
             <div class="mdl-layout-spacer"></div>
             
             <nav class="mdl-navigation">
+
+		<iframe src="http://ghbtns.com/github-btn.html?user=zeekhuge&size=large&type=follow"
+			allowtransparency="true" frameborder="0"  scrolling="0" width="150" height="30"></iframe>
+
            	<a class='mdl-navigation__link active' href="/">Home</a>
 		<a class='mdl-navigation__link ' href="https://github.com/ZeekHuge/BeagleScope">BeagleScope</a>
                 <a class='mdl-navigation__link ' href="/post">Posts</a>
@@ -62,11 +67,11 @@
 
             <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">About</a>
 	    <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">Github</a>
-        </nav>
-    </div>
+        </nav></div>
 
     
     <main class="mdl-layout__content">
+
 
 <div class="hugo-blog__posts mdl-grid">
     
@@ -94,7 +99,7 @@
             </button>
         </a>
         
-        <a href="mailto:me.zubeen3@gmail.com?subject=Hi">
+        <a href="mailto:zeekhuge@gmail.com?subject=Hi">
             <button id="email" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-color--primary" title="Email Me">
                 <i class="icon ion-email mdl-color-text--white" role="presentation"></i>
             </button>
@@ -123,8 +128,73 @@
 <div class="mdl-card mdl-cell mdl-cell--8-col">
 
     
+    <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/cardheaderimages/rproc_dmesg.png'); background-color:#263238;">
+        <h3><a href="/post/ptp_docs_commands_and_tools/" style="color:#ffffff;">
+	<div style="padding: 5px; background-color: black;">
+	 PTP - Programming The PRUs 2: Docs, Commands And Tools</div></h3></a>
+    </div>
+
+    
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+        picture credits : xkcd.com Preface: If the content here seems to be out of context, you&rsquo;ll probably want to start from here. So you have decided to play with PRUs and after this blinky post, you have some understanding about how to work with PRUs. Cool ! Thats a courageous decision, as PRUs are quite challenging. To make life easier, we need some tools to work along. This post will help you make some of your own tools, using mostly bash scripts/aliases, and explain how to use other known tools with PRUs.
+    </div>
+
+    
+    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
+        
+        <div class="minilogo" style="background-image: url('https://avatars1.githubusercontent.com/u/8711218?v=3&amp;s=460');"></div>
+        <div>
+            <strong><a href="https://zeekhuge.github.io/">ZeekHuge</a></strong>
+            <span>Jul 17, 2016</span>
+        </div>
+    </div>
+
+</div>
+
+     
+ 
+    
+        
+<div class="mdl-card mdl-cell mdl-cell--12-col">
+
+    
+    <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/cardheaderimages/rproc_dmesg.png'); ">
+    
+        <h3><a href="/post/ptp_blinky/" style="color:#ffffff;">
+	<div style="padding: 5px; background-color: black;">
+	 PTP - Programming The PRUs 1: Blinky</div></h3></a>
+	
+    </div>
+
+    
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+        This is the first post in a series of posts that will try to put the PRU programming process in the simplest and the most logical form, connecting all the dots (rpmsg, remoteproc etc). The posts of this series will have PTP (Programming The Pru) at the beginning of its title. As its just the beginning, this post aims to get you a blinky application using PRUs on your BeagleBone Black.
+    </div>
+
+    
+    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
+        
+        <div class="minilogo" style="background-image: url('https://avatars1.githubusercontent.com/u/8711218?v=3&amp;s=460');"></div>
+        <div>
+            <strong><a href="https://www.zeekhuge.me">ZeekHuge</a></strong>
+            <span>Jul 16, 2016</span>
+        </div>
+    </div>
+</div>
+
+     
+ 
+    
+        
+<div class="mdl-card mdl-cell mdl-cell--12-col">
+
+    
     <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/images/pic8_jst_everything.jpg'); background-color:#263238;">
-        <h3><a href="/post/some_shots/" >SomeShots</a></h3>
+    
+        <h3><a href="/post/some_shots/" style="color:#ffffff;">
+	<div style="padding: 5px; background-color: black;">
+	 Some Shots</div></h3></a>
+	
     </div>
 
     
@@ -135,14 +205,14 @@
     
     <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
         
-        <div class="minilogo" style="background-image: url('/images/avatar-64x64.png');"></div>
+        <div class="minilogo" style="background-image: url('https://avatars1.githubusercontent.com/u/8711218?v=3&amp;s=460');"></div>
         <div>
             <strong><a href="https://zeekhuge.github.io/">ZeekHuge</a></strong>
             <span>Jul 10, 2016</span>
         </div>
     </div>
-
 </div>
+
      
  
     
@@ -151,7 +221,11 @@
 
     
     <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/images/commands.png'); background-color:#263238;">
-        <h3><a href="/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/" >A Handful Of Commands And Scripts To Get Started With BeagleBone Black</a></h3>
+    
+        <h3><a href="/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/" >
+	<div style="padding: 5px; background-color: black;">
+	 A Handful Of Commands And Scripts To Get Started With BeagleBone Black</div></h3></a>
+	
     </div>
 
     
@@ -162,14 +236,14 @@
     
     <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
         
-        <div class="minilogo" style="background-image: url('/images/avatar-64x64.png');"></div>
+        <div class="minilogo" style="background-image: url('https://avatars1.githubusercontent.com/u/8711218?v=3&amp;s=460');"></div>
         <div>
-            <strong><a href="https://zeekhuge.github.io/">ZeekHuge</a></strong>
+            <strong><a href="https://www.zeekhuge.me/">ZeekHuge</a></strong>
             <span>Jun 16, 2016</span>
         </div>
     </div>
-
 </div>
+
      
  
     
@@ -178,7 +252,11 @@
 
     
     <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/images/pru_rpmsg.jpg'); background-color:#263238;">
-        <h3><a href="/post/working_with_prus_beagleboneblack_rpmsg/" >Working With PRUs @BeagleBoneBlack : RPMsg Framework</a></h3>
+    
+        <h3><a href="/post/working_with_prus_beagleboneblack_rpmsg/" >
+	<div style="padding: 5px; background-color: black;">
+	 Working With PRUs @BeagleBoneBlack : RPMsg Framework</div></h3></a>
+	
     </div>
 
     
@@ -189,14 +267,14 @@
     
     <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
         
-        <div class="minilogo" style="background-image: url('/images/avatar-64x64.png');"></div>
+        <div class="minilogo" style="background-image: url('https://avatars1.githubusercontent.com/u/8711218?v=3&amp;s=460');"></div>
         <div>
             <strong><a href="https://zeekhuge.github.io/">ZeekHuge</a></strong>
             <span>Jun 16, 2016</span>
         </div>
     </div>
-
 </div>
+
      
  
     
@@ -205,7 +283,11 @@
 
     
     <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/images/remoteproc_dmesg.png'); background-color:#263238;">
-        <h3><a href="/post/working_with_prus_beagleboneblack_remoteproc/" >Working With PRUs @BeagleBoneBlack : Remoteproc</a></h3>
+    
+        <h3><a href="/post/working_with_prus_beagleboneblack_remoteproc/" >
+	<div style="padding: 5px; background-color: black;">
+	 Working With PRUs @BeagleBoneBlack : Remoteproc</div></h3></a>
+	
     </div>
 
     
@@ -216,41 +298,14 @@
     
     <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
         
-        <div class="minilogo" style="background-image: url('/images/avatar-64x64.png');"></div>
+        <div class="minilogo" style="background-image: url('https://avatars1.githubusercontent.com/u/8711218?v=3&amp;s=460');"></div>
         <div>
             <strong><a href="https://zeekhuge.github.io/">ZeekHuge</a></strong>
             <span>Jun 16, 2016</span>
         </div>
     </div>
-
 </div>
-     
- 
-    
-        
-<div class="mdl-card mdl-cell mdl-cell--12-col">
 
-    
-    <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/images/beagleboneblack.jpg'); background-color:#263238;">
-        <h3><a href="/post/working_with_prus_beagleboneblack_introduction_to_prus/" >Working With PRUs @BeagleBoneBlack : Introduction To PRUs</a></h3>
-    </div>
-
-    
-    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-        This is the first in a series of posts to explain and provide with some basic examples to work on PRU cores in AM335x. The AM335x SoC can be found on famous embedded board BeagleBone Black. The post are: Introduction to PRUs (this) To make you comfortable with the concept of realtime systems with PRUs, and basic introduction to various peripherals in the PRU-ICSS subsystem. Remoteproc To explain the working of remoteproc Linux driver to manipulate remote processing unit ie PRU for AM335x SoC.
-    </div>
-
-    
-    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-        
-        <div class="minilogo" style="background-image: url('/images/avatar-64x64.png');"></div>
-        <div>
-            <strong><a href="https://zeekhuge.github.io/">ZeekHuge</a></strong>
-            <span>Jun 16, 2016</span>
-        </div>
-    </div>
-
-</div>
      
 
     
@@ -271,7 +326,7 @@
             <footer class="mdl-mini-footer">
                 <div class="mdl-mini-footer--left-section">
                     
-<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="mailto:me.zubeen3@gmail.com?subject=Hi">
+<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="mailto:zeekhuge@gmail.com?subject=Hi">
     <i class="material-icons_lg icon ion-email"></i>
     <span class="visuallyhidden">Email</span>
 </a>

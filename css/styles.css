@@ -82,10 +82,11 @@ body .hugo-blog {
 }
 .hugo-blog .mdl-card__supporting-text {
   width: 100%;
-  padding: 16px;
+  margin-left: 00px;
+  padding: 50px;
   min-height: 64px;
   display: flex;
-  align-items: center;
+  align-items: left;
 }
 .hugo-blog .mdl-card__supporting-text strong {
   font-weight: bold;
