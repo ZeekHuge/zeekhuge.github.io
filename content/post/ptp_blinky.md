@@ -325,6 +325,3 @@ MEMORY
 
 ### <u>Whats next ?</u>{#nxt}
 OK, so now you have a blinky ready and have got quite understanding of the PRUSS part. The next post will be related to [Tools and Commands](/post/ptp_docs_commands_and_tools) that use while eperimenting with PRUs. They really make working with them easier. 
-
-
-{{ template "_internal/disqus.html" . }}
