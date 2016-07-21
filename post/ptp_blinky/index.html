@@ -240,7 +240,7 @@ the first few lines of your &lsquo;/boot/uEnv.txt&rsquo; would then look somethi
 <h5 id="pins:a6dc26714d32df1ac6a7aa69d40ae020"><u>Available pins</u></h5>
 
 <ul>
-<li>So aftr disabling the HDMI cape, we have a few pins to use for PRU examples on P8 header. At this point you might want to note the pins that we can use the doc at <a href="https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/docs/BeagleboneBlackP8HeaderTable.pdf">BeagleScope/docs/BeagleboneBlackP8HeaderTable.pdf</a>:
+<li>So after disabling the HDMI cape, we have a few pins to use for PRU examples on P8 header. At this point you might want to note the pins that we can use the. You can use this doc at <a href="https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/docs/BeagleboneBlackP8HeaderTable.pdf">BeagleScope/docs/BeagleboneBlackP8HeaderTable.pdf</a>:
 
 <figure >
     
@@ -261,7 +261,7 @@ the first few lines of your &lsquo;/boot/uEnv.txt&rsquo; would then look somethi
 <h5 id="leds:a6dc26714d32df1ac6a7aa69d40ae020"><u>LEDs on P8_45</u></h5>
 
 <ul>
-<li><strong><em>Read this carefully</em></strong>*. The blinky we are aiming to get will be using an external LED. ***NOW, THIS EXTERNAL LED SHOULD NOT DRAIN A CURRENT MORE THAN ~8mA, AND FOR THIS, AT 3.3V, <strong><em>THE RESISTOR TO BE USED SHOULD BE GREATER THAN OR EQUAL TO 470 ohms</em></strong>. If you would want to the get more current out of it, checkout <a href="http://www.thebrokendesk.com/post/blinking-an-led-with-the-beaglebone-black/">this link</a>. Connect this LED you have now, through a &gt;=470 ohm resistor, to the p8_45 pin on the beaglebone black board.</li>
+<li><strong><em>Read this carefully</em></strong>*. The blinky we are aiming to get will be using an external LED. ***NOW, THIS EXTERNAL LED SHOULD NOT USE CURRENT MORE THAN ~8mA, AND FOR THIS, AT 3.3V, <strong><em>THE RESISTOR TO BE USED SHOULD BE GREATER THAN OR EQUAL TO 470 ohms</em></strong>. If you would want to the get more current out of it, checkout <a href="http://www.thebrokendesk.com/post/blinking-an-led-with-the-beaglebone-black/">this link</a>. Connect this LED you have now, using a &gt;=470 ohm resistor, to the P8_45 pin on the beaglebone black board.</li>
 </ul>
 
 <hr />
@@ -293,12 +293,12 @@ $ ln -s /usr/bin/lnkpru /usr/share/ti/cgt-pru/bin/lnkpru
 </pre></li>
 </ul></li>
 
-<li><p>we need the environment variable &lsquo;PRU_CGT&rsquo; to point to the &lsquo;/usr/share/ti/cgt-pru/&rsquo; directory. This is pretty straight forward, just:
+<li><p>We need the environment variable &lsquo;PRU_CGT&rsquo; to point to the &lsquo;/usr/share/ti/cgt-pru/&rsquo; directory. This is pretty straight forward, just:
 <pre class="prettyprint">
 $ export PRU_CGT=/usr/share/ti/cgt-pru
 </pre></p></li>
 
-<li><p>If you want this to be done automatically you start a terminal on bbb, just add the above line to &lsquo;~/.bash.rc&rsquo;. Once all this is done, you can test your setup:
+<li><p>If you want this to be done automatically when you start a terminal on bbb, just add the above line to &lsquo;~/.bash.rc&rsquo;. Once all this is done, you can test your setup:
 $ $PRU_CGT/bin/clpru
 And a list of help options would appear.</p></li>
 </ol>
@@ -323,7 +323,7 @@ $ ./deploy.sh
 <h3 id="code:a6dc26714d32df1ac6a7aa69d40ae020"><u>Into the code</u></h3>
 
 <ul>
-<li>For this post, we will dive into the PRU_gpioToggle/PRU_gpioToggle.c, PRU_gpioToggle/AM335x_PRU.cmd file and the deploy.sh script. We will get into the Makefile and the resource table in next post.</li>
+<li>For this post, we will dive into the PRU_gpioToggle/PRU_gpioToggle.c, PRU_gpioToggle/AM335x_PRU.cmd file and the deploy.sh script. We will get into the Makefile and the resource table in future post.</li>
 </ul>
 
 <hr />
@@ -340,10 +340,10 @@ The two lines in the code :
 volatile register uint32_t __R30;
 volatile register uint32_t __R31;
 </pre>
-declares the global register variables __R30 and __R31.  One may think that any of the PRUs register could be accessed by using a variable of &lsquo;register&rsquo; type, but that is not true with C/C++. The special thing about this is, the clpru (compiler we are using) can only have __R30 and __R31 as the variable of register type.The compiler would not allow the any other variable than __R31 and __R30 to compile, and the compiler do not allows to access any of the R29-R0 registers of the PRU. You may declare various variables and the PRU would manage internally, juggling all various resources (including registers), but no direct access is allowed.</p></li>
+declares the global register variables __R30 and __R31.  One may think that any of the PRUs register could be accessed by using a variable of &lsquo;register&rsquo; type, but that is not true with C/C++. The special thing about this is, the clpru (compiler we are using) can only have __R30 and __R31 as the variable of register type. The compiler would not allow the any variable other than __R31 and __R30 to be of the &lsquo;register&rsquo; type, and the compiler do not allows to access any of the R29-R0 registers of the PRU. You may declare various variables and the PRU would manage internally, juggling all various resources (including registers), but no direct access is allowed.</p></li>
 
 <li><p>The __delay_cycles() function
-The __delay_cycles() function, as the name suggests, causes a delay of specified number of cycles. __delay_cycles() is an intrinsic compiler function. The term &lsquo;intrinsic&rsquo; means that the definition of the function is not a fixed one. It is handled by the PRUs. This is probably because in the assembly implementation of the loop, it takes 1 cycle to subtract 1 from counter register and then another cycle to compare the register. This limits the delay that can be produced by one implementation, as the next counter value will be
+The __delay_cycles() function, as the name suggests, causes a delay of specified number of cycles. __delay_cycles() is an intrinsic compiler function. The term &lsquo;intrinsic&rsquo; means that the definition of the function is not a fixed one. The definition is handled by the compiler. This is probably because in the assembly implementation of the loop, it takes one cycle to subtract 1 from counter register and then another cycle to compare the register. This limits the delay that can be produced by one implementation, as the next counter value will be
 <pre class="prettyprint">
 counter = counter - 2
 </pre>
@@ -360,7 +360,7 @@ void __delay_cycles (const unsigned int cycles);
 <h5 id="cmd:a6dc26714d32df1ac6a7aa69d40ae020"><u>The linker file : PRU_gpioToggle/AM335x_PRU.cmd</u></h5>
 
 <ol>
-<li><p>PRUs are pretty simple processing cores, but the PRUSS system is highly integrated and provides the PRU a rich set of peripherals. All these peripherals inside the PRUSS are at different address locations and they need to be configured by the linux kernel at the time of firmware loading onto the PRUs. The <a href="https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/AM335x_PRU.cmd">AM335x_PRU.cmd file</a> provides a mapping to the compiler, from different sections of code, to different memory locations inside the PRUSS.</p></li>
+<li><p>PRUs are pretty simple processing cores, but the PRUSS system is highly integrated and provides the PRU a rich set of peripherals. All these peripherals inside the PRUSS are at different address locations and they need to be configured by the linux kernel at the time of firmware loading onto the PRUs. The <a href="https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/AM335x_PRU.cmd">AM335x_PRU.cmd file</a> provides a mapping to the linker, from different sections of code, to different memory locations inside the PRUSS.</p></li>
 
 <li><p>There are 2 sections inside the AM335x_PRU.cmd file :</p>
 
