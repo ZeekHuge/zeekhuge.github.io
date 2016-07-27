@@ -586,7 +586,9 @@ $ export PRU_CGT=/usr/share/ti/cgt-pru
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;If you want this to be done automatically when you start a terminal on bbb, just add the above line to &amp;lsquo;~/.bash.rc&amp;rsquo;. Once all this is done, you can test your setup:
+&lt;pre class=&#34;prettyprint&#34;&gt;
 $ $PRU_CGT/bin/clpru
+&lt;/pre&gt;
 And a list of help options would appear.&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
