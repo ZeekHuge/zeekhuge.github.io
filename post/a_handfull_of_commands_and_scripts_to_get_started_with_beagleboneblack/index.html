@@ -194,7 +194,7 @@ PRU GPIO id: 103
 </code></pre></div>
 </p></li>
 
-<li><p>** Sharing your Ubuntu system&rsquo;s Internet with BBB ** -  Use the command <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ifconfig 
+<li><p><strong>Sharing your Ubuntu system&rsquo;s Internet with BBB</strong> -  Use the command <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ifconfig 
 </code></pre></div>
  to determine the interface your system is using to connect to BBB (it will be mostly eth0) and to the Internet.</p>
 
@@ -207,7 +207,7 @@ PRU GPIO id: 103
 
 Generally, these commands will look like :
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
-<span class="nv">$ </span>iptables -A FORWARD -i etch1 -j ACCEPT
+<span class="nv">$ </span>iptables -A FORWARD -i eth0 -j ACCEPT
 <span class="nv">$ </span>sysctl net.ipv4.ip_forward<span class="o">=</span>1
 </code></pre></div>
 </p></li>

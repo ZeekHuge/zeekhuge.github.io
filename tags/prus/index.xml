@@ -867,7 +867,7 @@ PRU GPIO id: 103
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;** Sharing your Ubuntu system&amp;rsquo;s Internet with BBB ** -  Use the command &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;ifconfig 
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Sharing your Ubuntu system&amp;rsquo;s Internet with BBB&lt;/strong&gt; -  Use the command &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;ifconfig 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
  to determine the interface your system is using to connect to BBB (it will be mostly eth0) and to the Internet.&lt;/p&gt;
 
@@ -880,7 +880,7 @@ PRU GPIO id: 103
 
 Generally, these commands will look like :
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
-&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;iptables -A FORWARD -i etch1 -j ACCEPT
+&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;iptables -A FORWARD -i eth0 -j ACCEPT
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;sysctl net.ipv4.ip_forward&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
