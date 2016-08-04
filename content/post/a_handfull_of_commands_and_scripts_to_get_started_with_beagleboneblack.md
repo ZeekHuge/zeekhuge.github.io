@@ -99,7 +99,7 @@ PRU GPIO id: 103
 echo b >/proc/sysrq-trigger
 {{< /highlight >}}
 
-* ** Sharing your Ubuntu system's Internet with BBB ** -  Use the command {{< highlight bash >}}$ ifconfig {{< /highlight >}} to determine the interface your system is using to connect to BBB (it will be mostly eth0) and to the Internet.
+* **Sharing your Ubuntu system's Internet with BBB** -  Use the command {{< highlight bash >}}$ ifconfig {{< /highlight >}} to determine the interface your system is using to connect to BBB (it will be mostly eth0) and to the Internet.
 	* Let the Internet interface and BBB interface be \<Internet-interface\> and \<BBB-interface\> respectively. Now on your system, execute following commands as root:		
 {{< highlight bash >}}
 $ iptables -t nat -A POSTROUTING -o <Internet-interface> -j MASQUERADE
@@ -109,7 +109,7 @@ $ sysctl net.ipv4.ip_forward=1
 	Generally, these commands will look like :
 {{< highlight bash >}}
 $ iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
-$ iptables -A FORWARD -i etch1 -j ACCEPT
+$ iptables -A FORWARD -i eth0 -j ACCEPT
 $ sysctl net.ipv4.ip_forward=1
 {{</highlight>}}
 
