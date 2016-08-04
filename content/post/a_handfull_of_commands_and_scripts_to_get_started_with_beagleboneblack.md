@@ -119,6 +119,22 @@ $ route add default gw 192.168.7.1
 {{< /highlight >}}
 	* To automate all this Internet connecting thing, just put all these commands in /etc/rc.local in their respective systems. 
 
+	* Now to test if all this works, use command  "ping 8.8.8.8" and the output should look like :
+{{< highlight bash >}}
+root@beaglebone:~# ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=54 time=49.2 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=54 time=46.1 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=54 time=40.0 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=54 time=52.1 ms
+^C
+--- 8.8.8.8 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3006ms
+rtt min/avg/max/mdev = 40.021/46.883/52.108/4.496 ms
+{{</highlight>}}
+
+	* It will be then useful to add "nameserver 8.8.8.8" in the first line of your /etc/resolv.conf
+
 ### <u>Kernel Development</u>{#kdev}
 
 

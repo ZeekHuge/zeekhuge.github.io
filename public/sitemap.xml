@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://www.zeekhuge.me/</loc>
+    <lastmod>2016-07-17T23:37:27+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.zeekhuge.me/post/ptp_docs_commands_and_tools/</loc>
+    <lastmod>2016-07-17T23:37:27+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.zeekhuge.me/post/ptp_blinky/</loc>
+    <lastmod>2016-07-16T15:45:08+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.zeekhuge.me/post/some_shots/</loc>
+    <lastmod>2016-07-10T03:00:17+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.zeekhuge.me/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/</loc>
+    <lastmod>2016-06-16T19:56:39+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_rpmsg/</loc>
+    <lastmod>2016-06-16T14:29:03+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_remoteproc/</loc>
+    <lastmod>2016-06-16T14:28:03+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.zeekhuge.me/post/working_with_prus_beagleboneblack_introduction_to_prus/</loc>
+    <lastmod>2016-06-16T14:27:03+05:30</lastmod>
+  </url>
+  
+</urlset>
