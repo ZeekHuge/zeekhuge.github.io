@@ -89,30 +89,34 @@ $ echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/bind
 
 	+ **pshut1 : To shut PRU core 1** 
 	<pre class="prettyprint">
-	alias pshut1='echo "4a338000.pru1">/sys/bus/platform/drivers/pru-rproc/unbind && echo "Core 1 is off"'
+	alias pshut1='echo 4a338000.pru1>/sys/bus/platform/drivers/pru-rproc/unbind && echo “Core 1 is off”'
 	</pre>
 
 
 	+ **pshut0 : To shut PRU core 0**
 	<pre class="prettyprint">
-	alias pshut0='echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/unbind && echo "Core 0 is off"'
+	alias pshut0='echo 4a334000.pru0>/sys/bus/platform/drivers/pru-rproc/unbind && echo “Core 0 is off”'
 	</pre>
 	
 	
 	+ **pboot1 : To boot PRU core 1**
 	<pre class="prettyprint">
-	alias pboot1='echo "4a338000.pru1"  > /sys/bus/platform/drivers/pru-rproc/bind && echo "Core 1 is on"'
+	alias pboot1='echo 4a338000.pru1>/sys/bus/platform/drivers/pru-rproc/bind && echo “Core 1 is on”'
 	</pre>
 	
 	+ **pboot0 : To boot PRU core 0**
 	<pre class="prettyprint">
-	alias pboot0='echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/bind && echo "Core 0 is on"'
+	alias pboot0='echo 4a334000.pru0>/sys/bus/platform/drivers/pru-rproc/bind && echo “Core 0 is on”'
 	</pre>
 	
 	
 	+ **preboot : To reboot both PRU cores**
 	<pre class="prettyprint">
-	alias preboot='pshut1 && pboot1 && pshut0 && pboot0'
+	alias preboot='echo 4a338000.pru1>/sys/bus/platform/drivers/pru-rproc/unbind &&
+	               echo 4a334000.pru0>/sys/bus/platform/drivers/pru-rproc/unbind &&
+	               echo 4a338000.pru1>/sys/bus/platform/drivers/pru-rproc/bind &&
+	               echo 4a334000.pru0>/sys/bus/platform/drivers/pru-rproc/bind &&
+	               echo "PRUs rebooted"'
 	</pre>
 
 
