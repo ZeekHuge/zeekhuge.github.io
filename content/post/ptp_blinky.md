@@ -49,7 +49,7 @@ However experienced an embedded programmer is, blinky can still be the most thri
 		+ The __delay_cycles() function
 	* [The linker file : PRU_gpioToggle/AM335x_PRU.cmd]({{< relref "#cmd" >}})
 	* [The deploy script : deploy.sh]({{< relref "#desh" >}})
-* [Whats next ?]{{< relref "#nxt" >}}
+* [Whats next ?]({{< relref "#nxt" >}})
 
 ### <u>Pointers</u>{#ptr}
 
