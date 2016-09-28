@@ -9,6 +9,5 @@ git push $(echo "https://zeekhuge:$PASS@github.com/ZeekHuge/zeekhuge.github.io.g
 cd ../website
 git add --all
 git commit -m "add pages"
-git push origin
-
+git push $(echo "https://zeekhuge:$PASS@github.com/ZeekHuge/zeekhuge.github.io.git")
 exit 0
