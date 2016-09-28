@@ -5,7 +5,7 @@ read -s PASS
 hugo -d ../website
 git add --all
 git commit -m "add content"
-echo -e "zeekhuge\n$PASS" | git push origin 
+git push origin < $(echo -e "zeekhuge\n$PASS")
 cd ../website
 git add --all
 git commit -m "add pages"
