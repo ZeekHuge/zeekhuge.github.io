@@ -2,7 +2,7 @@ baseurl = "https://www.zeekhuge.me/"
 pygmentsuseclasses = "true"
 layoutdir = "layouts"
 languageCode = "en-us"
-title = "ZeekHuge"
+title = "ZeekHuge (Zubeen Tolani)"
 theme = "HugoMDL"
 disqusShortname = "zeekhuge"
 disqus_identifier = "ZeekHuge"
@@ -13,9 +13,9 @@ MetaDataFormat = "yaml"
 	about = "/:filename/"
 
 [params]
-    author = "ZeekHuge"
+    author = "ZeekHuge (Zubeen Tolani)"
     avatar = "https://avatars1.githubusercontent.com/u/8711218?v=3&s=460"
-    background = "/images/back.jpg"
+    background = "/images/back_c.jpg"
     description = "A place to publish my incomprehensible ramblings" #meta description
     image = "/images/av.jpg" #for frontpage profile card
     

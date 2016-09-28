@@ -28,14 +28,14 @@ title: 'PTP - Programming The PRUs 1: Blinky'
 
 ### <u>Preface</u>
 
-Some people might say, *"Really ? A blinky ? Are you kidding me ? If someone is trying to get started with PRUs, he/she's most probably knows the concepts of embedded programming well."* And to them, I would just say *"yes, a blinky."*
+Some people may say, *"Really ? A blinky ? Are you kidding me ? If someone is trying to get started with PRUs, he/she's most probably well acquainted to the concept of embedded programming."*, to them, I would just say *"yes, a blinky."*
 
 However experienced an embedded programmer is, blinky can still be the most thrilling application that he develops. It is thrilling at least to me, and I just put my hands up in the air like I have won a war. Further, this post will help you get all the things at the right place to begin with more complex examples. If you still don't think its worth it, well, Its my post :P
 
 ----------------------------------------------------
 
 ### <u>Content</u>
-* [Pointers - some miscellaneous and important points]({{< relref "#ptr" >}})
+* [Pointers - some random and important points]({{< relref "#ptr" >}})
 * [Setup]({{< relref "#stp" >}})
 	* [Get the repo]({{< relref "#repo" >}})
 	* [Disable the HDMI cape]({{< relref "#hdmi" >}})
