@@ -5,7 +5,7 @@ read -s PASS
 hugo -d ../website
 git add --all
 git commit -m "add content"
-git push $(echo "https://zeekhuge:$PASS@github.com/ZeekHuge/zeekhuge.github.io.git")
+git push $(echo "https://zeekhuge:$PASS@github.com/ZeekHuge/zeekhuge.github.io.git") || notify-send "Failed to update the website"
 cd ../website
 git add --all
 git commit -m "add pages"
