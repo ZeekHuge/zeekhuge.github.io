@@ -26,7 +26,7 @@ cardbackground: "#263238" #optional: card background color; only shows when no i
 </center>
 ---
 <div style="font-family: 'Kalam', cursive;">
-<font size="5">Hi ! I am **Zubeen Tolani**, AKA **ZeekHuge**, an undergraduate student at the department of **Electronics and Communication Engineering**.</font>
+<font size="5">Hi ! I am **Zubeen Tolani**, AKA **ZeekHuge**, an undergraduate student at the department of **Electronics and TeleCommunication Engineering**.</font>
 
 ---
 </div>
