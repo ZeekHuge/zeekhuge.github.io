@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Embedded Programming on ZeekHuge</title>
+    <title>Embedded Programming on ZeekHuge (Zubeen Tolani)</title>
     <link>https://www.zeekhuge.me/tags/embedded-programming/</link>
-    <description>Recent content in Embedded Programming on ZeekHuge</description>
+    <description>Recent content in Embedded Programming on ZeekHuge (Zubeen Tolani)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 17 Jul 2016 23:37:27 +0530</lastBuildDate>
@@ -117,27 +117,31 @@ $ echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pr
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;pshut1 : To shut PRU core 1&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias pshut1=&amp;lsquo;echo &amp;ldquo;4a338000.pru1&amp;rdquo;&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo &amp;ldquo;Core 1 is off&amp;rdquo;&amp;rsquo;
+alias pshut1=&amp;lsquo;echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo “Core 1 is off”&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;pshut0 : To shut PRU core 0&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias pshut0=&amp;lsquo;echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo &amp;ldquo;Core 0 is off&amp;rdquo;&amp;rsquo;
+alias pshut0=&amp;lsquo;echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo “Core 0 is off”&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;pboot1 : To boot PRU core 1&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias pboot1=&amp;lsquo;echo &amp;ldquo;4a338000.pru1&amp;rdquo;  &amp;gt; /sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo &amp;ldquo;Core 1 is on&amp;rdquo;&amp;rsquo;
+alias pboot1=&amp;lsquo;echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo “Core 1 is on”&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;pboot0 : To boot PRU core 0&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias pboot0=&amp;lsquo;echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo &amp;ldquo;Core 0 is on&amp;rdquo;&amp;rsquo;
+alias pboot0=&amp;lsquo;echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo “Core 0 is on”&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;preboot : To reboot both PRU cores&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias preboot=&amp;lsquo;pshut1 &amp;amp;&amp;amp; pboot1 &amp;amp;&amp;amp; pshut0 &amp;amp;&amp;amp; pboot0&amp;rsquo;
+alias preboot=&amp;lsquo;echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp;
+           echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp;
+           echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp;
+           echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp;
+           echo &amp;ldquo;PRUs rebooted&amp;rdquo;&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;

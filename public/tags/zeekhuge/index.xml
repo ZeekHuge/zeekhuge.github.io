@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Zeekhuge on ZeekHuge</title>
+    <title>Zeekhuge on ZeekHuge (Zubeen Tolani)</title>
     <link>https://www.zeekhuge.me/tags/zeekhuge/</link>
-    <description>Recent content in Zeekhuge on ZeekHuge</description>
+    <description>Recent content in Zeekhuge on ZeekHuge (Zubeen Tolani)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 16 Jun 2016 19:56:39 +0530</lastBuildDate>
@@ -126,6 +126,22 @@ Generally, these commands will look like :
 &lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;To automate all this Internet connecting thing, just put all these commands in /etc/rc.local in their respective systems.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now to test if all this works, use command  &amp;ldquo;ping 8.8.8.8&amp;rdquo; and the output should look like :
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;root@beaglebone:~# ping 8.8.8.8
+PING 8.8.8.8 &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;8.8.8.8&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; 56&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;84&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; bytes of data.
+64 bytes from 8.8.8.8: &lt;span class=&#34;nv&#34;&gt;icmp_seq&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1 &lt;span class=&#34;nv&#34;&gt;ttl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;54 &lt;span class=&#34;nb&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;49.2 ms
+64 bytes from 8.8.8.8: &lt;span class=&#34;nv&#34;&gt;icmp_seq&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;2 &lt;span class=&#34;nv&#34;&gt;ttl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;54 &lt;span class=&#34;nb&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;46.1 ms
+64 bytes from 8.8.8.8: &lt;span class=&#34;nv&#34;&gt;icmp_seq&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;3 &lt;span class=&#34;nv&#34;&gt;ttl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;54 &lt;span class=&#34;nb&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;40.0 ms
+64 bytes from 8.8.8.8: &lt;span class=&#34;nv&#34;&gt;icmp_seq&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;4 &lt;span class=&#34;nv&#34;&gt;ttl&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;54 &lt;span class=&#34;nb&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;52.1 ms
+^C
+--- 8.8.8.8 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, &lt;span class=&#34;nb&#34;&gt;time &lt;/span&gt;3006ms
+rtt min/avg/max/mdev &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 40.021/46.883/52.108/4.496 ms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;It will be then useful to add &amp;ldquo;nameserver 8.8.8.8&amp;rdquo; in the first line of your /etc/resolv.conf&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ol&gt;
 

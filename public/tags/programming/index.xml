@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Programming on ZeekHuge</title>
+    <title>Programming on ZeekHuge (Zubeen Tolani)</title>
     <link>https://www.zeekhuge.me/tags/programming/</link>
-    <description>Recent content in Programming on ZeekHuge</description>
+    <description>Recent content in Programming on ZeekHuge (Zubeen Tolani)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 17 Jul 2016 23:37:27 +0530</lastBuildDate>
@@ -117,27 +117,31 @@ $ echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pr
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;pshut1 : To shut PRU core 1&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias pshut1=&amp;lsquo;echo &amp;ldquo;4a338000.pru1&amp;rdquo;&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo &amp;ldquo;Core 1 is off&amp;rdquo;&amp;rsquo;
+alias pshut1=&amp;lsquo;echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo “Core 1 is off”&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;pshut0 : To shut PRU core 0&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias pshut0=&amp;lsquo;echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo &amp;ldquo;Core 0 is off&amp;rdquo;&amp;rsquo;
+alias pshut0=&amp;lsquo;echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo “Core 0 is off”&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;pboot1 : To boot PRU core 1&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias pboot1=&amp;lsquo;echo &amp;ldquo;4a338000.pru1&amp;rdquo;  &amp;gt; /sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo &amp;ldquo;Core 1 is on&amp;rdquo;&amp;rsquo;
+alias pboot1=&amp;lsquo;echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo “Core 1 is on”&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;pboot0 : To boot PRU core 0&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias pboot0=&amp;lsquo;echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo &amp;ldquo;Core 0 is on&amp;rdquo;&amp;rsquo;
+alias pboot0=&amp;lsquo;echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo “Core 0 is on”&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;preboot : To reboot both PRU cores&lt;/strong&gt;
 &lt;pre class=&#34;prettyprint&#34;&gt;
-alias preboot=&amp;lsquo;pshut1 &amp;amp;&amp;amp; pboot1 &amp;amp;&amp;amp; pshut0 &amp;amp;&amp;amp; pboot0&amp;rsquo;
+alias preboot=&amp;lsquo;echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp;
+           echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp;
+           echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp;
+           echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp;
+           echo &amp;ldquo;PRUs rebooted&amp;rdquo;&amp;rsquo;
 &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -402,7 +406,7 @@ first four sharpening the axe&amp;rdquo;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;u-preface-u:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Preface&lt;/u&gt;&lt;/h3&gt;
 
-&lt;p&gt;Some people may say, &lt;em&gt;&amp;ldquo;Really ? A blinky ? Are you kidding me ? If someone is trying to get started with PRUs, he/she&amp;rsquo;s most probably well acquainted to the concept of embedded programming.&amp;rdquo;&lt;/em&gt;, to them, I would just say &lt;em&gt;&amp;ldquo;yes, a blinky.&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Some people might say, &lt;em&gt;&amp;ldquo;Really ? A blinky ? Are you kidding me ? If someone is trying to get started with PRUs, he/she&amp;rsquo;s most probably knows the concepts of embedded programming well.&amp;rdquo;&lt;/em&gt; And to them, I would just say &lt;em&gt;&amp;ldquo;yes, a blinky.&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;However experienced an embedded programmer is, blinky can still be the most thrilling application that he develops. It is thrilling at least to me, and I just put my hands up in the air like I have won a war. Further, this post will help you get all the things at the right place to begin with more complex examples. If you still don&amp;rsquo;t think its worth it, well, Its my post :P&lt;/p&gt;
 
@@ -411,7 +415,7 @@ first four sharpening the axe&amp;rdquo;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;h3 id=&#34;u-content-u:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Content&lt;/u&gt;&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#ptr:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Pointers - some random and important points&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ptr:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Pointers - some miscellaneous and important points&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#stp:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Setup&lt;/a&gt;
 
 &lt;ul&gt;
@@ -434,7 +438,7 @@ first four sharpening the axe&amp;rdquo;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;#cmd:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;The linker file : PRU_gpioToggle/AM335x_PRU.cmd&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#desh:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;The deploy script : deploy.sh&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;[Whats next ?]#nxt:a6dc26714d32df1ac6a7aa69d40ae020&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#nxt:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Whats next ?&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;ptr:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Pointers&lt;/u&gt;&lt;/h3&gt;
