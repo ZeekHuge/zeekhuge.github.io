@@ -77,7 +77,7 @@ cardbackground: "#263238" #optional: card background color; only shows when no i
 
 
 <font size="5"><u>Whats 'ZeekHuge':</u></font><p>
-<font size="4"><p>Yeah, most of you might be thinking that my alias 'ZeekHuge' is a meaningless word, so let me tell you this, it really is meaningless. I was in my 7th-8th Std. and use to watch "The Suite Life of Zack & Cody" and one day an idea popped up in my mind = "Hey ! 'Zeek' (inspired by the name 'Zack') is such a good name and I can keep it as my secret name !" And then, somewhere along 'Huge' got attached with it, and I don't know from where it came .. but anyway .. it looks cool ! Isn't it ? </p>
+<font size="4"><p>Yeah, most of you might be thinking that my alias 'ZeekHuge' is a meaningless word, so let me tell you this, it really is meaningless. I was in my 7th-8th Std. and use to watch "The Suite Life of Zack & Cody" and one day an idea popped up in my mind = "Hey ! 'Zeek' (inspired by the name 'Zack') is such a good name and I can keep it as my secret name !" And then even I dont actually know how somwhere along 'Huge' got attached with it. Anyway .. it looks cool ! Isn't it ? </p>
 </font><br>
 
 <font size="5"><u>Whats the VIM thingy ?:</u></font><p>
