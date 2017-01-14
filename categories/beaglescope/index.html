@@ -10,7 +10,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="My thoughts and rambles">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Working with PRUs @BeagleBoneBlack : remoteproc</title>
+        <title>Beaglescope</title>
         
         <meta name="mobile-web-app-capable" content="yes">
         <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
@@ -28,14 +28,12 @@
         <link rel="stylesheet" href="/css/material.grey-orange.min.css"/>
         <link rel="stylesheet" href="/css/styles.css"/>
 	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
-          <link rel="stylesheet" href="/css/prism.css" />  
+        
 </head>
 
 <body style="background-image: url('/images/back_c.jpg');">
      
-         
-            <div class="hugo-blog hugo-blog--blogpost mdl-layout mdl-js-layout has-drawer is-upgraded">  
-        
+        <div class="hugo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
     
         
         
@@ -85,79 +83,57 @@
     
     <main class="mdl-layout__content">
 
-
-<div class="hugo-blog__posts mdl-grid">
-    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-        
-        <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/images/remoteproc_dmesg.png'); background-color:#263238;">
-            <h3 >
-<div style="padding: 5px; background-color: black;">
-	 Working With PRUs @BeagleBoneBlack : Remoteproc</div></h3>
-        </div>
-          
-        <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-            <div class="minilogo" style="background-image: url('https://avatars1.githubusercontent.com/u/8711218?v=3&amp;s=460');"></div>
-            <div>
-                <strong>ZeekHuge</strong>
-                <span>Jun 16, 2016</span>
-            </div>
-            
-            <div class="section-spacer"></div>
-            <div><span>
-                
-                
-            </span></div>
-            
-        </div>
-            
-        <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
-            <p>Working on this</p>
-
-        </div>
-        
-        <div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments"> 
-            <a href=https://zeekhuge.github.io/>ZeekHuge</a>
-            <p></p>
-        </div>  
-    </div>
-
-    <nav class="hugo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     
-    <a href="/post/working_with_prus_beagleboneblack_introduction_to_prus/" class="hugo-nav__button">
-        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-           <i class="icon ion-android-arrow-back"></i>
-        </button>
-        Older
-    </a>
-    <div class="section-spacer"></div>
-    
-    <a href="/post/working_with_prus_beagleboneblack_rpmsg/" class="hugo-nav__button">Newer
-      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-           <i class="icon ion-android-arrow-forward"></i>
-      </button>
-    </a>
-</nav> 
+    <header class="mdl-layout__header mdl-layout__header--transparent mdl-layout__header--scroll">
+        <div class="mdl-layout__header-row">
+            
+            
+            
+            <div class="mdl-layout-spacer"></div>
+            
+            <nav class="mdl-navigation">
 
 
-</div>
 
-<div class="mdl-color-text--grey-700 mdl-card__supporting-text comments">
-	<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'zeekhuge';
-    var disqus_identifier = 'https:\/\/www.zeekhuge.me\/post\/working_with_prus_beagleboneblack_remoteproc\/';
-    var disqus_title = 'Working with PRUs @BeagleBoneBlack : remoteproc';
-    var disqus_url = 'https:\/\/www.zeekhuge.me\/post\/working_with_prus_beagleboneblack_remoteproc\/';
 
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</div>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<a aria-label="Follow @zeekhuge on GitHub" data-count-aria-label="# followers on GitHub" data-count-api="/users/zeekhuge#followers" data-count-href="/zeekhuge/followers" data-style="mega" href="https://github.com/zeekhuge" class="github-button">Follow @zeekhuge</a>
+
+
+
+
+
+
+
+
+           	<a class='mdl-navigation__link ' href="/">Home</a>
+		<a class='mdl-navigation__link ' href="https://github.com/ZeekHuge/BeagleScope">BeagleScope</a>
+                <a class='mdl-navigation__link ' href="/post">Posts</a>
+	
+                <a class='mdl-navigation__link ' href="/about">About</a>
+		<a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">Github</a>
+            </nav>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        
+        <nav class="mdl-navigation">
+            <a class='mdl-navigation__link ' href="/">Home</a>
+	    <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge/BeagleScope">BeagleScope</a>
+            <a class='mdl-navigation__link ' href="/post">Posts</a>
+
+            <a class='mdl-navigation__link ' href="/about">About</a>
+	    <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">Github</a>
+        </nav></div>
+
+
+<h3>Generic List Heading</h3>
+
+
+
+
+
 	    <footer class="mdl-mini-footer">
                 <div class="mdl-mini-footer--left-section">
                     
@@ -189,8 +165,42 @@
         <div class="mdl-layout__obfuscator"></div>
     </div>
     <script src="/js/material.min.js"></script>
-     <script src="/js/prism.js"></script>
     
+     <script>
+    Array.prototype.forEach.call(document.querySelectorAll('.mdl-card__media'), function(el) {
+        var link = el.querySelector('a');
+        if (!link) {
+            return;
+        }
+        var target = link.getAttribute('href');
+        if (!target) {
+            return;
+        }
+        el.addEventListener('click', function() {
+            location.href = target;
+        });
+    });
+</script> <script>
+    (function () {
+    var VISIBLE_CLASS = "is-showing-options",
+        fab_btn  = document.getElementById("fab_btn"),
+        fab_ctn  = document.getElementById("fab_ctn"),
+        showOpts = function(e) {
+          var processClick = function (evt) {
+            if (e !== evt) {
+              fab_ctn.classList.remove(VISIBLE_CLASS);
+              fab_ctn.IS_SHOWING = false;
+              document.removeEventListener("click", processClick);
+            }
+          };
+          if (!fab_ctn.IS_SHOWING) {
+            fab_ctn.IS_SHOWING = true;
+            fab_ctn.classList.add(VISIBLE_CLASS);
+            document.addEventListener("click", processClick);
+          }
+        };
+    fab_btn.addEventListener("click", showOpts);
+    }.call(this));
+</script>
 </body>
 </html>
-

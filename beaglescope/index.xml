@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Beaglescopes on ZeekHuge (Zubeen Tolani)</title>
+    <link>https://www.zeekhuge.me/beaglescope/</link>
+    <description>Recent content in Beaglescopes on ZeekHuge (Zubeen Tolani)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Jan 2017 16:21:52 +0530</lastBuildDate>
+    <atom:link href="https://www.zeekhuge.me/beaglescope/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>tmp</title>
+      <link>https://www.zeekhuge.me/beaglescope/tmp/</link>
+      <pubDate>Sat, 14 Jan 2017 16:21:52 +0530</pubDate>
+      
+      <guid>https://www.zeekhuge.me/beaglescope/tmp/</guid>
+      <description>&lt;p&gt;This is my project.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
