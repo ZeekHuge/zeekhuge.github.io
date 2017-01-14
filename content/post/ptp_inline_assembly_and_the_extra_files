@@ -7,6 +7,7 @@ author:
   name: ZeekHuge
   website: https://www.zeekhuge.me
 cardbackground: '#263238'
+repo: https://github.com/ZeekHuge/BeagleScope
 cardheaderimage: /cardheaderimages/rproc_dmesg.png
 cardthumbimage: /cardheaderimages/rproc_dmesg.png
 categories:

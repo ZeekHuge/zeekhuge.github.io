@@ -7,6 +7,7 @@ author:
   name: ZeekHuge
   website: https://zeekhuge.github.io/
 cardbackground: '#263238'
+repo: https://github.com/ZeekHuge/BeagleScope
 cardheaderimage: /images/pic8_jst_everything.jpg
 cardthumbimage: /images/pic8_jst_everything.jpg
 cardtitlecolor: "#ffffff" 

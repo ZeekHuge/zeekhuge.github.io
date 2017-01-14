@@ -1,7 +1,7 @@
 ---
 author:
   description: 
-  email: zeekhuge@gmail.com
+  email: contact@zeekhuge.me
   github: https://github.com/ZeekHuge
   image: https://avatars1.githubusercontent.com/u/8711218?v=3&s=460
   name: ZeekHuge
@@ -13,6 +13,7 @@ categories:
 - post
 date: 2016-06-16T19:56:39+05:30
 description: Some very basic but tricky things about beaglebone black
+repo: https://github.com/ZeekHuge/BeagleScope
 tags:
 - beaglebone black
 - ZeekHuge

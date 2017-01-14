@@ -14,6 +14,7 @@ categories:
 - post
 date: 2016-07-16T15:45:08+05:30
 description: Firts post in the PTP series.
+repo: https://github.com/ZeekHuge/BeagleScope
 tags:
 - beagleboneblack
 - PRUs

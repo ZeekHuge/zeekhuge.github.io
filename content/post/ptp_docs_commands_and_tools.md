@@ -10,6 +10,7 @@ cardbackground: '#263238'
 cardheaderimage: /cardheaderimages/rproc_dmesg.png
 cardthumbimage: /cardheaderimages/rproc_dmesg.png
 cardtitlecolor: "#ffffff" 
+repo: https://github.com/ZeekHuge/BeagleScope
 categories:
 - post
 date: 2016-07-17T23:37:27+05:30
