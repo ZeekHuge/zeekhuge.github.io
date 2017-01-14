@@ -20,11 +20,11 @@ MetaDataFormat = "yaml"
     image = "/images/av.jpg" #for frontpage profile card
     
     website = "www.zeekhuge.me"
-    email = "zeekhuge@gmail.com"
+    email = "contact@zeekhuge.me"
     #twitter = "https://twitter.com/firstname_lastname"
     github = "https://github.com/ZeekHuge/"
     #linkedin = "https://linkedin.com/in/firstname_lastname/"
     facebook = "https://www.facebook.com/zubeen.tolani"
-    copyrightyear = "2016"
+    copyrightyear = "2017"
     frontpageposts = 6 #number of post cards to display on frontpage
     
