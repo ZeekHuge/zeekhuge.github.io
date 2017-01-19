@@ -269,20 +269,21 @@ rtt min/avg/max/mdev <span class="o">=</span> 40.021/46.883/52.108/4.496 ms
 </p></li>
 
 <li><p><strong>BBB clone kernel source</strong> - To clone a kernel source ( Thanks to <a href="https://github.com/mwelling/">Michael Welling</a> and <a href="https://github.com/SJLC">Stephanie</a> for help on this )  :
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir KERNEL-&lt;kernel build number&gt;
-<span class="nv">$ </span>git clone --depth<span class="o">=</span>100 -b &lt;kernel build number&gt; https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&lt;kernel build number&gt;
-<span class="nv">$ </span>touch KERNEL-&lt;kernel build number&gt;/.ignore-&lt;kernel build number&gt;
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir KERNEL-&lt;build number&gt;
+<span class="nv">$ </span>git clone --depth<span class="o">=</span>100 -b &lt;build number&gt; https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&lt;build number&gt;
+<span class="nv">$ </span>touch KERNEL-&lt;build number&gt;/.ignore-&lt;build number&gt;
 </code></pre></div>
 
 <u><strong><em>for example</em></strong></u> if you want to clone the 4.4.11-ti-r29 kernel, the commands will be :
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir KERNEL-4.4.11-ti-r29
-<span class="nv">$ </span>git clone --depth<span class="o">=</span>100 -b 4.4.11-ti-r29 https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&lt;kernel build number&gt;
+<span class="nv">$ </span>git clone --depth<span class="o">=</span>100 -b 4.4.11-ti-r29 https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-4.4.11-ti-r29
 <span class="nv">$ </span>touch KERNEL-4.4.11-ti-r29/.ignore-4.4.11-ti-r29
 </code></pre></div>
 </p></li>
 
 <li><p><strong>Cross-compiler toolchain</strong> -  To download the latest version of cross-compiler tool-chain ( command source : <a href="https://eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC">eewiki</a> )
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">DWL</span><span class="o">=</span><span class="s2">&quot;gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz&quot;</span>
+<span class="nv">$ </span>wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/<span class="nv">$DWL</span>
 <span class="nv">$ </span>tar xf gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
 <span class="nv">$ </span><span class="nb">export </span><span class="nv">CC</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
 </code></pre></div>

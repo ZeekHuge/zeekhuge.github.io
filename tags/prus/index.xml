@@ -939,20 +939,21 @@ rtt min/avg/max/mdev &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; 40.021/46.883/
 &lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;BBB clone kernel source&lt;/strong&gt; - To clone a kernel source ( Thanks to &lt;a href=&#34;https://github.com/mwelling/&#34;&gt;Michael Welling&lt;/a&gt; and &lt;a href=&#34;https://github.com/SJLC&#34;&gt;Stephanie&lt;/a&gt; for help on this )  :
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;mkdir KERNEL-&amp;lt;kernel build number&amp;gt;
-&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;100 -b &amp;lt;kernel build number&amp;gt; https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&amp;lt;kernel build number&amp;gt;
-&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;touch KERNEL-&amp;lt;kernel build number&amp;gt;/.ignore-&amp;lt;kernel build number&amp;gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;mkdir KERNEL-&amp;lt;build number&amp;gt;
+&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;100 -b &amp;lt;build number&amp;gt; https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&amp;lt;build number&amp;gt;
+&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;touch KERNEL-&amp;lt;build number&amp;gt;/.ignore-&amp;lt;build number&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;u&gt;&lt;strong&gt;&lt;em&gt;for example&lt;/em&gt;&lt;/strong&gt;&lt;/u&gt; if you want to clone the 4.4.11-ti-r29 kernel, the commands will be :
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;mkdir KERNEL-4.4.11-ti-r29
-&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;100 -b 4.4.11-ti-r29 https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&amp;lt;kernel build number&amp;gt;
+&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;100 -b 4.4.11-ti-r29 https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-4.4.11-ti-r29
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;touch KERNEL-4.4.11-ti-r29/.ignore-4.4.11-ti-r29
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Cross-compiler toolchain&lt;/strong&gt; -  To download the latest version of cross-compiler tool-chain ( command source : &lt;a href=&#34;https://eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC&#34;&gt;eewiki&lt;/a&gt; )
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DWL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz&amp;quot;&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/&lt;span class=&#34;nv&#34;&gt;$DWL&lt;/span&gt;
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;tar xf gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
 &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;export &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CC&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
