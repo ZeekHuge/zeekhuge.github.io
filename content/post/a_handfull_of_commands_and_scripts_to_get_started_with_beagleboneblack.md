@@ -136,6 +136,7 @@ rtt min/avg/max/mdev = 40.021/46.883/52.108/4.496 ms
 
 	* It will be then useful to add "nameserver 8.8.8.8" in the first line of your /etc/resolv.conf
 
+
 ### <u>Kernel Development</u>{#kdev}
 
 
@@ -162,14 +163,14 @@ $ sudo apt-get install -y linux-firmware-image-$NEW linux-headers-$NEW linux-ima
 
 * **BBB clone kernel source** - To clone a kernel source ( Thanks to [Michael Welling](https://github.com/mwelling/) and [Stephanie](https://github.com/SJLC) for help on this )  :
 {{< highlight bash >}}
-$ mkdir KERNEL-<kernel build number>
-$ git clone --depth=100 -b <kernel build number> https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-<kernel build number>
-$ touch KERNEL-<kernel build number>/.ignore-<kernel build number>
+$ mkdir KERNEL-<build number>
+$ git clone --depth=100 -b <build number> https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-<build number>
+$ touch KERNEL-<build number>/.ignore-<build number>
 {{< /highlight >}}
 <u>***for example***</u> if you want to clone the 4.4.11-ti-r29 kernel, the commands will be :
 {{< highlight bash >}}
 $ mkdir KERNEL-4.4.11-ti-r29
-$ git clone --depth=100 -b 4.4.11-ti-r29 https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-<kernel build number>
+$ git clone --depth=100 -b 4.4.11-ti-r29 https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-4.4.11-ti-r29
 $ touch KERNEL-4.4.11-ti-r29/.ignore-4.4.11-ti-r29
 {{< /highlight >}}
 
@@ -177,7 +178,8 @@ $ touch KERNEL-4.4.11-ti-r29/.ignore-4.4.11-ti-r29
 
 * **Cross-compiler toolchain** -  To download the latest version of cross-compiler tool-chain ( command source : [eewiki](https://eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC) )
 {{< highlight bash >}}
-$ wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
+$ export DWL="gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz"
+$ wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/$DWL
 $ tar xf gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
 $ export CC=`pwd`/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
 {{< /highlight >}}
@@ -226,7 +228,11 @@ $ make modules SUB_DIRS=drivers/rpmsg/ ARCH=arm LOCALVERSION=$BUILD_V
 {{< /highlight>}}
 
 
+
+
 ### <u>Working with PRUs</u>{#wprus}
+
+
 
 1. **Fact 1** - Rebooting any PRU core (0 or 1) will result in reloading of the firmware that is at /lib/firmware/am335x-pruN-fw (pruN can be pru0 or pru1)
 
