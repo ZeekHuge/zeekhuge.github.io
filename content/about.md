@@ -42,7 +42,7 @@ cardbackground: "#263238" #optional: card background color; only shows when no i
 <div style="font-family: 'Kalam', cursive;">
 
 <br>
-* <font size="4">I am stubborn and but appreaciate logical arguments, so think twice before arguing me.</font>
+* <font size="4">I am stubborn but appreaciate logical arguments, so think twice before arguing me.</font>
 <br><br>
 * <font size="4">I am a die heart Michael Jackson fan, and I love his dance, music and MJ himself.</font>
 <br><br>
@@ -70,7 +70,7 @@ cardbackground: "#263238" #optional: card background color; only shows when no i
 
 * Wirelessly Gesture controlled robot.
 * Robot for rough terrains
-* Autonomous to place blocks at right position
+* Autonomous robots to place blocks at right position
 * and ofc, line followers.
 </p></font>
 <br>
