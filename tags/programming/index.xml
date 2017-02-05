@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Programming on ZeekHuge (Zubeen Tolani)</title>
+    <link>https://www.zeekhuge.me/tags/programming/</link>
+    <description>Recent content in Programming on ZeekHuge (Zubeen Tolani)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 17 Jul 2016 23:37:27 +0530</lastBuildDate>
+    <atom:link href="https://www.zeekhuge.me/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>PTP - Programming The PRUs 2: Docs, Commands and Tools</title>
+      <link>https://www.zeekhuge.me/post/ptp_docs_commands_and_tools/</link>
+      <pubDate>Sun, 17 Jul 2016 23:37:27 +0530</pubDate>
+      
+      <guid>https://www.zeekhuge.me/post/ptp_docs_commands_and_tools/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;https://www.zeekhuge.me/jokes/tools.png&#34; alt=&#34;Tools&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;picture credits : &lt;a href=&#34;https://xkcd.com&#34;&gt;xkcd.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;u-preface-u:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;Preface:&lt;/u&gt;&lt;/h3&gt;
+
+&lt;p&gt;If the content here seems to be out of context, you&amp;rsquo;ll probably want to start from &lt;a href=&#34;https://www.zeekhuge.me/post/ptp_blinky&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;So you have decided to play with PRUs and after this &lt;a href=&#34;https://www.zeekhuge.me/post/ptp_blinky&#34;&gt;blinky&lt;/a&gt; post, you have some understanding about how to work with PRUs. Cool ! Thats a courageous decision, as PRUs are quite challenging. To make life easier, we need some tools to work along. This post will help you make some of your own tools, using mostly bash scripts/aliases, and explain how to use other known tools with PRUs. Please note that some of the tools/use-cases will not make sense as of now, but I will still include them in the post for future reference. Some of these tools might seem very trivial, but I would still like to mention them (it may give hope to someone :) )&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;u-contents-u:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;Contents&lt;/u&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#docs:de018d5265887708b1682007c1f4431a&#34;&gt;Documents&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;AM335x PRU-ICSS Reference Guide&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#cmd:de018d5265887708b1682007c1f4431a&#34;&gt;Commands&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pmd:de018d5265887708b1682007c1f4431a&#34;&gt;Power management : PRUs : Details&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#pmc:de018d5265887708b1682007c1f4431a&#34;&gt;Power management : PRUs : Commands&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To shut PRU core 1&lt;/li&gt;
+&lt;li&gt;To shut PRU core 0&lt;/li&gt;
+&lt;li&gt;To boot PRU core 1&lt;/li&gt;
+&lt;li&gt;To boot PRU core 0&lt;/li&gt;
+&lt;li&gt;To reboot both PRU cores&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#pdd:de018d5265887708b1682007c1f4431a&#34;&gt;PRU debug : Details&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#pdc:de018d5265887708b1682007c1f4431a&#34;&gt;PRU debug : Commands&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ppause1 and ppause0 - to pause the PRUs&lt;/li&gt;
+&lt;li&gt;presume1 and presume0 - to resume the PRUs&lt;/li&gt;
+&lt;li&gt;pnext1 and pnext0 - to execute the next step&lt;/li&gt;
+&lt;li&gt;pregs1 and pregs0 - to read the debug register content of the PRUs&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tools:de018d5265887708b1682007c1f4431a&#34;&gt;Tools&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#dmesg:de018d5265887708b1682007c1f4431a&#34;&gt;dmesg : kernel logs and the PRU&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#fin:de018d5265887708b1682007c1f4431a&#34;&gt;fin&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;docs:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;Documents&lt;/u&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You definitely know that the AM335x processor is manufactured by TI, and only they know what actually is inside the semiconductor. To tell this to the world, every semiconductor device, open to the world, comes with some kind of document explaining its internal working. For PRUs, I found the document at &lt;a href=&#34;https://github.com/beagleboard/am335x_pru_package/&#34;&gt;https://github.com/beagleboard/am335x_pru_package/&lt;/a&gt;. The pdf named am335xPruReferenceGuide.pdf is the one I am talking about. Its an ultimately important and nice document to keep with you. I use it all the time, when I am working with PRUs. If you want to download this click &lt;a href=&#34;https://github.com/beagleboard/am335x_pru_package/raw/master/am335xPruReferenceGuide.pdf&#34;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;cmd:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;Commands&lt;/u&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In this section, we will add some commands to use them as our tools. &lt;strong&gt;Please note that these commands may not be very clean, but they definitely server the purpose. When you will execute them, they might produce some output, but dont worry much about it, we can use &amp;lsquo;dmesg&amp;rsquo; to do the real debugging and monitor what is happening as I have explained below in the post&lt;/strong&gt;. There will be an explanation about the working of the commands also.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h5 id=&#34;pmd:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;Power management : PRUs : Details&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;This &lt;a href=&#34;https://www.zeekhuge.me/post/ptp_blinky/&#34;&gt;blinky post&lt;/a&gt; demonstrated how the deploy.sh script reboots the PRU. Now if you are deciding to play with PRUs frequently, there needs to be a tool to shut them down and boot them up, when needed, without doing the force rmmod of the pru_rproc. Now the remoteproc driver for PRUs, pru_proc handles the PRU core. It further exposes sysfs entries to boot and shutdown PRUs. So for PRU0 you can shut it down like this :
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/unbind
+&lt;/pre&gt;
+and boot it up :
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/bind
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;At this point, you would want to make this &lt;strong&gt;note that the device name of PRU core 0 is actually &lt;u&gt;4a334000.pru0&lt;/u&gt; and that of the PRU core 1 is &lt;u&gt;4a338000.pru1&lt;/u&gt;.&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;So writing the device name of any of the pru cores to the &amp;lsquo;bind&amp;rsquo; sysfs entry will make the remoteproc driver to boot that pru core. Similarly, writing a pru device name to &amp;lsquo;unbind&amp;rsquo; sysfs entry will make that pru core to shutdown.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;pmc:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;Power management : PRUs : Commands&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;While working, I really don&amp;rsquo;t like to type this long instruction to shutdown or boot the PRU. What I do is, I have added some aliases to my ~/.bashrc script, and believe me, they really make things easy. Just open the ~/.bash.rc in your favorite editor and append it with following aliases.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;pshut1 : To shut PRU core 1&lt;/strong&gt;
+&lt;pre class=&#34;prettyprint&#34;&gt;
+alias pshut1=&amp;lsquo;echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo “Core 1 is off”&amp;rsquo;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;pshut0 : To shut PRU core 0&lt;/strong&gt;
+&lt;pre class=&#34;prettyprint&#34;&gt;
+alias pshut0=&amp;lsquo;echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp; echo “Core 0 is off”&amp;rsquo;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;pboot1 : To boot PRU core 1&lt;/strong&gt;
+&lt;pre class=&#34;prettyprint&#34;&gt;
+alias pboot1=&amp;lsquo;echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo “Core 1 is on”&amp;rsquo;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;pboot0 : To boot PRU core 0&lt;/strong&gt;
+&lt;pre class=&#34;prettyprint&#34;&gt;
+alias pboot0=&amp;lsquo;echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp; echo “Core 0 is on”&amp;rsquo;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;preboot : To reboot both PRU cores&lt;/strong&gt;
+&lt;pre class=&#34;prettyprint&#34;&gt;
+alias preboot=&amp;lsquo;echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp;
+           echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/unbind &amp;amp;&amp;amp;
+           echo 4a338000.pru1&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp;
+           echo 4a334000.pru0&amp;gt;/sys/bus/platform/drivers/pru-rproc/bind &amp;amp;&amp;amp;
+           echo &amp;ldquo;PRUs rebooted&amp;rdquo;&amp;rsquo;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;pdd:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;PRU debug : Details&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Now here comes the interesting section. The PRUs are usually seen as these &amp;lsquo;black boxes&amp;rsquo; as no one knows what is happening inside it. With the latest remoteproc, this is not true. We can actually see the content of the PRU registers or we can pru execute one instruction at a time, and then wait for the user for a instruction to execute next instruction. The pru_rproc driver exposes these debugfs entries :
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ root@beaglebone:/sys/kernel/debug/remoteproc# tree remoteproc0
+remoteproc0
+|&amp;ndash; name
+|&amp;ndash; recovery
+|&amp;ndash; state
+|&amp;ndash; trace0
+&lt;code&gt;-- version
+&lt;/code&gt;
+0 directories, 5 files
+root@beaglebone:/sys/kernel/debug/remoteproc# tree remoteproc1
+remoteproc1
+|&amp;ndash; name
+|&amp;ndash; recovery
+|&amp;ndash; regs
+|&amp;ndash; single_step
+|&amp;ndash; state
+&lt;code&gt;-- version
+&lt;/code&gt;
+0 directories, 6 files
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;NOTE that all these entries will appear only when the associated PRU is properly booted.&lt;/strong&gt; So remoteproc1 is associated with PRU1 and remoteproc0 is associated with PRU0.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;PRUs have this nice feature called the SINGLE_STEP mode. When activated in this mode, the PRU core executes one instruction, waits for a kind of flag from the user, executes the next instruction and this continues. To get PRU0 in the SINGLE_STEP mode, just :
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ echo 1 &amp;gt; /sys/kernel/debug/remoteproc/remoteproc0/single_step
+&lt;/pre&gt;
+and for PRU1 it will be
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ echo 1 &amp;gt; /sys/kernel/debug/remoteproc/remoteproc1/single_step
+&lt;/pre&gt;
+So basically, writing 0 to the single_step entry, changes the PRU mode to continuous mode and writing a non-zero value starts the single_step mode. Internally, writing to single_step entry writes to the SINGLE_STEP field of the CONTROL register in the PRU_CTRL register set.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Like any other computing system, PRUs has got a set of register and data-structures, for various purposes. Some of these are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;General Purpose registers.&lt;/strong&gt; So each PRU core has got this set of 32 general purpose register. While programming PRUs in C/C++, the compiler makes use of these registers for various purposes and one cant actually access a single register in C/C++, exception being the R31 and R30 register. But when programming them in Assembly, having something to peek into the contents of these register can be very useful tool. When the PRU is disabled, that is, it is not in continuous mode of fetching next instruction, the Kernel can actually read the content of these general purpose register.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PRU_CONTROL register.&lt;/strong&gt; PRUs has this set of registers called PRU_CTRL (read it PRU control) registers. It consists of CONTROL, STATUS, WAKEUP_EN, CYCLE, STALL, CTBIR0, CTBIR1, CTPPR0 and CTPPR1 register. The control various subsystems and accesses. The kernel can, at anytime read the content of these registers. By &amp;lsquo;anytime&amp;rsquo; I mean that the PRU does not need to be disabled to read this register set.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PRU constant table.&lt;/strong&gt; This data structure contains the address of various subsystem that are most commonly used by the PRUs. Some of its entries can also be configured using the PRU_CTR registers. Programming in C/C++ removes the need of any access to this structure, it internally manages everything (except in a few cases). But if needed, the kernel can read the content of the constant table too, provided, the pru is disabled.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To disable the PRUs, what one can do from userspace is, just write a non-zero value to the single_step debugfs entry, the PRU will execute one instruction and then will disable itself until you again write a value to the entry. In fact this is how the single_step mode works.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;After disabling the PRU, you can use the &amp;lsquo;regs&amp;rsquo; entry to read the register content values.
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ cat /sys/kernel/debug/remoteproc/remoteproc1/regs
+============== Control Registers ==============
+CTRL      := 0x00000101
+STS (PC)  := 0x00000028 (0x000000a0)
+WAKEUP_EN := 0x00000000
+CYCLE     := 0x00000000
+STALL     := 0x00000000
+CTBIR0    := 0x00000000
+CTBIR1    := 0x00000000
+CTPPR0    := 0x00000000
+CTPPR1    := 0x00000000
+=============== Debug Registers ===============
+GPREG0  := 0x7fff8000   CT_REG0  := 0x00020000
+GPREG1  := 0x9e103100   CT_REG1  := 0x48040000
+GPREG2  := 0x000002ac   CT_REG2  := 0x4802a000
+GPREG3  := 0x0035003b   CT_REG3  := 0x00030000
+GPREG4  := 0x00020024   CT_REG4  := 0x00026000
+GPREG5  := 0x00000300   CT_REG5  := 0x48060000
+GPREG6  := 0xdfd3df83   CT_REG6  := 0x48030000
+GPREG7  := 0xf9c1a30b   CT_REG7  := 0x00028000
+GPREG8  := 0x215e3af4   CT_REG8  := 0x46000000
+GPREG9  := 0x2868c478   CT_REG9  := 0x4a100000
+GPREG10 := 0x26e01c54   CT_REG10 := 0x48318000
+GPREG11 := 0xaf704e74   CT_REG11 := 0x48022000
+GPREG12 := 0x51588e6f   CT_REG12 := 0x48024000
+GPREG13 := 0x667bc7c2   CT_REG13 := 0x48310000
+GPREG14 := 0x0000ffff   CT_REG14 := 0x481cc000
+GPREG15 := 0x00000290   CT_REG15 := 0x481d0000
+GPREG16 := 0x0000028c   CT_REG16 := 0x481a0000
+GPREG17 := 0x00000000   CT_REG17 := 0x4819c000
+GPREG18 := 0x000002ac   CT_REG18 := 0x48300000
+GPREG19 := 0x000a6465   CT_REG19 := 0x48302000
+GPREG20 := 0x02100000   CT_REG20 := 0x48304000
+GPREG21 := 0x01120011   CT_REG21 := 0x00032400
+GPREG22 := 0x0000001e   CT_REG22 := 0x480c8000
+GPREG23 := 0x00000000   CT_REG23 := 0x480ca000
+GPREG24 := 0x75727265   CT_REG24 := 0x00000000
+GPREG25 := 0x64657470   CT_REG25 := 0x00002000
+GPREG26 := 0x6e616843   CT_REG26 := 0x0002e000
+GPREG27 := 0x206c656e   CT_REG27 := 0x00032000
+GPREG28 := 0x49003033   CT_REG28 := 0x00000000
+GPREG29 := 0x7265746e   CT_REG29 := 0x49000000
+GPREG30 := 0xe5e2782f   CT_REG30 := 0x40000000
+GPREG31 := 0x80000000   CT_REG31 := 0x80000000
+&lt;/pre&gt;
+In the above output&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;GPREGn refers to the nth general prupose register&lt;/li&gt;
+&lt;li&gt;CT_REGn refers to the nth content of the constant table.&lt;/li&gt;
+&lt;li&gt;And the &amp;lsquo;Control Registers&amp;rsquo; section displays the content of the PRU_CTRL registers.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;pdc:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;PRU debug : Commands&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;So here comes the set of aliases that I use to control PRUs for debugging. Just append them to your ~/.bashrc file and the will be in effect you login next time.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;ppause1 and ppause0 - to pause the PRUs.&lt;/strong&gt; This basically changes the mode of the PRUs to single_step mode. PRUs execute one instruction and then gets paused
+&lt;pre class=&#34;prettyprint&#34;&gt;
+alias ppause1=&amp;lsquo;echo 1 &amp;gt; /sys/kernel/debug/remoteproc/remoteproc1/single_step&amp;rsquo;
+alias ppause0=&amp;lsquo;echo 1 &amp;gt; /sys/kernel/debug/remoteproc/remoteproc0/single_step&amp;rsquo;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;presume1 and presume0 - to resume the PRUs.&lt;/strong&gt; Internally this brings back the PRU to continuous mode of operation.
+&lt;pre class=&#34;prettyprint&#34;&gt;
+alias presume1=&amp;lsquo;echo 0 &amp;gt; /sys/kernel/debug/remoteproc/remoteproc1/single_step&amp;rsquo;
+alias presume0=&amp;lsquo;echo 0 &amp;gt; /sys/kernel/debug/remoteproc/remoteproc0/single_step&amp;rsquo;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;pnext1 and pnext0 - to execute the next step.&lt;/strong&gt; This starts the single_step mode of the PRUs and execute one next step each time invoked.
+&lt;pre class=&#34;prettyprint&#34;&gt;
+alias pnext1=&amp;lsquo;echo 1 &amp;gt; /sys/kernel/debug/remoteproc/remoteproc1/single_step&amp;rsquo;
+alias pnext0=&amp;lsquo;echo 1 &amp;gt; /sys/kernel/debug/remoteproc/remoteproc0/single_step&amp;rsquo;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;pregs1 and pregs0 - to read the debug register content of the PRUs.&lt;/strong&gt; If you want to read all the register content, the PRU need to paused before the call to this alias. If it is not paused, only the PRU_CONTROL register content will be printed out.
+&lt;pre class=&#34;prettyprint&#34;&gt;
+alias pregs1=&amp;lsquo;cat /sys/kernel/debug/remoteproc/remoteproc1/regs&amp;rsquo;
+alias pregs0=&amp;lsquo;cat /sys/kernel/debug/remoteproc/remoteproc0/regs&amp;rsquo;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;tools:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;Tools&lt;/u&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Well, after all these commands/aliases we just added in the above section, I have one tool left for you that is &amp;lsquo;dmesg&amp;rsquo;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&#34;dmesg:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;dmesg : kernel logs and the PRU&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Yeah, I know that you already know this, but believe me, this &amp;lsquo;dmesg&amp;rsquo; point this blog can prove to save many hours(and probably lives). OK so you think I am just wasting up space mentioning this point here ? really ? well, then just let me use some more of it :P&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Whenever I start working with the PRUs, what I usually do is, open up a new terminal, ssh into the BBB, change the title of the terminal to &amp;lsquo;BBB dmesg&amp;rsquo; to make it easy to switch between 10-12 terminals, and then execute this command :
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ dmesg -Hw
+&lt;/pre&gt;
+What it does is that it waits for new kernel log messages and prints them as they arrive. It also makes the output a bit colorful.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;On booting or shutting down the PRUs, the remoteproc drivers print some kernel logs. These kernel log messages can be used to check if the firmware gets loaded on the PRU.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Kernel log messages when the PRUs are booted up :
+&lt;pre class=&#34;prettyprint linenums&#34;&gt;
+[  +5.822834]  remoteproc1: 4a334000.pru0 is available
+[  +0.005249]  remoteproc1: Note: remoteproc is still under development and considered experimental.
+[  +0.009165]  remoteproc1: THE BINARY FORMAT IS NOT YET FINALIZED, and backward compatibility isn&amp;rsquo;t yet guaranteed.
+[  +0.019388] pru-rproc 4a334000.pru0: booting the PRU core manually
+[  +0.006738]  remoteproc1: powering up 4a334000.pru0
+[  +0.011898]  remoteproc1: Booting fw image am335x-pru0-fw, size 32292
+[  +0.006832]  remoteproc1: remote processor 4a334000.pru0 is now up
+[  +0.006434] pru-rproc 4a334000.pru0: PRU rproc node /ocp/pruss@4a300000/pru0@4a334000 probed successfully
+[  +0.022337]  remoteproc2: 4a338000.pru1 is available
+[  +0.005196]  remoteproc2: Note: remoteproc is still under development and considered experimental.
+[  +0.009167]  remoteproc2: THE BINARY FORMAT IS NOT YET FINALIZED, and backward compatibility isn&amp;rsquo;t yet guaranteed.
+[  +0.017694] pru-rproc 4a338000.pru1: booting the PRU core manually
+[  +0.006884]  remoteproc2: powering up 4a338000.pru1
+[  +0.011585]  remoteproc2: Booting fw image am335x-pru1-fw, size 32292
+[  +0.006809]  remoteproc2: remote processor 4a338000.pru1 is now up
+[  +0.006440] pru-rproc 4a338000.pru1: PRU rproc node /ocp/pruss@4a300000/pru1@4a338000 probed successfully
+&lt;/pre&gt;
+This message can be a bit different for complex and different firmwares, but the important point to note here is the loading of the firmware onto the PRUs. The line in the dmesg that shows this is:
+&lt;pre class=&#34;prettyprint &#34;&gt;
+[  +0.006832]  remoteproc1: remote processor 4a334000.pru0 is now up
+[  +0.006434] pru-rproc 4a334000.pru0: PRU rproc node /ocp/pruss@4a300000/pru0@4a334000 probed successfully
+&lt;/pre&gt;
+and
+&lt;pre class=&#34;prettyprint &#34;&gt;
+[  +0.006884]  remoteproc2: powering up 4a338000.pru1
+[  +0.011585]  remoteproc2: Booting fw image am335x-pru1-fw, size 32292
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Kernel log message when the PRUs get shutdown :
+&lt;pre class=&#34;prettyprint linenums&#34;&gt;
+[Jul17 15:40] pru-rproc 4a334000.pru0: pru_rproc_remove: removing rproc 4a334000.pru0
+[  +0.007909] pru-rproc 4a334000.pru0: stopping the manually booted PRU core
+[  +0.017800] ti-pruss 4a300000.pruss: unconfigured system_events = 0xffffffffffffffff host_intr = 0x00000001
+[  +0.010081]  remoteproc1: stopped remote processor 4a334000.pru0
+[  +0.012963]  remoteproc1: releasing 4a334000.pru0
+[  +0.010409] pru-rproc 4a338000.pru1: pru_rproc_remove: removing rproc 4a338000.pru1
+[  +0.007950] pru-rproc 4a338000.pru1: stopping the manually booted PRU core
+[  +0.015339] ti-pruss 4a300000.pruss: unconfigured system_events = 0xffffffffffffffff host_intr = 0x00000001
+[  +0.010043]  remoteproc2: stopped remote processor 4a338000.pru1
+[  +0.012716]  remoteproc2: releasing 4a338000.pru1
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Kernel log messages when the firmware could not be loaded onto the PRUs :
+&lt;pre class=&#34;prettyprint linenums&#34;&gt;
+[Jul17 15:45]  remoteproc1: 4a334000.pru0 is available
+[  +0.005235]  remoteproc1: Note: remoteproc is still under development and considered experimental.
+[  +0.009203]  remoteproc1: THE BINARY FORMAT IS NOT YET FINALIZED, and backward compatibility isn&amp;rsquo;t yet guaranteed.
+[  +0.019418]  remoteproc1: Direct firmware load for am335x-pru0-fw failed with error -2
+[  +0.008195]  remoteproc1: failed to load am335x-pru0-fw
+[  +0.010259] pru-rproc 4a334000.pru0: booting the PRU core manually
+[  +0.006529]  remoteproc1: powering up 4a334000.pru0
+[  +0.013469]  remoteproc1: Direct firmware load for am335x-pru0-fw failed with error -2
+[  +0.008150]  remoteproc1: request_firmware failed: -2
+[  +0.005235] pru-rproc 4a334000.pru0: rproc_boot failed
+[  +0.012949]  remoteproc1: releasing 4a334000.pru0
+[  +0.005070] pru-rproc: probe of 4a334000.pru0 failed with error -2
+[  +0.012818]  remoteproc1: 4a338000.pru1 is available
+[  +0.005158]  remoteproc1: Note: remoteproc is still under development and considered experimental.
+[  +0.009091]  remoteproc1: THE BINARY FORMAT IS NOT YET FINALIZED, and backward compatibility isn&amp;rsquo;t yet guaranteed.
+[  +0.014271]  remoteproc1: Direct firmware load for am335x-pru1-fw failed with error -2
+[  +0.008084]  remoteproc1: failed to load am335x-pru1-fw
+[  +0.007755] pru-rproc 4a338000.pru1: booting the PRU core manually
+[  +0.009969]  remoteproc1: powering up 4a338000.pru1
+[  +0.005178]  remoteproc1: Direct firmware load for am335x-pru1-fw failed with error -2
+[  +0.008057]  remoteproc1: request_firmware failed: -2
+[  +0.005121] pru-rproc 4a338000.pru1: rproc_boot failed
+[  +0.009849]  remoteproc1: releasing 4a338000.pru1
+[  +0.005094] pru-rproc: probe of 4a338000.pru1 failed with error -2
+&lt;/pre&gt;
+This is mostly when there is no file like am335x-pru1-fw or am335x-pru0-fw available inside the /lib/firmware/ directory.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;fin:de018d5265887708b1682007c1f4431a&#34;&gt;&lt;u&gt;fin&lt;/u&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;So, with these tools, I hope that that your learning speed gets faster and the process gets much easier. I would close this post with these lines of Abraham Lincoln&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;&amp;ldquo;Give me Six hours to chop down a tree and I will spend
+first four sharpening the axe&amp;rdquo;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PTP - Programming The PRUs 1: Blinky</title>
+      <link>https://www.zeekhuge.me/post/ptp_blinky/</link>
+      <pubDate>Sat, 16 Jul 2016 15:45:08 +0530</pubDate>
+      
+      <guid>https://www.zeekhuge.me/post/ptp_blinky/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;This is the first post in a series of posts that will try to put the PRU programming process in the simplest and the most logical form, connecting all the dots (rpmsg, remoteproc etc). The posts of this series will have PTP (Programming The Pru) at the beginning of its title. As its just the beginning, this post aims to get you a blinky application using PRUs on your BeagleBone Black.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;u-preface-u:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Preface&lt;/u&gt;&lt;/h3&gt;
+
+&lt;p&gt;Some people might say, &lt;em&gt;&amp;ldquo;Really ? A blinky ? Are you kidding me ? If someone is trying to get started with PRUs, he/she&amp;rsquo;s most probably knows the concepts of embedded programming well.&amp;rdquo;&lt;/em&gt; And to them, I would just say &lt;em&gt;&amp;ldquo;yes, a blinky.&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;However experienced an embedded programmer is, blinky can still be the most thrilling application that he develops. It is thrilling at least to me, and I just put my hands up in the air like I have won a war. Further, this post will help you get all the things at the right place to begin with more complex examples. If you still don&amp;rsquo;t think its worth it, well, Its my post :P&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;u-content-u:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Content&lt;/u&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#ptr:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Pointers - some miscellaneous and important points&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#stp:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Setup&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#repo:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Get the repo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#hdmi:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Disable the HDMI cape&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#pins:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Available pins&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#leds:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;LEDs on P8_45&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#pcgt:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Setting up the PRU code generation tool&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#blin:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Get blinky&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#code:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Into the code&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#ccode:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;The C code : PRU_gpioToggle&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The __R31 and __R30 variables&lt;/li&gt;
+&lt;li&gt;The __delay_cycles() function&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#cmd:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;The linker file : PRU_gpioToggle/AM335x_PRU.cmd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#desh:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;The deploy script : deploy.sh&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#nxt:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;Whats next ?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;ptr:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Pointers&lt;/u&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;We will be dealing with latest kernels. The series of examples are expected to work on kernel version later than 4.4.12-ti-r31. To check what the latest kernel available is
+&lt;pre class=&#34;prettyprint &#34;&gt;
+$ sudo apt-get update
+$ sudo apt-cache search &amp;lsquo;linux-image-&lt;em&gt;-ti-&lt;/em&gt;&amp;rsquo; | sort -V
+&lt;/pre&gt;
+Out of the list that now appears, assuming the latest kernel image to be 4.4.12-ti-r31
+&lt;pre class=&#34;prettyprint &#34;&gt;
+$ export NEW=4.4.12-ti-r31
+$ sudo apt-get install -y linux-firmware-image-$NEW linux-headers-$NEW linux-image-$NEW
+$ reboot
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Since we all love Linux, and its standards that support scalability, no prussdrv talks.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The example directory that we will be using is the &amp;lsquo;examples/&amp;rsquo; directory from my GSoC project &lt;a href=&#34;https://github.com/ZeekHuge/BeagleScope&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I will be adding the code/commands for all the steps here, but to make life easier, there is always this &lt;a href=&#34;https://www.zeekhuge.me/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/&#34;&gt;cheat sheet&lt;/a&gt;  you can refer to.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;For any experiments you do with PRUs, remember that they can source very less current. Probably about 8mA, so keep that in mind.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.zeekhuge.me/jokes/ohm.png&#34; alt=&#34;Power&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;picture credits : &lt;a href=&#34;https://xkcd.com&#34;&gt;xkcd.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Hang on throughout the series, as it might get a bit daunting at times.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;stp:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Setup&lt;/u&gt;&lt;/h3&gt;
+
+&lt;h5 id=&#34;repo:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Get the repo&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;My GSoC 2016 project BeagleScope required understanding of PRU programming and its kernel interfacing. Since most of the things were documented in form of large PDFs I had to go through them and experiment a bit. The experiments are collected in the BeagleScop repo along with some documentation. To get the repo
+&lt;pre class=&#34;prettyprint &#34;&gt;
+$ git clone &lt;a href=&#34;https://github.com/ZeekHuge/BeagleScope.git&#34;&gt;https://github.com/ZeekHuge/BeagleScope.git&lt;/a&gt;
+&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h5 id=&#34;hdmi:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Disable the HDMI cape&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Why disable the HDMI cape ? Well, not all the pins of the PRUs are routed to the boards header pins. The max number of PRU pins in any case you can get is about 28 out of 64 pins, and most of the output pins happen to be routed to P8 header and associated to PRU1. But then, by default HDMI cape is loaded, which actually uses these pins, making it unstable to be used for PRUs. This pic of the &lt;a href=&#34;https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/docs/BeagleboneBlackP8HeaderTable.pdf&#34;&gt;BeagleScope/docs/BeagleboneBlackP8HeaderTable.pdf&lt;/a&gt; shows the pin numbers that we get after we disable the HDMI cape:
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://www.zeekhuge.me/images/hdmi_pins.png&#34; width=&#34;1000&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;P8 pins : muxed to hdmi by default&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+So disabling it is the best option. To disable the cape, you need to edit your &amp;lsquo;/boot/uEnv.txt&amp;rsquo; file and uncomment
+&lt;pre class=&#34;prettyprint &#34;&gt;
+dtb=am335x-boneblack-emmc-overlay.dtb
+&lt;/pre&gt;
+the first few lines of your &amp;lsquo;/boot/uEnv.txt&amp;rsquo; would then look something like this :
+&lt;pre class=&#34;prettyprint &#34;&gt;
+01 #Docs: &lt;a href=&#34;http://elinux.org/Beagleboard:U-boot_partitioning_layout_2.0&#34;&gt;http://elinux.org/Beagleboard:U-boot_partitioning_layout_2.0&lt;/a&gt;
+02
+03 uname_r=4.4.12-ti-r31
+04 ##uuid=
+05 #dtb=
+06
+07 ##BeagleBone Black/Green dtbs for v4.1.x (BeagleBone White just works..)
+08
+09 ##BeagleBone Black: HDMI (Audio/Video) disabled:
+10 dtb=am335x-boneblack-emmc-overlay.dtb
+11 ##BeagleBone Black: eMMC disabled:
+12 #dtb=am335x-boneblack-hdmi-overlay.dtb
+&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h5 id=&#34;pins:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Available pins&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;So after disabling the HDMI cape, we have a few pins to use for PRU examples on P8 header. At this point you might want to note the pins that we can use the. You can use this doc at &lt;a href=&#34;https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/docs/BeagleboneBlackP8HeaderTable.pdf&#34;&gt;BeagleScope/docs/BeagleboneBlackP8HeaderTable.pdf&lt;/a&gt;:
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://www.zeekhuge.me/images/pru_pins_p8.png&#34; width=&#34;1000&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;P8 pins : Associated to PRU1&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h5 id=&#34;leds:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;LEDs on P8_45&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;em&gt;Read this carefully&lt;/em&gt;&lt;/strong&gt;*. The blinky we are aiming to get will be using an external LED. ***NOW, THIS EXTERNAL LED SHOULD NOT USE CURRENT MORE THAN ~8mA, AND FOR THIS, AT 3.3V, &lt;strong&gt;&lt;em&gt;THE RESISTOR TO BE USED SHOULD BE GREATER THAN OR EQUAL TO 470 ohms&lt;/em&gt;&lt;/strong&gt;. If you would want to the get more current out of it, checkout &lt;a href=&#34;http://www.thebrokendesk.com/post/blinking-an-led-with-the-beaglebone-black/&#34;&gt;this link&lt;/a&gt;. Connect this LED you have now, using a &amp;gt;=470 ohm resistor, to the P8_45 pin on the beaglebone black board.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h5 id=&#34;pcgt:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Setting up the PRU code generation tools&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;The PRUs are not like the other standard processors. PRUs are based on TI&amp;rsquo;s proprietor architecture, and therefore we need a compiler other than GCC to compile code for PRUs. To download the code generation tools on your BBB(recommended) :
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ wget -c &lt;a href=&#34;http://software-dl.ti.com/codegen/esd/cgt_public_sw/PRU/2.1.2/ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh&#34;&gt;http://software-dl.ti.com/codegen/esd/cgt_public_sw/PRU/2.1.2/ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh&lt;/a&gt;
+$ chmod +x ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh
+$ ./ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh
+&lt;/pre&gt;
+To download it on you linux host system
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ wget -c &lt;a href=&#34;http://software-dl.ti.com/codegen/esd/cgt_public_sw/PRU/2.1.2/ti_cgt_pru_2.1.2_linux_installer_x86.bin&#34;&gt;http://software-dl.ti.com/codegen/esd/cgt_public_sw/PRU/2.1.2/ti_cgt_pru_2.1.2_linux_installer_x86.bin&lt;/a&gt;
+$ chmod +x ti_cgt_pru_2.1.2_linux_installer_x86.bin
+$ ./ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To setup the environment, we need to create some symbolic links and export some environment variables. The symbolic links will help us to keep things at one place, and that is, inside the /usr/share/cgt-pru/. The symbolic links target to the&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;clpru - The PRU c compiler&lt;/li&gt;
+&lt;li&gt;lnkpru - The PRU linker
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ ln -s /usr/bin/clpru /usr/share/ti/cgt-pru/bin/clpru
+$ ln -s /usr/bin/lnkpru /usr/share/ti/cgt-pru/bin/lnkpru
+&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;We need the environment variable &amp;lsquo;PRU_CGT&amp;rsquo; to point to the &amp;lsquo;/usr/share/ti/cgt-pru/&amp;rsquo; directory. This is pretty straight forward, just:
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ export PRU_CGT=/usr/share/ti/cgt-pru
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If you want this to be done automatically when you start a terminal on bbb, just add the above line to &amp;lsquo;~/.bash.rc&amp;rsquo;. Once all this is done, you can test your setup:
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ $PRU_CGT/bin/clpru
+&lt;/pre&gt;
+And a list of help options would appear.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h5 id=&#34;blin:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Get blinky&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;To get to the example we are going to use, you will have to get into the examples :
+$ cd BeagleScope/examples/firmware_exmples/pru_blinky/&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now that you are at the example, just:
+&lt;pre class=&#34;prettyprint&#34;&gt;
+$ ./deploy.sh
+&lt;/pre&gt;
+&lt;em&gt;and WHOLA ! You have the led blinking at P8_45.&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;code:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Into the code&lt;/u&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;For this post, we will dive into the PRU_gpioToggle/PRU_gpioToggle.c, PRU_gpioToggle/AM335x_PRU.cmd file and the deploy.sh script. We will get into the Makefile and the resource table in future post.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h5 id=&#34;ccode:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;The C code : PRU_gpioToggle.c&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;So here is the &lt;a href=&#34;https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/PRU_gpioToggle.c&#34;&gt;code&lt;/a&gt; and its pretty straight forward .But there are two things I would like to discuss here :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The __R31 and __R30 variables
+The two lines in the code :
+&lt;pre class=&#34;prettyprint&#34;&gt;
+volatile register uint32_t __R30;
+volatile register uint32_t __R31;
+&lt;/pre&gt;
+declares the global register variables __R30 and __R31.  One may think that any of the PRUs register could be accessed by using a variable of &amp;lsquo;register&amp;rsquo; type, but that is not true with C/C++. The special thing about this is, the clpru (compiler we are using) can only have __R30 and __R31 as the variable of register type. The compiler would not allow the any variable other than __R31 and __R30 to be of the &amp;lsquo;register&amp;rsquo; type, and the compiler do not allows to access any of the R29-R0 registers of the PRU. You may declare various variables and the PRU would manage internally, juggling all various resources (including registers), but no direct access is allowed.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The __delay_cycles() function
+The __delay_cycles() function, as the name suggests, causes a delay of specified number of cycles. __delay_cycles() is an intrinsic compiler function. The term &amp;lsquo;intrinsic&amp;rsquo; means that the definition of the function is not a fixed one. The definition is handled by the compiler. This is probably because in the assembly implementation of the loop, it takes one cycle to subtract 1 from counter register and then another cycle to compare the register. This limits the delay that can be produced by one implementation, as the next counter value will be
+&lt;pre class=&#34;prettyprint&#34;&gt;
+counter = counter - 2
+&lt;/pre&gt;
+A single implementation of delay function can work either for odd number of cycles, or an even umber of cycles, but not for both.
+The exact declaration of the function is as:
+&lt;pre class=&#34;prettyprint&#34;&gt;
+void __delay_cycles (const unsigned int cycles);
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h5 id=&#34;cmd:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;The linker file : PRU_gpioToggle/AM335x_PRU.cmd&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;PRUs are pretty simple processing cores, but the PRUSS system is highly integrated and provides the PRU a rich set of peripherals. All these peripherals inside the PRUSS are at different address locations and they need to be configured by the linux kernel at the time of firmware loading onto the PRUs. The &lt;a href=&#34;https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/AM335x_PRU.cmd&#34;&gt;AM335x_PRU.cmd file&lt;/a&gt; provides a mapping to the linker, from different sections of code, to different memory locations inside the PRUSS.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;There are 2 sections inside the AM335x_PRU.cmd file :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The &amp;lsquo;MEMORY&amp;rsquo; section
+This section gives a kind of alias name to different regions of memory inside the PRUs. If you look at the code and this snippet from the PRU reference manual, you see that the mappings are indeed associated to the exact memory region of the peripherals.
+&amp;lt;?prettify?&amp;gt;
+&lt;pre class=&#34;prettyprint linenums&#34;&gt;
+MEMORY
+{
+PAGE 0:
+PRU_IMEM                : org = 0x00000000 len = 0x00002000  /* 8kB PRU0 Instruction RAM */
+PAGE 1:
+/* RAM */
+PRU_DMEM_0_1    : org = 0x00000000 len = 0x00002000 CREGISTER=24 /* 8kB PRU Data RAM 0_1 */
+PRU_DMEM_1_0    : org = 0x00002000 len = 0x00002000     CREGISTER=25 /* 8kB PRU Data RAM 1_0 */
+  PAGE 2:
+PRU_SHAREDMEM   : org = 0x00010000 len = 0x00003000 CREGISTER=28 /* 12kB Shared RAM */
+DDR                         : org = 0x80000000 len = 0x00000100 CREGISTER=31
+L3OCMC                  : org = 0x40000000 len = 0x00010000     CREGISTER=30
+/* Peripherals */
+PRU_CFG                 : org = 0x00026000 len = 0x00000044     CREGISTER=4
+PRU_ECAP                : org = 0x00030000 len = 0x00000060     CREGISTER=3
+PRU_IEP                 : org = 0x0002E000 len = 0x0000031C     CREGISTER=26
+PRU_INTC                : org = 0x00020000 len = 0x00001504     CREGISTER=0
+PRU_UART                : org = 0x00028000 len = 0x00000038     CREGISTER=7
+DCAN0                   : org = 0x481CC000 len = 0x000001E8     CREGISTER=14
+DCAN1                   : org = 0x481D0000 len = 0x000001E8     CREGISTER=15
+DMTIMER2                : org = 0x48040000 len = 0x0000005C     CREGISTER=1
+PWMSS0                  : org = 0x48300000 len = 0x000002C4     CREGISTER=18
+PWMSS1                  : org = 0x48302000 len = 0x000002C4     CREGISTER=19
+PWMSS2                  : org = 0x48304000 len = 0x000002C4     CREGISTER=20
+GEMAC                   : org = 0x4A100000 len = 0x0000128C     CREGISTER=9
+I2C1                    : org = 0x4802A000 len = 0x000000D8     CREGISTER=2
+I2C2                    : org = 0x4819C000 len = 0x000000D8     CREGISTER=17
+MBX0                    : org = 0x480C8000 len = 0x00000140     CREGISTER=22
+MCASP0_DMA              : org = 0x46000000 len = 0x00000100     CREGISTER=8
+MCSPI0                  : org = 0x48030000 len = 0x000001A4     CREGISTER=6
+MCSPI1                  : org = 0x481A0000 len = 0x000001A4     CREGISTER=16
+MMCHS0                  : org = 0x48060000 len = 0x00000300     CREGISTER=5
+SPINLOCK                : org = 0x480CA000 len = 0x00000880     CREGISTER=23
+TPCC                    : org = 0x49000000 len = 0x00001098     CREGISTER=29
+UART1                   : org = 0x48022000 len = 0x00000088     CREGISTER=11
+UART2                   : org = 0x48024000 len = 0x00000088     CREGISTER=12
+RSVD10                  : org = 0x48318000 len = 0x00000100     CREGISTER=10
+RSVD13                  : org = 0x48310000 len = 0x00000100     CREGISTER=13
+RSVD21                  : org = 0x00032400 len = 0x00000100     CREGISTER=21
+RSVD27                  : org = 0x00032000 len = 0x00000100     CREGISTER=27
+}
+&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://www.zeekhuge.me/images/memory_mapping.png&#34; width=&#34;1000&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;PRUSS Memory locations&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;hr /&gt;
+
+&lt;h5 id=&#34;desh:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;The deploy script : deploy.sh&lt;/u&gt;&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;The deploy script, in this example does following things :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&amp;lsquo;make&amp;rsquo;s the pru code.
+That is simple, the part of the script included below enters the PRU_gpioToggle and invokes the &amp;lsquo;make&amp;rsquo; command to make the project.
+&lt;pre class=&#34;prettyprint&#34;&gt;
+54 echo &amp;ldquo;-Building project&amp;rdquo;
+55 cd PRU_gpioToggle
+56 make clean
+57 make
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Copies the compiled pru firmware file (the file gen/&lt;em&gt;.out) to /lib/firmware/am335x-pru1-fw. When the PRUs are rebooted, the pru_rproc (remoteproc driver for PRUs) search for this file ans load it onto the PRU is it is present.
+The part of the script that does this is :
+&lt;pre class=&#34;prettyprint&#34;&gt;
+59 echo &amp;ldquo;-Placing the firmware&amp;rdquo;
+60 cp gen/&lt;/em&gt;.out /lib/firmware/am335x-pru$PRU_CORE-fw
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Configures the header pin.
+The script has two variables - 1) HEADER and 2) PIN_NUMBER. They together decide the boards header pin that is to be used and you can change them to get blinky on other pin (mind the comments above these variables in the script). The header pin is then configured and muxed to be a pru output pin. The script uses a very nice utility called &amp;lsquo;config-pin&amp;rsquo; and an which, very intelligently uses a Universal cape to configure pins without using a device tree file. More about &amp;lsquo;config-pin&amp;rsquo; can be found &lt;a href=&#34;https://www.zeekhuge.me/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/&#34;&gt;here&lt;/a&gt;. The part of the script that configures the pin is :
+&lt;pre class=&#34;prettyprint&#34;&gt;
+62 echo &amp;ldquo;-Configuring pinmux&amp;rdquo;
+63         config-pin -a $HEADER$PIN_NUMBER pruout
+64         config-pin -q $HEADER$PIN_NUMBER
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Reboots the PRU cores. After the firmwares are /lib/firmware/am335x-pru1(0)-fw is present, rebooting the PRU cores automatically loads the PRU with these firmwares. The sysfs bindings at the &amp;lsquo;/sys/bus/platform/drivers/pru-rproc/&amp;rsquo; can be used to reboot PRUs (more on this below). The part of the script that reboots the PRU core, according to the variable PRU_CORE in the script
+&lt;pre class=&#34;prettyprint&#34;&gt;
+66 echo &amp;ldquo;-Rebooting&amp;rdquo;
+67 if [ $PRU_CORE -eq 0 ]
+68 then
+69         echo &amp;ldquo;Rebooting pru-core 0&amp;rdquo;
+70         echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/unbind 2&amp;gt;/dev/null
+71         echo &amp;ldquo;4a334000.pru0&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/bind
+72 else
+73         echo &amp;ldquo;Rebooting pru-core 1&amp;rdquo;
+74         echo &amp;ldquo;4a338000.pru1&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/unbind 2&amp;gt; /dev/null
+75         echo &amp;ldquo;4a338000.pru1&amp;rdquo; &amp;gt; /sys/bus/platform/drivers/pru-rproc/bind
+76 fi
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;nxt:a6dc26714d32df1ac6a7aa69d40ae020&#34;&gt;&lt;u&gt;Whats next ?&lt;/u&gt;&lt;/h3&gt;
+
+&lt;p&gt;OK, so now you have a blinky ready and have got quite understanding of the PRUSS part. The next post will be related to &lt;a href=&#34;https://www.zeekhuge.me/post/ptp_docs_commands_and_tools&#34;&gt;Tools and Commands&lt;/a&gt; that use while eperimenting with PRUs. They really make working with them easier.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

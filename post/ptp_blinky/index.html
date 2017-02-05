@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="generator" content="Hugo 0.16-DEV" />
+        
+        <link rel="icon" type="image/png" href="/images/favicon.ico">
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="My thoughts and rambles">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PTP - Programming The PRUs 1: Blinky</title>
+        
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+        
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+        <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+        
+        <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+        <meta name="msapplication-TileColor" content="#3372DF">
+    
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"/>
+        <link rel="stylesheet" href="/css/ionicons.min.css"/>
+        <link rel="stylesheet" href="/css/material.grey-orange.min.css"/>
+        <link rel="stylesheet" href="/css/styles.css"/>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+          <link rel="stylesheet" href="/css/prism.css" />  
+</head>
+
+<body style="background-image: url('/images/back_c.jpg');">
+     
+         
+            <div class="hugo-blog hugo-blog--blogpost mdl-layout mdl-js-layout has-drawer is-upgraded">  
+        
+    
+        
+        
+    <header class="mdl-layout__header mdl-layout__header--transparent mdl-layout__header--scroll">
+        <div class="mdl-layout__header-row">
+            
+            
+            
+            <div class="mdl-layout-spacer"></div>
+            
+            <nav class="mdl-navigation">
+
+
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<a aria-label="Follow @zeekhuge on GitHub" data-count-aria-label="# followers on GitHub" data-count-api="/users/zeekhuge#followers" data-count-href="/zeekhuge/followers" data-style="mega" href="https://github.com/zeekhuge" class="github-button">Follow @zeekhuge</a>
+
+
+
+
+
+
+
+
+           	<a class='mdl-navigation__link ' href="/">Home</a>
+		<a class='mdl-navigation__link ' href="https://github.com/ZeekHuge/BeagleScope">BeagleScope</a>
+                <a class='mdl-navigation__link ' href="/post">Posts</a>
+	
+                <a class='mdl-navigation__link ' href="/about">About</a>
+		<a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">Github</a>
+            </nav>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        
+        <nav class="mdl-navigation">
+            <a class='mdl-navigation__link ' href="/">Home</a>
+	    <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge/BeagleScope">BeagleScope</a>
+            <a class='mdl-navigation__link ' href="/post">Posts</a>
+
+            <a class='mdl-navigation__link ' href="/about">About</a>
+	    <a class='mdl-navigation__link ' href="https://github.com/ZeekHuge">Github</a>
+        </nav></div>
+
+    
+    <main class="mdl-layout__content">
+
+
+<div class="hugo-blog__posts mdl-grid">
+    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+        
+        <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url('/cardheaderimages/rproc_dmesg.png'); ">
+            <h3 style="color:#ffffff;">
+<div style="padding: 5px; background-color: black;">
+	 PTP - Programming The PRUs 1: Blinky</div></h3>
+        </div>
+          
+        <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+            <div class="minilogo" style="background-image: url('https://avatars1.githubusercontent.com/u/8711218?v=3&amp;s=460');"></div>
+            <div>
+                <strong>ZeekHuge</strong>
+                <span>Jul 16, 2016</span>
+            </div>
+            
+            <div class="section-spacer"></div>
+            <div><span>
+                
+                    <a id="repolink" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="https://github.com/ZeekHuge/BeagleScope"><i class="material-icons icon ion-social-github"></i><span class="visuallyhidden">Github</span></a>
+                    <span for="repolink" class="mdl-tooltip">Code Repository</span>
+                
+                
+            </span></div>
+            
+        </div>
+            
+        <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
+            
+
+<p><strong>This is the first post in a series of posts that will try to put the PRU programming process in the simplest and the most logical form, connecting all the dots (rpmsg, remoteproc etc). The posts of this series will have PTP (Programming The Pru) at the beginning of its title. As its just the beginning, this post aims to get you a blinky application using PRUs on your BeagleBone Black.</strong></p>
+
+<hr />
+
+<h3 id="u-preface-u:a6dc26714d32df1ac6a7aa69d40ae020"><u>Preface</u></h3>
+
+<p>Some people might say, <em>&ldquo;Really ? A blinky ? Are you kidding me ? If someone is trying to get started with PRUs, he/she&rsquo;s most probably knows the concepts of embedded programming well.&rdquo;</em> And to them, I would just say <em>&ldquo;yes, a blinky.&rdquo;</em></p>
+
+<p>However experienced an embedded programmer is, blinky can still be the most thrilling application that he develops. It is thrilling at least to me, and I just put my hands up in the air like I have won a war. Further, this post will help you get all the things at the right place to begin with more complex examples. If you still don&rsquo;t think its worth it, well, Its my post :P</p>
+
+<hr />
+
+<h3 id="u-content-u:a6dc26714d32df1ac6a7aa69d40ae020"><u>Content</u></h3>
+
+<ul>
+<li><a href="#ptr:a6dc26714d32df1ac6a7aa69d40ae020">Pointers - some miscellaneous and important points</a></li>
+<li><a href="#stp:a6dc26714d32df1ac6a7aa69d40ae020">Setup</a>
+
+<ul>
+<li><a href="#repo:a6dc26714d32df1ac6a7aa69d40ae020">Get the repo</a></li>
+<li><a href="#hdmi:a6dc26714d32df1ac6a7aa69d40ae020">Disable the HDMI cape</a></li>
+<li><a href="#pins:a6dc26714d32df1ac6a7aa69d40ae020">Available pins</a></li>
+<li><a href="#leds:a6dc26714d32df1ac6a7aa69d40ae020">LEDs on P8_45</a></li>
+<li><a href="#pcgt:a6dc26714d32df1ac6a7aa69d40ae020">Setting up the PRU code generation tool</a></li>
+<li><a href="#blin:a6dc26714d32df1ac6a7aa69d40ae020">Get blinky</a></li>
+</ul></li>
+<li><a href="#code:a6dc26714d32df1ac6a7aa69d40ae020">Into the code</a>
+
+<ul>
+<li><a href="#ccode:a6dc26714d32df1ac6a7aa69d40ae020">The C code : PRU_gpioToggle</a>
+
+<ul>
+<li>The __R31 and __R30 variables</li>
+<li>The __delay_cycles() function</li>
+</ul></li>
+<li><a href="#cmd:a6dc26714d32df1ac6a7aa69d40ae020">The linker file : PRU_gpioToggle/AM335x_PRU.cmd</a></li>
+<li><a href="#desh:a6dc26714d32df1ac6a7aa69d40ae020">The deploy script : deploy.sh</a></li>
+</ul></li>
+<li><a href="#nxt:a6dc26714d32df1ac6a7aa69d40ae020">Whats next ?</a></li>
+</ul>
+
+<h3 id="ptr:a6dc26714d32df1ac6a7aa69d40ae020"><u>Pointers</u></h3>
+
+<ul>
+<li><p>We will be dealing with latest kernels. The series of examples are expected to work on kernel version later than 4.4.12-ti-r31. To check what the latest kernel available is
+<pre class="prettyprint ">
+$ sudo apt-get update
+$ sudo apt-cache search &lsquo;linux-image-<em>-ti-</em>&rsquo; | sort -V
+</pre>
+Out of the list that now appears, assuming the latest kernel image to be 4.4.12-ti-r31
+<pre class="prettyprint ">
+$ export NEW=4.4.12-ti-r31
+$ sudo apt-get install -y linux-firmware-image-$NEW linux-headers-$NEW linux-image-$NEW
+$ reboot
+</pre></p></li>
+
+<li><p>Since we all love Linux, and its standards that support scalability, no prussdrv talks.</p></li>
+
+<li><p>The example directory that we will be using is the &lsquo;examples/&rsquo; directory from my GSoC project <a href="https://github.com/ZeekHuge/BeagleScope">here</a>.</p></li>
+
+<li><p>I will be adding the code/commands for all the steps here, but to make life easier, there is always this <a href="https://www.zeekhuge.me/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/">cheat sheet</a>  you can refer to.</p></li>
+
+<li><p>For any experiments you do with PRUs, remember that they can source very less current. Probably about 8mA, so keep that in mind.</p></li>
+</ul>
+
+<p><img src="/jokes/ohm.png" alt="Power" /></p>
+
+<p>picture credits : <a href="https://xkcd.com">xkcd.com</a></p>
+
+<ul>
+<li>Hang on throughout the series, as it might get a bit daunting at times.</li>
+</ul>
+
+<hr />
+
+<h3 id="stp:a6dc26714d32df1ac6a7aa69d40ae020"><u>Setup</u></h3>
+
+<h5 id="repo:a6dc26714d32df1ac6a7aa69d40ae020"><u>Get the repo</u></h5>
+
+<ul>
+<li>My GSoC 2016 project BeagleScope required understanding of PRU programming and its kernel interfacing. Since most of the things were documented in form of large PDFs I had to go through them and experiment a bit. The experiments are collected in the BeagleScop repo along with some documentation. To get the repo
+<pre class="prettyprint ">
+$ git clone <a href="https://github.com/ZeekHuge/BeagleScope.git">https://github.com/ZeekHuge/BeagleScope.git</a>
+</pre></li>
+</ul>
+
+<hr />
+
+<h5 id="hdmi:a6dc26714d32df1ac6a7aa69d40ae020"><u>Disable the HDMI cape</u></h5>
+
+<ul>
+<li>Why disable the HDMI cape ? Well, not all the pins of the PRUs are routed to the boards header pins. The max number of PRU pins in any case you can get is about 28 out of 64 pins, and most of the output pins happen to be routed to P8 header and associated to PRU1. But then, by default HDMI cape is loaded, which actually uses these pins, making it unstable to be used for PRUs. This pic of the <a href="https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/docs/BeagleboneBlackP8HeaderTable.pdf">BeagleScope/docs/BeagleboneBlackP8HeaderTable.pdf</a> shows the pin numbers that we get after we disable the HDMI cape:
+
+<figure >
+    
+        <img src="/images/hdmi_pins.png" width="1000" />
+    
+    
+    <figcaption>
+        <h4>P8 pins : muxed to hdmi by default</h4>
+        
+    </figcaption>
+    
+</figure>
+
+So disabling it is the best option. To disable the cape, you need to edit your &lsquo;/boot/uEnv.txt&rsquo; file and uncomment
+<pre class="prettyprint ">
+dtb=am335x-boneblack-emmc-overlay.dtb
+</pre>
+the first few lines of your &lsquo;/boot/uEnv.txt&rsquo; would then look something like this :
+<pre class="prettyprint ">
+01 #Docs: <a href="http://elinux.org/Beagleboard:U-boot_partitioning_layout_2.0">http://elinux.org/Beagleboard:U-boot_partitioning_layout_2.0</a>
+02
+03 uname_r=4.4.12-ti-r31
+04 ##uuid=
+05 #dtb=
+06
+07 ##BeagleBone Black/Green dtbs for v4.1.x (BeagleBone White just works..)
+08
+09 ##BeagleBone Black: HDMI (Audio/Video) disabled:
+10 dtb=am335x-boneblack-emmc-overlay.dtb
+11 ##BeagleBone Black: eMMC disabled:
+12 #dtb=am335x-boneblack-hdmi-overlay.dtb
+</pre></li>
+</ul>
+
+<hr />
+
+<h5 id="pins:a6dc26714d32df1ac6a7aa69d40ae020"><u>Available pins</u></h5>
+
+<ul>
+<li>So after disabling the HDMI cape, we have a few pins to use for PRU examples on P8 header. At this point you might want to note the pins that we can use the. You can use this doc at <a href="https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/docs/BeagleboneBlackP8HeaderTable.pdf">BeagleScope/docs/BeagleboneBlackP8HeaderTable.pdf</a>:
+
+<figure >
+    
+        <img src="/images/pru_pins_p8.png" width="1000" />
+    
+    
+    <figcaption>
+        <h4>P8 pins : Associated to PRU1</h4>
+        
+    </figcaption>
+    
+</figure>
+</li>
+</ul>
+
+<hr />
+
+<h5 id="leds:a6dc26714d32df1ac6a7aa69d40ae020"><u>LEDs on P8_45</u></h5>
+
+<ul>
+<li><strong><em>Read this carefully</em></strong>*. The blinky we are aiming to get will be using an external LED. ***NOW, THIS EXTERNAL LED SHOULD NOT USE CURRENT MORE THAN ~8mA, AND FOR THIS, AT 3.3V, <strong><em>THE RESISTOR TO BE USED SHOULD BE GREATER THAN OR EQUAL TO 470 ohms</em></strong>. If you would want to the get more current out of it, checkout <a href="http://www.thebrokendesk.com/post/blinking-an-led-with-the-beaglebone-black/">this link</a>. Connect this LED you have now, using a &gt;=470 ohm resistor, to the P8_45 pin on the beaglebone black board.</li>
+</ul>
+
+<hr />
+
+<h5 id="pcgt:a6dc26714d32df1ac6a7aa69d40ae020"><u>Setting up the PRU code generation tools</u></h5>
+
+<ol>
+<li><p>The PRUs are not like the other standard processors. PRUs are based on TI&rsquo;s proprietor architecture, and therefore we need a compiler other than GCC to compile code for PRUs. To download the code generation tools on your BBB(recommended) :
+<pre class="prettyprint">
+$ wget -c <a href="http://software-dl.ti.com/codegen/esd/cgt_public_sw/PRU/2.1.2/ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh">http://software-dl.ti.com/codegen/esd/cgt_public_sw/PRU/2.1.2/ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh</a>
+$ chmod +x ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh
+$ ./ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh
+</pre>
+To download it on you linux host system
+<pre class="prettyprint">
+$ wget -c <a href="http://software-dl.ti.com/codegen/esd/cgt_public_sw/PRU/2.1.2/ti_cgt_pru_2.1.2_linux_installer_x86.bin">http://software-dl.ti.com/codegen/esd/cgt_public_sw/PRU/2.1.2/ti_cgt_pru_2.1.2_linux_installer_x86.bin</a>
+$ chmod +x ti_cgt_pru_2.1.2_linux_installer_x86.bin
+$ ./ti_cgt_pru_2.1.2_armlinuxa8hf_busybox_installer.sh
+</pre></p></li>
+
+<li><p>To setup the environment, we need to create some symbolic links and export some environment variables. The symbolic links will help us to keep things at one place, and that is, inside the /usr/share/cgt-pru/. The symbolic links target to the</p>
+
+<ul>
+<li>clpru - The PRU c compiler</li>
+<li>lnkpru - The PRU linker
+<pre class="prettyprint">
+$ ln -s /usr/bin/clpru /usr/share/ti/cgt-pru/bin/clpru
+$ ln -s /usr/bin/lnkpru /usr/share/ti/cgt-pru/bin/lnkpru
+</pre></li>
+</ul></li>
+
+<li><p>We need the environment variable &lsquo;PRU_CGT&rsquo; to point to the &lsquo;/usr/share/ti/cgt-pru/&rsquo; directory. This is pretty straight forward, just:
+<pre class="prettyprint">
+$ export PRU_CGT=/usr/share/ti/cgt-pru
+</pre></p></li>
+
+<li><p>If you want this to be done automatically when you start a terminal on bbb, just add the above line to &lsquo;~/.bash.rc&rsquo;. Once all this is done, you can test your setup:
+<pre class="prettyprint">
+$ $PRU_CGT/bin/clpru
+</pre>
+And a list of help options would appear.</p></li>
+</ol>
+
+<hr />
+
+<h5 id="blin:a6dc26714d32df1ac6a7aa69d40ae020"><u>Get blinky</u></h5>
+
+<ol>
+<li><p>To get to the example we are going to use, you will have to get into the examples :
+$ cd BeagleScope/examples/firmware_exmples/pru_blinky/</p></li>
+
+<li><p>Now that you are at the example, just:
+<pre class="prettyprint">
+$ ./deploy.sh
+</pre>
+<em>and WHOLA ! You have the led blinking at P8_45.</em></p></li>
+</ol>
+
+<hr />
+
+<h3 id="code:a6dc26714d32df1ac6a7aa69d40ae020"><u>Into the code</u></h3>
+
+<ul>
+<li>For this post, we will dive into the PRU_gpioToggle/PRU_gpioToggle.c, PRU_gpioToggle/AM335x_PRU.cmd file and the deploy.sh script. We will get into the Makefile and the resource table in future post.</li>
+</ul>
+
+<hr />
+
+<h5 id="ccode:a6dc26714d32df1ac6a7aa69d40ae020"><u>The C code : PRU_gpioToggle.c</u></h5>
+
+<ul>
+<li><p>So here is the <a href="https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/PRU_gpioToggle.c">code</a> and its pretty straight forward .But there are two things I would like to discuss here :</p>
+
+<ul>
+<li><p>The __R31 and __R30 variables
+The two lines in the code :
+<pre class="prettyprint">
+volatile register uint32_t __R30;
+volatile register uint32_t __R31;
+</pre>
+declares the global register variables __R30 and __R31.  One may think that any of the PRUs register could be accessed by using a variable of &lsquo;register&rsquo; type, but that is not true with C/C++. The special thing about this is, the clpru (compiler we are using) can only have __R30 and __R31 as the variable of register type. The compiler would not allow the any variable other than __R31 and __R30 to be of the &lsquo;register&rsquo; type, and the compiler do not allows to access any of the R29-R0 registers of the PRU. You may declare various variables and the PRU would manage internally, juggling all various resources (including registers), but no direct access is allowed.</p></li>
+
+<li><p>The __delay_cycles() function
+The __delay_cycles() function, as the name suggests, causes a delay of specified number of cycles. __delay_cycles() is an intrinsic compiler function. The term &lsquo;intrinsic&rsquo; means that the definition of the function is not a fixed one. The definition is handled by the compiler. This is probably because in the assembly implementation of the loop, it takes one cycle to subtract 1 from counter register and then another cycle to compare the register. This limits the delay that can be produced by one implementation, as the next counter value will be
+<pre class="prettyprint">
+counter = counter - 2
+</pre>
+A single implementation of delay function can work either for odd number of cycles, or an even umber of cycles, but not for both.
+The exact declaration of the function is as:
+<pre class="prettyprint">
+void __delay_cycles (const unsigned int cycles);
+</pre></p></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<h5 id="cmd:a6dc26714d32df1ac6a7aa69d40ae020"><u>The linker file : PRU_gpioToggle/AM335x_PRU.cmd</u></h5>
+
+<ol>
+<li><p>PRUs are pretty simple processing cores, but the PRUSS system is highly integrated and provides the PRU a rich set of peripherals. All these peripherals inside the PRUSS are at different address locations and they need to be configured by the linux kernel at the time of firmware loading onto the PRUs. The <a href="https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/AM335x_PRU.cmd">AM335x_PRU.cmd file</a> provides a mapping to the linker, from different sections of code, to different memory locations inside the PRUSS.</p></li>
+
+<li><p>There are 2 sections inside the AM335x_PRU.cmd file :</p>
+
+<ul>
+<li>The &lsquo;MEMORY&rsquo; section
+This section gives a kind of alias name to different regions of memory inside the PRUs. If you look at the code and this snippet from the PRU reference manual, you see that the mappings are indeed associated to the exact memory region of the peripherals.
+&lt;?prettify?&gt;
+<pre class="prettyprint linenums">
+MEMORY
+{
+PAGE 0:
+PRU_IMEM                : org = 0x00000000 len = 0x00002000  /* 8kB PRU0 Instruction RAM */
+PAGE 1:
+/* RAM */
+PRU_DMEM_0_1    : org = 0x00000000 len = 0x00002000 CREGISTER=24 /* 8kB PRU Data RAM 0_1 */
+PRU_DMEM_1_0    : org = 0x00002000 len = 0x00002000     CREGISTER=25 /* 8kB PRU Data RAM 1_0 */
+  PAGE 2:
+PRU_SHAREDMEM   : org = 0x00010000 len = 0x00003000 CREGISTER=28 /* 12kB Shared RAM */
+DDR                         : org = 0x80000000 len = 0x00000100 CREGISTER=31
+L3OCMC                  : org = 0x40000000 len = 0x00010000     CREGISTER=30
+/* Peripherals */
+PRU_CFG                 : org = 0x00026000 len = 0x00000044     CREGISTER=4
+PRU_ECAP                : org = 0x00030000 len = 0x00000060     CREGISTER=3
+PRU_IEP                 : org = 0x0002E000 len = 0x0000031C     CREGISTER=26
+PRU_INTC                : org = 0x00020000 len = 0x00001504     CREGISTER=0
+PRU_UART                : org = 0x00028000 len = 0x00000038     CREGISTER=7
+DCAN0                   : org = 0x481CC000 len = 0x000001E8     CREGISTER=14
+DCAN1                   : org = 0x481D0000 len = 0x000001E8     CREGISTER=15
+DMTIMER2                : org = 0x48040000 len = 0x0000005C     CREGISTER=1
+PWMSS0                  : org = 0x48300000 len = 0x000002C4     CREGISTER=18
+PWMSS1                  : org = 0x48302000 len = 0x000002C4     CREGISTER=19
+PWMSS2                  : org = 0x48304000 len = 0x000002C4     CREGISTER=20
+GEMAC                   : org = 0x4A100000 len = 0x0000128C     CREGISTER=9
+I2C1                    : org = 0x4802A000 len = 0x000000D8     CREGISTER=2
+I2C2                    : org = 0x4819C000 len = 0x000000D8     CREGISTER=17
+MBX0                    : org = 0x480C8000 len = 0x00000140     CREGISTER=22
+MCASP0_DMA              : org = 0x46000000 len = 0x00000100     CREGISTER=8
+MCSPI0                  : org = 0x48030000 len = 0x000001A4     CREGISTER=6
+MCSPI1                  : org = 0x481A0000 len = 0x000001A4     CREGISTER=16
+MMCHS0                  : org = 0x48060000 len = 0x00000300     CREGISTER=5
+SPINLOCK                : org = 0x480CA000 len = 0x00000880     CREGISTER=23
+TPCC                    : org = 0x49000000 len = 0x00001098     CREGISTER=29
+UART1                   : org = 0x48022000 len = 0x00000088     CREGISTER=11
+UART2                   : org = 0x48024000 len = 0x00000088     CREGISTER=12
+RSVD10                  : org = 0x48318000 len = 0x00000100     CREGISTER=10
+RSVD13                  : org = 0x48310000 len = 0x00000100     CREGISTER=13
+RSVD21                  : org = 0x00032400 len = 0x00000100     CREGISTER=21
+RSVD27                  : org = 0x00032000 len = 0x00000100     CREGISTER=27
+}
+</pre></li>
+</ul></li>
+</ol>
+
+
+<figure >
+    
+        <img src="/images/memory_mapping.png" width="1000" />
+    
+    
+    <figcaption>
+        <h4>PRUSS Memory locations</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<hr />
+
+<h5 id="desh:a6dc26714d32df1ac6a7aa69d40ae020"><u>The deploy script : deploy.sh</u></h5>
+
+<ol>
+<li><p>The deploy script, in this example does following things :</p>
+
+<ul>
+<li><p>&lsquo;make&rsquo;s the pru code.
+That is simple, the part of the script included below enters the PRU_gpioToggle and invokes the &lsquo;make&rsquo; command to make the project.
+<pre class="prettyprint">
+54 echo &ldquo;-Building project&rdquo;
+55 cd PRU_gpioToggle
+56 make clean
+57 make
+</pre></p></li>
+
+<li><p>Copies the compiled pru firmware file (the file gen/<em>.out) to /lib/firmware/am335x-pru1-fw. When the PRUs are rebooted, the pru_rproc (remoteproc driver for PRUs) search for this file ans load it onto the PRU is it is present.
+The part of the script that does this is :
+<pre class="prettyprint">
+59 echo &ldquo;-Placing the firmware&rdquo;
+60 cp gen/</em>.out /lib/firmware/am335x-pru$PRU_CORE-fw
+</pre></p></li>
+
+<li><p>Configures the header pin.
+The script has two variables - 1) HEADER and 2) PIN_NUMBER. They together decide the boards header pin that is to be used and you can change them to get blinky on other pin (mind the comments above these variables in the script). The header pin is then configured and muxed to be a pru output pin. The script uses a very nice utility called &lsquo;config-pin&rsquo; and an which, very intelligently uses a Universal cape to configure pins without using a device tree file. More about &lsquo;config-pin&rsquo; can be found <a href="/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/">here</a>. The part of the script that configures the pin is :
+<pre class="prettyprint">
+62 echo &ldquo;-Configuring pinmux&rdquo;
+63         config-pin -a $HEADER$PIN_NUMBER pruout
+64         config-pin -q $HEADER$PIN_NUMBER
+</pre></p></li>
+
+<li><p>Reboots the PRU cores. After the firmwares are /lib/firmware/am335x-pru1(0)-fw is present, rebooting the PRU cores automatically loads the PRU with these firmwares. The sysfs bindings at the &lsquo;/sys/bus/platform/drivers/pru-rproc/&rsquo; can be used to reboot PRUs (more on this below). The part of the script that reboots the PRU core, according to the variable PRU_CORE in the script
+<pre class="prettyprint">
+66 echo &ldquo;-Rebooting&rdquo;
+67 if [ $PRU_CORE -eq 0 ]
+68 then
+69         echo &ldquo;Rebooting pru-core 0&rdquo;
+70         echo &ldquo;4a334000.pru0&rdquo; &gt; /sys/bus/platform/drivers/pru-rproc/unbind 2&gt;/dev/null
+71         echo &ldquo;4a334000.pru0&rdquo; &gt; /sys/bus/platform/drivers/pru-rproc/bind
+72 else
+73         echo &ldquo;Rebooting pru-core 1&rdquo;
+74         echo &ldquo;4a338000.pru1&rdquo; &gt; /sys/bus/platform/drivers/pru-rproc/unbind 2&gt; /dev/null
+75         echo &ldquo;4a338000.pru1&rdquo; &gt; /sys/bus/platform/drivers/pru-rproc/bind
+76 fi
+</pre></p></li>
+</ul></li>
+</ol>
+
+<hr />
+
+<h3 id="nxt:a6dc26714d32df1ac6a7aa69d40ae020"><u>Whats next ?</u></h3>
+
+<p>OK, so now you have a blinky ready and have got quite understanding of the PRUSS part. The next post will be related to <a href="/post/ptp_docs_commands_and_tools">Tools and Commands</a> that use while eperimenting with PRUs. They really make working with them easier.</p>
+
+        </div>
+        
+        <div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments"> 
+            <a href=https://www.zeekhuge.me>ZeekHuge</a>
+            <p></p>
+        </div>  
+    </div>
+
+    <nav class="hugo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <a href="/post/some_shots/" class="hugo-nav__button">
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+           <i class="icon ion-android-arrow-back"></i>
+        </button>
+        Older
+    </a>
+    <div class="section-spacer"></div>
+    
+    <a href="/post/ptp_docs_commands_and_tools/" class="hugo-nav__button">Newer
+      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+           <i class="icon ion-android-arrow-forward"></i>
+      </button>
+    </a>
+</nav> 
+
+
+</div>
+
+<div class="mdl-color-text--grey-700 mdl-card__supporting-text comments">
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'zeekhuge';
+    var disqus_identifier = 'https:\/\/www.zeekhuge.me\/post\/ptp_blinky\/';
+    var disqus_title = 'PTP - Programming The PRUs 1: Blinky';
+    var disqus_url = 'https:\/\/www.zeekhuge.me\/post\/ptp_blinky\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	    <footer class="mdl-mini-footer">
+                <div class="mdl-mini-footer--left-section">
+                    
+<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="mailto:contact@zeekhuge.me?subject=Hi">
+    <i class="material-icons_lg icon ion-email"></i>
+    <span class="visuallyhidden">Email</span>
+</a>
+
+
+<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="https://github.com/ZeekHuge/">
+    <i class="material-icons_lg icon ion-social-github"></i>
+    <span class="visuallyhidden">Github</span>
+</a>
+
+
+
+
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-mini-footer--social-btn social-btn" href="https://www.facebook.com/zubeen.tolani">
+        <i class="material-icons_lg icon ion-social-facebook "></i>                        
+        <span class="visuallyhidden">Facebook</span>
+    </a>
+
+                </div>
+                <div class="mdl-mini-footer--right-section">
+                    <span>© 2017 ZeekHuge (Zubeen Tolani)</span>
+                </div>
+            </footer>
+        </main>
+        <div class="mdl-layout__obfuscator"></div>
+    </div>
+    <script src="/js/material.min.js"></script>
+     <script src="/js/prism.js"></script>
+    
+</body>
+</html>
+
