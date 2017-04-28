@@ -165,30 +165,30 @@
 
 <ol>
 <li><p><strong>Environment Variables</strong> - <em>ssh</em> into your BBB and append your <em>bashrc</em> with following lines:
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">export </span><span class="nv">PINS</span><span class="o">=</span>/sys/kernel/debug/pinctrl/44e10800.pinmux
-<span class="nb">export </span><span class="nv">SLOTS</span><span class="o">=</span>/sys/devices/platform/bone_capemgr/slots
-<span class="nb">export </span><span class="nv">FW</span><span class="o">=</span>/lib/firmware
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">PINS</span><span class="o">=</span>/sys/kernel/debug/pinctrl/44e10800.pinmux
+<span class="nb">export</span> <span class="nv">SLOTS</span><span class="o">=</span>/sys/devices/platform/bone_capemgr/slots
+<span class="nb">export</span> <span class="nv">FW</span><span class="o">=</span>/lib/firmware
 </code></pre></div>
 </p></li>
 
 <li><p><strong>Config-pin utility</strong> - To change the pinmux settings for a pin does not need device tree overlays now (4.4+ kernel), you can simply use &lsquo;config-pin&rsquo; utility. To configure the pin you just need to know its position on the board, so to change mux settings of pin at , for example , P8_46
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>config-pin -l P8_46
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ config-pin -l P8_46
 </code></pre></div>
 
 The output shows space separated list of available pin-modes and will look like :
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>default gpio gpio_pu gpio_pd pruout pruin pwm
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ default gpio gpio_pu gpio_pd pruout pruin pwm
 </code></pre></div>
 
 Now to change pinmode, to, for example, pruout
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>config-pin P8_46 pruout
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ config-pin P8_46 pruout
 </code></pre></div>
 
 This will configure pin at P8_46 to pru_output mode.
 Further status of the pin can be known using &lsquo;config-pin -i&rsquo;, which will give detailed output.
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>config-pin -i P8_46
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ config-pin -i P8_46
 Pin name: P8_46
-Function <span class="k">if </span>no cape loaded: hdmi
-Function <span class="k">if </span>cape loaded: default gpio gpio_pu gpio_pd pruout pruin pwm
+Function <span class="k">if</span> no cape loaded: hdmi
+Function <span class="k">if</span> cape loaded: default gpio gpio_pu gpio_pd pruout pruin pwm
 Function information: lcd_data1 default gpio2_7 gpio2_7 gpio2_7 pr1_pru1_pru_r30_1 pr1_pru1_pru_r31_1 ehrpwm2B
 Cape: cape-universala cape-univ-hdmi
 Kernel GPIO id: 71
@@ -197,30 +197,30 @@ PRU GPIO id: 103
 </p></li>
 
 <li><p><strong>Force rebooting</strong> -  One of my favorite commands, rebooting your BBB when something goes wrong and it won&rsquo;t reboot the normal way ( Thanks to <a href="https://github.com/SJLC">Stephanie</a> for this).<br />
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo </span>b &gt;/proc/sysrq-trigger
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> b &gt;/proc/sysrq-trigger
 </code></pre></div>
 </p></li>
 
-<li><p><strong>Sharing your Ubuntu system&rsquo;s Internet with BBB</strong> -  Use the command <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ifconfig 
+<li><p><strong>Sharing your Ubuntu system&rsquo;s Internet with BBB</strong> -  Use the command <div class="highlight"><pre><code class="language-bash" data-lang="bash">$ ifconfig 
 </code></pre></div>
  to determine the interface your system is using to connect to BBB (it will be mostly eth0) and to the Internet.</p>
 
 <ul>
 <li><p>Let the Internet interface and BBB interface be &lt;Internet-interface&gt; and &lt;BBB-interface&gt; respectively. Now on your system, execute following commands as root:<br />
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>iptables -t nat -A POSTROUTING -o &lt;Internet-interface&gt; -j MASQUERADE
-<span class="nv">$ </span>iptables -A FORWARD -i &lt;BBB-interface&gt; -j ACCEPT
-<span class="nv">$ </span>sysctl net.ipv4.ip_forward<span class="o">=</span>1
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ iptables -t nat -A POSTROUTING -o &lt;Internet-interface&gt; -j MASQUERADE
+$ iptables -A FORWARD -i &lt;BBB-interface&gt; -j ACCEPT
+$ sysctl net.ipv4.ip_forward<span class="o">=</span>1
 </code></pre></div>
 
 Generally, these commands will look like :
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
-<span class="nv">$ </span>iptables -A FORWARD -i eth0 -j ACCEPT
-<span class="nv">$ </span>sysctl net.ipv4.ip_forward<span class="o">=</span>1
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
+$ iptables -A FORWARD -i eth0 -j ACCEPT
+$ sysctl net.ipv4.ip_forward<span class="o">=</span>1
 </code></pre></div>
 </p></li>
 
 <li><p>On your BBB, execute this command after you login as root :
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>route add default gw 192.168.7.1
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ route add default gw 192.168.7.1
 </code></pre></div>
 </p></li>
 
@@ -229,13 +229,13 @@ Generally, these commands will look like :
 <li><p>Now to test if all this works, use command  &ldquo;ping 8.8.8.8&rdquo; and the output should look like :
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">root@beaglebone:~# ping 8.8.8.8
 PING 8.8.8.8 <span class="o">(</span>8.8.8.8<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
-64 bytes from 8.8.8.8: <span class="nv">icmp_seq</span><span class="o">=</span>1 <span class="nv">ttl</span><span class="o">=</span>54 <span class="nb">time</span><span class="o">=</span>49.2 ms
-64 bytes from 8.8.8.8: <span class="nv">icmp_seq</span><span class="o">=</span>2 <span class="nv">ttl</span><span class="o">=</span>54 <span class="nb">time</span><span class="o">=</span>46.1 ms
-64 bytes from 8.8.8.8: <span class="nv">icmp_seq</span><span class="o">=</span>3 <span class="nv">ttl</span><span class="o">=</span>54 <span class="nb">time</span><span class="o">=</span>40.0 ms
-64 bytes from 8.8.8.8: <span class="nv">icmp_seq</span><span class="o">=</span>4 <span class="nv">ttl</span><span class="o">=</span>54 <span class="nb">time</span><span class="o">=</span>52.1 ms
+<span class="m">64</span> bytes from 8.8.8.8: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">1</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">54</span> <span class="nv">time</span><span class="o">=</span>49.2 ms
+<span class="m">64</span> bytes from 8.8.8.8: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">2</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">54</span> <span class="nv">time</span><span class="o">=</span>46.1 ms
+<span class="m">64</span> bytes from 8.8.8.8: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">3</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">54</span> <span class="nv">time</span><span class="o">=</span>40.0 ms
+<span class="m">64</span> bytes from 8.8.8.8: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">4</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">54</span> <span class="nv">time</span><span class="o">=</span>52.1 ms
 ^C
 --- 8.8.8.8 ping statistics ---
-4 packets transmitted, 4 received, 0% packet loss, <span class="nb">time </span>3006ms
+<span class="m">4</span> packets transmitted, <span class="m">4</span> received, 0% packet loss, <span class="nb">time</span> 3006ms
 rtt min/avg/max/mdev <span class="o">=</span> 40.021/46.883/52.108/4.496 ms
 </code></pre></div>
 </p></li>
@@ -248,14 +248,14 @@ rtt min/avg/max/mdev <span class="o">=</span> 40.021/46.883/52.108/4.496 ms
 
 <ol>
 <li><p><strong>Linux Headers</strong> - To install Linux kernel header files for your current Linux version:
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>apt-get install -y linux-headers-<span class="k">$(</span>uname -r<span class="k">)</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ apt-get install -y linux-headers-<span class="k">$(</span>uname -r<span class="k">)</span>
 </code></pre></div>
 </p></li>
 
 <li><p><strong>Install latest kernel</strong> - To install a new version of kernel image <u><strong><em>for example</em></strong></u>: kernel image 4.4.11-ti-r29 ( Thanks to <a href="https://github.com/sarnold">Steve Arnold</a> for these ) :
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo apt-get update
-<span class="nv">$ </span><span class="nb">export </span><span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;4.4.11-ti-r29&quot;</span> 
-<span class="nv">$ </span>sudo apt-get install -y linux-firmware-image-<span class="nv">$NEW</span> linux-headers-<span class="nv">$NEW</span> linux-image-<span class="nv">$NEW</span> 
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ sudo apt-get update
+$ <span class="nb">export</span> <span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;4.4.11-ti-r29&quot;</span> 
+$ sudo apt-get install -y linux-firmware-image-$NEW linux-headers-$NEW linux-image-$NEW 
 </code></pre></div>
 </p></li>
 
@@ -269,65 +269,65 @@ rtt min/avg/max/mdev <span class="o">=</span> 40.021/46.883/52.108/4.496 ms
 </p></li>
 
 <li><p><strong>BBB clone kernel source</strong> - To clone a kernel source ( Thanks to <a href="https://github.com/mwelling/">Michael Welling</a> and <a href="https://github.com/SJLC">Stephanie</a> for help on this )  :
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir KERNEL-&lt;build number&gt;
-<span class="nv">$ </span>git clone --depth<span class="o">=</span>100 -b &lt;build number&gt; https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&lt;build number&gt;
-<span class="nv">$ </span>touch KERNEL-&lt;build number&gt;/.ignore-&lt;build number&gt;
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ mkdir KERNEL-&lt;build number&gt;
+$ git clone --depth<span class="o">=</span><span class="m">100</span> -b &lt;build number&gt; https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-&lt;build number&gt;
+$ touch KERNEL-&lt;build number&gt;/.ignore-&lt;build number&gt;
 </code></pre></div>
 
 <u><strong><em>for example</em></strong></u> if you want to clone the 4.4.11-ti-r29 kernel, the commands will be :
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir KERNEL-4.4.11-ti-r29
-<span class="nv">$ </span>git clone --depth<span class="o">=</span>100 -b 4.4.11-ti-r29 https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-4.4.11-ti-r29
-<span class="nv">$ </span>touch KERNEL-4.4.11-ti-r29/.ignore-4.4.11-ti-r29
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ mkdir KERNEL-4.4.11-ti-r29
+$ git clone --depth<span class="o">=</span><span class="m">100</span> -b 4.4.11-ti-r29 https://github.com/RobertCNelson/linux-stable-rcn-ee.git KERNEL-4.4.11-ti-r29
+$ touch KERNEL-4.4.11-ti-r29/.ignore-4.4.11-ti-r29
 </code></pre></div>
 </p></li>
 
 <li><p><strong>Cross-compiler toolchain</strong> -  To download the latest version of cross-compiler tool-chain ( command source : <a href="https://eewiki.net/display/linuxonarm/BeagleBone+Black#BeagleBoneBlack-ARMCrossCompiler:GCC">eewiki</a> )
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">DWL</span><span class="o">=</span><span class="s2">&quot;gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz&quot;</span>
-<span class="nv">$ </span>wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/<span class="nv">$DWL</span>
-<span class="nv">$ </span>tar xf gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
-<span class="nv">$ </span><span class="nb">export </span><span class="nv">CC</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">DWL</span><span class="o">=</span><span class="s2">&quot;gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz&quot;</span>
+$ wget -c https://releases.linaro.org/components/toolchain/binaries/5.3-2016.02/arm-linux-gnueabihf/<span class="nv">$D</span>WL
+$ tar xf gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf.tar.xz
+$ <span class="nb">export</span> <span class="nv">CC</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
 </code></pre></div>
 </p></li>
 
 <li><p><strong>Particular kernel config file</strong> - To download .config file of a particular kernel build number:
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;&lt;kernel build number&gt;&quot;</span>
-<span class="nv">$ </span>wget -c http://rcn-ee.net/deb/jessie-armhf/v<span class="nv">$NEW</span>/defconfig -O config-<span class="nv">$NEW</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;&lt;kernel build number&gt;&quot;</span>
+$ wget -c http://rcn-ee.net/deb/jessie-armhf/v$NEW/defconfig -O config-$NEW
 </code></pre></div>
 
 <u><strong>for example</strong></u>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;4.4.11-ti-r29&quot;</span>
-<span class="nv">$ </span>wget -c http://rcn-ee.net/deb/jessie-armhf/v<span class="nv">$NEW</span>/defconfig -O config-<span class="nv">$NEW</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;4.4.11-ti-r29&quot;</span>
+$ wget -c http://rcn-ee.net/deb/jessie-armhf/v$NEW/defconfig -O config-$NEW
 </code></pre></div>
 </p></li>
 
 <li><p><strong>Cross compiling the kernel source</strong> - To cross compile the source code, cd into the kernel source&rsquo;s root :
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">KERN_V</span><span class="o">=</span><span class="s2">&quot;&lt;kernel version&gt;&quot;</span>
-<span class="nv">$ </span><span class="nb">export </span><span class="nv">BUILD_V</span><span class="o">=</span><span class="s2">&quot;&lt;build version&gt;&quot;</span>
-<span class="nv">$ </span><span class="nb">export </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>path/to/your/cross/compiler/tool/chain
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">KERN_V</span><span class="o">=</span><span class="s2">&quot;&lt;kernel version&gt;&quot;</span>
+$ <span class="nb">export</span> <span class="nv">BUILD_V</span><span class="o">=</span><span class="s2">&quot;&lt;build version&gt;&quot;</span>
+$ <span class="nb">export</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>path/to/your/cross/compiler/tool/chain
 </code></pre></div>
 
 <strong><u>for example</u></strong> for kernel - 4.4.11-ti-r29,
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">export </span><span class="nv">KERN_V</span><span class="o">=</span><span class="s2">&quot;4.4.11&quot;</span>
-<span class="nv">$ </span><span class="nb">export </span><span class="nv">BUILD_V</span><span class="o">=</span><span class="s2">&quot;-ti-r29&quot;</span>
-<span class="nv">$ </span><span class="nb">export </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>../../toolcahin/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">KERN_V</span><span class="o">=</span><span class="s2">&quot;4.4.11&quot;</span>
+$ <span class="nb">export</span> <span class="nv">BUILD_V</span><span class="o">=</span><span class="s2">&quot;-ti-r29&quot;</span>
+$ <span class="nb">export</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>../../toolcahin/gcc-linaro-5.3-2016.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
 </code></pre></div>
 
 then after that:
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>make mrproper <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$BUILD_V</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>path/to/the/cross/compile/toolchain 
-<span class="nv">$ </span>wget -c http://rcn-ee.net/deb/jessie-armhf/v<span class="nv">$KERN_V$BUILD_V</span>/defconfig -O .config
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ make mrproper <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$B</span>UILD_V <span class="nv">CROSS_COMPILE</span><span class="o">=</span>path/to/the/cross/compile/toolchain 
+$ wget -c http://rcn-ee.net/deb/jessie-armhf/v$KERN_V<span class="nv">$B</span>UILD_V/defconfig -O .config
 </code></pre></div>
 
 now each time you want to build your kernel
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>make <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$BUILD_V</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>path/to/the/cross/compile/toolchain 
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ make <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$B</span>UILD_V <span class="nv">CROSS_COMPILE</span><span class="o">=</span>path/to/the/cross/compile/toolchain 
 </code></pre></div>
 </p></li>
 
 <li><p><strong>Cross compile a driver</strong> -  To cross compile particular drivers that is present in your kernel source, you will have to go through complete kernel build process at-least once so that it generates that symbol version file, and only then will you be able to load the module. Follow above steps to build the kernel, then to compile one driver
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>make modules <span class="nv">SUB_DIRS</span><span class="o">=</span>path/to/the/driver <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$BUILD_V</span> 
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ make modules <span class="nv">SUB_DIRS</span><span class="o">=</span>path/to/the/driver <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$B</span>UILD_V 
 </code></pre></div>
 
 <strong><u>for example</u></strong> to compile rpmsg drivers :
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>make modules <span class="nv">SUB_DIRS</span><span class="o">=</span>drivers/rpmsg/ <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$BUILD_V</span> 
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">$ make modules <span class="nv">SUB_DIRS</span><span class="o">=</span>drivers/rpmsg/ <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$B</span>UILD_V 
 </code></pre></div>
 </p></li>
 </ol>
@@ -436,6 +436,7 @@ and to boot it up
     <script src="/js/material.min.js"></script>
      <script src="/js/prism.js"></script>
     
+    <script src="//my.hellobar.com/220bb74d81d13326d13b024c3bb37ab07cf87d9f.js" type="text/javascript" charset="utf-8" async="async"></script>
 </body>
 </html>
 
