@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta name="generator" content="Hugo 0.16-DEV" />
+    <meta name="generator" content="Hugo 0.24.1" />
         
         <link rel="icon" type="image/png" href="/images/favicon.ico">
         
@@ -137,7 +137,7 @@ Till this post, you will have understanding of how PRUs are booted up and start 
 
 <hr />
 
-<h3 id="u-prelude-u:f112cc63f5e4b6b33907400366d8b15d"><u><strong>Prelude</strong></u></h3>
+<h3 id="u-prelude-u"><u><strong>Prelude</strong></u></h3>
 
 <p>Texas Instruments has this series of processors based on ARM Cortex-A core they call <em>TI&rsquo;s Sitara Processors</em>. One of these processors that is used in the microcomputer board BeagleBone Black is AM335x . These processors have a very interesting subsystem called <em>PRU-ICSS</em> as can be seen in top right in the figure below.</p>
 
@@ -151,7 +151,7 @@ Till this post, you will have understanding of how PRUs are booted up and start 
 
 <hr />
 
-<h3 id="u-prus-u:f112cc63f5e4b6b33907400366d8b15d"><u><strong>PRUs</strong></u></h3>
+<h3 id="u-prus-u"><u><strong>PRUs</strong></u></h3>
 
 <p>The two PRUs enclosed in the PRU-ICSS subsystem are specially designed for high speed, low latency, realtime processing. PRUs are basically 32 bit RISC processors that can work independent of the MPU. As is shown in the figure below, there are many more peripherals that are enclosed in the PRU-ICSS unit. Integration of all these peripherals in the PRU-ICSS aims to make realtime processing easy, reliable and fast. After all that <em>&ldquo;realtime&rdquo;</em> stuff above, you may ask, &ldquo;How does the PRUs make realtime thing possible ? after all they are yet another processing core.&rdquo; Well, No, they are not <em>&ldquo;yet another&rdquo;</em> processing unit, but are special kind of processing unit. They have very limited yet enough number of instructions to program with and almost all of them get executed in single cycle (ie 5 nSec). Each instruction has a perfectly deterministic latency (provided its accessing PRU-ICSS resources, more on this later), has no caches or pipelines and is equipped with enhanced GPIO unit. Using PRUs, you can toggle a GPO at about 50MHz, and believe me, thats a great thing for a SoC having a general purpose OS on it.<br />
 This figure down here may look a bit complex, its rather simple and will be very useful once you understand it.</p>

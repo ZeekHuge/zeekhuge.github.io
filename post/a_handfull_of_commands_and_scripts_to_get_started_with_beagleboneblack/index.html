@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta name="generator" content="Hugo 0.16-DEV" />
+    <meta name="generator" content="Hugo 0.24.1" />
         
         <link rel="icon" type="image/png" href="/images/favicon.ico">
         
@@ -124,10 +124,10 @@
 
 <p>All of these commands are to be executed on the BeagleBone black (BBB for short) itself after you login as root, and are expected to work on kernel version 4.4.11+</p>
 
-<h3 id="u-content-u:01d25bfd2399ec47b9c04f156786eab8"><u>Content</u></h3>
+<h3 id="u-content-u"><u>Content</u></h3>
 
 <ul>
-<li><a href="#strt:01d25bfd2399ec47b9c04f156786eab8">Starters</a>
+<li><a href="#strt">Starters</a>
 
 <ol>
 <li>Environment Variables</li>
@@ -135,7 +135,7 @@
 <li>Force rebooting</li>
 <li>Sharing your Ubuntu system&rsquo;s Internet with BBB</li>
 </ol></li>
-<li><a href="#kdev:01d25bfd2399ec47b9c04f156786eab8">Kernel Development</a>
+<li><a href="#kdev">Kernel Development</a>
 
 <ol>
 <li>Linux Headers</li>
@@ -147,7 +147,7 @@
 <li>Cross compiling the kernel source</li>
 <li>Cross compile a driver</li>
 </ol></li>
-<li><a href="#wprus:01d25bfd2399ec47b9c04f156786eab8">Working with PRUs</a>
+<li><a href="#wprus">Working with PRUs</a>
 
 <ol>
 <li>Fact 1</li>
@@ -161,16 +161,18 @@
 
 <hr />
 
-<h3 id="strt:01d25bfd2399ec47b9c04f156786eab8"><u>Starters</u> :</h3>
+<h3 id="strt"><u>Starters</u> :</h3>
 
 <ol>
-<li><p><strong>Environment Variables</strong> - <em>ssh</em> into your BBB and append your <em>bashrc</em> with following lines:
+<li><strong>Environment Variables</strong> - <em>ssh</em> into your BBB and append your <em>bashrc</em> with following lines:
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">PINS</span><span class="o">=</span>/sys/kernel/debug/pinctrl/44e10800.pinmux
 <span class="nb">export</span> <span class="nv">SLOTS</span><span class="o">=</span>/sys/devices/platform/bone_capemgr/slots
 <span class="nb">export</span> <span class="nv">FW</span><span class="o">=</span>/lib/firmware
 </code></pre></div>
-</p></li>
+</li>
+</ol>
 
+<ul>
 <li><p><strong>Config-pin utility</strong> - To change the pinmux settings for a pin does not need device tree overlays now (4.4+ kernel), you can simply use &lsquo;config-pin&rsquo; utility. To configure the pin you just need to know its position on the board, so to change mux settings of pin at , for example , P8_46
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">$ config-pin -l P8_46
 </code></pre></div>
@@ -242,16 +244,18 @@ rtt min/avg/max/mdev <span class="o">=</span> 40.021/46.883/52.108/4.496 ms
 
 <li><p>It will be then useful to add &ldquo;nameserver 8.8.8.8&rdquo; in the first line of your /etc/resolv.conf</p></li>
 </ul></li>
-</ol>
+</ul>
 
-<h3 id="kdev:01d25bfd2399ec47b9c04f156786eab8"><u>Kernel Development</u></h3>
+<h3 id="kdev"><u>Kernel Development</u></h3>
 
 <ol>
-<li><p><strong>Linux Headers</strong> - To install Linux kernel header files for your current Linux version:
+<li><strong>Linux Headers</strong> - To install Linux kernel header files for your current Linux version:
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">$ apt-get install -y linux-headers-<span class="k">$(</span>uname -r<span class="k">)</span>
 </code></pre></div>
-</p></li>
+</li>
+</ol>
 
+<ul>
 <li><p><strong>Install latest kernel</strong> - To install a new version of kernel image <u><strong><em>for example</em></strong></u>: kernel image 4.4.11-ti-r29 ( Thanks to <a href="https://github.com/sarnold">Steve Arnold</a> for these ) :
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">$ sudo apt-get update
 $ <span class="nb">export</span> <span class="nv">NEW</span><span class="o">=</span><span class="s2">&quot;4.4.11-ti-r29&quot;</span> 
@@ -330,13 +334,15 @@ now each time you want to build your kernel
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">$ make modules <span class="nv">SUB_DIRS</span><span class="o">=</span>drivers/rpmsg/ <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span><span class="nv">$B</span>UILD_V 
 </code></pre></div>
 </p></li>
-</ol>
+</ul>
 
-<h3 id="wprus:01d25bfd2399ec47b9c04f156786eab8"><u>Working with PRUs</u></h3>
+<h3 id="wprus"><u>Working with PRUs</u></h3>
 
 <ol>
-<li><p><strong>Fact 1</strong> - Rebooting any PRU core (0 or 1) will result in reloading of the firmware that is at /lib/firmware/am335x-pruN-fw (pruN can be pru0 or pru1)</p></li>
+<li><strong>Fact 1</strong> - Rebooting any PRU core (0 or 1) will result in reloading of the firmware that is at /lib/firmware/am335x-pruN-fw (pruN can be pru0 or pru1)</li>
+</ol>
 
+<ul>
 <li><p><strong>To shutdown PRU0</strong>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s2">&quot;4a334000.pru0&quot;</span> &gt; /sys/bus/platform/drivers/pru-rproc/unbind
 </code></pre></div>
@@ -356,7 +362,7 @@ and to boot it up
 </p></li>
 
 <li><p><strong>More</strong> - Some more of them have been described in the <a href="/post/ptp_docs_commands_and_tools">2nd post of PTP series</a></p></li>
-</ol>
+</ul>
 
         </div>
         

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Embedded Programming on ZeekHuge (Zubeen Tolani)</title>
-    <link>https://www.zeekhuge.me/tags/embedded-programming/</link>
-    <description>Recent content in Embedded Programming on ZeekHuge (Zubeen Tolani)</description>
+    <title>C/C&#43;&#43; on ZeekHuge (Zubeen Tolani)</title>
+    <link>https://www.zeekhuge.me/tags/c/c&#43;&#43;/</link>
+    <description>Recent content in C/C&#43;&#43; on ZeekHuge (Zubeen Tolani)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 17 Jul 2016 23:37:27 +0530</lastBuildDate>
     
-	<atom:link href="https://www.zeekhuge.me/tags/embedded-programming/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.zeekhuge.me/tags/c/c++/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,6 +20,15 @@
       <description>picture credits : xkcd.com
 Preface: If the content here seems to be out of context, you&amp;rsquo;ll probably want to start from here.
 So you have decided to play with PRUs and after this blinky post, you have some understanding about how to work with PRUs. Cool ! Thats a courageous decision, as PRUs are quite challenging. To make life easier, we need some tools to work along. This post will help you make some of your own tools, using mostly bash scripts/aliases, and explain how to use other known tools with PRUs.</description>
+    </item>
+    
+    <item>
+      <title>PTP - Programming The PRUs 1: Blinky</title>
+      <link>https://www.zeekhuge.me/post/ptp_blinky/</link>
+      <pubDate>Sat, 16 Jul 2016 15:45:08 +0530</pubDate>
+      
+      <guid>https://www.zeekhuge.me/post/ptp_blinky/</guid>
+      <description>This is the first post in a series of posts that will try to put the PRU programming process in the simplest and the most logical form, connecting all the dots (rpmsg, remoteproc etc). The posts of this series will have PTP (Programming The Pru) at the beginning of its title. As its just the beginning, this post aims to get you a blinky application using PRUs on your BeagleBone Black.</description>
     </item>
     
   </channel>

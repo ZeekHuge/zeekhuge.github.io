@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on ZeekHuge (Zubeen Tolani)</title>
+    <link>https://www.zeekhuge.me/categories/</link>
+    <description>Recent content in Categories on ZeekHuge (Zubeen Tolani)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 18 Aug 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.zeekhuge.me/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>https://www.zeekhuge.me/categories/about/</link>
+      <pubDate>Tue, 18 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.zeekhuge.me/categories/about/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Beaglescope</title>
+      <link>https://www.zeekhuge.me/categories/beaglescope/</link>
+      <pubDate>Sat, 14 Jan 2017 16:21:52 +0530</pubDate>
+      
+      <guid>https://www.zeekhuge.me/categories/beaglescope/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bio</title>
+      <link>https://www.zeekhuge.me/categories/bio/</link>
+      <pubDate>Tue, 18 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.zeekhuge.me/categories/bio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Meta</title>
+      <link>https://www.zeekhuge.me/categories/meta/</link>
+      <pubDate>Tue, 18 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.zeekhuge.me/categories/meta/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Post</title>
+      <link>https://www.zeekhuge.me/categories/post/</link>
+      <pubDate>Sun, 17 Jul 2016 23:37:27 +0530</pubDate>
+      
+      <guid>https://www.zeekhuge.me/categories/post/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

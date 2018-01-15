@@ -7,7 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 10 Jul 2016 03:00:17 +0530</lastBuildDate>
-    <atom:link href="https://www.zeekhuge.me/tags/test/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="https://www.zeekhuge.me/tags/test/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Some Shots</title>
@@ -15,126 +17,9 @@
       <pubDate>Sun, 10 Jul 2016 03:00:17 +0530</pubDate>
       
       <guid>https://www.zeekhuge.me/post/some_shots/</guid>
-      <description>
-
-&lt;p&gt;BeagleScope project can be found &lt;a href=&#34;https://github.com/ZeekHuge/BeagleScope&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;some-shots:0c26a2495997b81bc3012ac9e5454c14&#34;&gt;Some Shots&lt;/h3&gt;
-
-&lt;p&gt;These are are some clicks of the hardware setup that I am going to use for the beaglescope project.&lt;/p&gt;
-
-
-&lt;figure &gt;
-    
-        &lt;img src=&#34;https://www.zeekhuge.me/images/pic1_bbb_power.jpg&#34; width=&#34;1000&#34; /&gt;
-    
-    
-    &lt;figcaption&gt;
-        &lt;h4&gt;Pic 1 : BBB power supply&lt;/h4&gt;
-        
-    &lt;/figcaption&gt;
-    
-&lt;/figure&gt;
-
-
-
-&lt;figure &gt;
-    
-        &lt;img src=&#34;https://www.zeekhuge.me/images/pic2_adc_power_cnnct.jpg&#34; width=&#34;1000&#34; /&gt;
-    
-    
-    &lt;figcaption&gt;
-        &lt;h4&gt;Pic 2 : ADC power connections&lt;/h4&gt;
-        
-    &lt;/figcaption&gt;
-    
-&lt;/figure&gt;
-
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;https://www.zeekhuge.me/images/pic3_adc_power_src.jpg&#34; width=&#34;1000&#34; /&gt;
-    
-    
-    &lt;figcaption&gt;
-        &lt;h4&gt;Pic 3 : ADC power source &lt;/h4&gt;
-        
-    &lt;/figcaption&gt;
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;https://www.zeekhuge.me/images/pic4_smthing_like_cape.jpg&#34; width=&#34;1000&#34; /&gt;
-    
-    
-    &lt;figcaption&gt;
-        &lt;h4&gt;Pic 4 : Something like a cape &lt;/h4&gt;
-        
-    &lt;/figcaption&gt;
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;https://www.zeekhuge.me/images/pic5_overlay_bbb.jpg&#34; width=&#34;1000&#34; /&gt;
-    
-    
-    &lt;figcaption&gt;
-        &lt;h4&gt;Pic 5 : The connections of &amp;#39;something like a cape&amp;#39;&lt;/h4&gt;
-        
-    &lt;/figcaption&gt;
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;https://www.zeekhuge.me/images/pic6_adc_connectors.jpg&#34; width=&#34;1000&#34; /&gt;
-    
-    
-    &lt;figcaption&gt;
-        &lt;h4&gt;Pic 6 : ADC data connectors&lt;/h4&gt;
-        
-    &lt;/figcaption&gt;
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;https://www.zeekhuge.me/images/pic7_adc_connection.jpg&#34; width=&#34;1000&#34; /&gt;
-    
-    
-    &lt;figcaption&gt;
-        &lt;h4&gt;Pic 7 : Connection with the ADC connectors&lt;/h4&gt;
-        
-    &lt;/figcaption&gt;
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-
-&lt;p&gt;
-&lt;figure &gt;
-    
-        &lt;img src=&#34;https://www.zeekhuge.me/images/pic8_jst_everything.jpg&#34; width=&#34;1000&#34; /&gt;
-    
-    
-    &lt;figcaption&gt;
-        &lt;h4&gt;Pic 8 : Just everything all together&lt;/h4&gt;
-        
-    &lt;/figcaption&gt;
-    
-&lt;/figure&gt;
-&lt;/p&gt;
-</description>
+      <description> BeagleScope project can be found here
+Some Shots These are are some clicks of the hardware setup that I am going to use for the beaglescope project.
+ Pic 1 : BBB power supply    Pic 2 : ADC power connections    Pic 3 : ADC power source     Pic 4 : Something like a cape     Pic 5 : The connections of &amp;#39;something like a cape&amp;#39;    Pic 6 : ADC data connectors    Pic 7 : Connection with the ADC connectors    Pic 8 : Just everything all together   </description>
     </item>
     
   </channel>

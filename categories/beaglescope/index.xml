@@ -7,7 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 14 Jan 2017 16:21:52 +0530</lastBuildDate>
-    <atom:link href="https://www.zeekhuge.me/categories/beaglescope/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="https://www.zeekhuge.me/categories/beaglescope/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>tmp</title>
@@ -15,8 +17,7 @@
       <pubDate>Sat, 14 Jan 2017 16:21:52 +0530</pubDate>
       
       <guid>https://www.zeekhuge.me/beaglescope/tmp/</guid>
-      <description>&lt;p&gt;This is my project.&lt;/p&gt;
-</description>
+      <description>This is my project.</description>
     </item>
     
   </channel>

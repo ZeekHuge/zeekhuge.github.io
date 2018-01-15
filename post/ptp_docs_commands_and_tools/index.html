@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta name="generator" content="Hugo 0.16-DEV" />
+    <meta name="generator" content="Hugo 0.24.1" />
         
         <link rel="icon" type="image/png" href="/images/favicon.ico">
         
@@ -124,7 +124,7 @@
 
 <hr />
 
-<h3 id="u-preface-u:de018d5265887708b1682007c1f4431a"><u>Preface:</u></h3>
+<h3 id="u-preface-u"><u>Preface:</u></h3>
 
 <p>If the content here seems to be out of context, you&rsquo;ll probably want to start from <a href="/post/ptp_blinky">here</a>.</p>
 
@@ -132,19 +132,19 @@
 
 <hr />
 
-<h3 id="u-contents-u:de018d5265887708b1682007c1f4431a"><u>Contents</u></h3>
+<h3 id="u-contents-u"><u>Contents</u></h3>
 
 <ul>
-<li><a href="#docs:de018d5265887708b1682007c1f4431a">Documents</a>
+<li><a href="#docs">Documents</a>
 
 <ul>
 <li>AM335x PRU-ICSS Reference Guide</li>
 </ul></li>
-<li><a href="#cmd:de018d5265887708b1682007c1f4431a">Commands</a>
+<li><a href="#cmd">Commands</a>
 
 <ul>
-<li><a href="#pmd:de018d5265887708b1682007c1f4431a">Power management : PRUs : Details</a></li>
-<li><a href="#pmc:de018d5265887708b1682007c1f4431a">Power management : PRUs : Commands</a>
+<li><a href="#pmd">Power management : PRUs : Details</a></li>
+<li><a href="#pmc">Power management : PRUs : Commands</a>
 
 <ul>
 <li>To shut PRU core 1</li>
@@ -153,8 +153,8 @@
 <li>To boot PRU core 0</li>
 <li>To reboot both PRU cores</li>
 </ul></li>
-<li><a href="#pdd:de018d5265887708b1682007c1f4431a">PRU debug : Details</a></li>
-<li><a href="#pdc:de018d5265887708b1682007c1f4431a">PRU debug : Commands</a>
+<li><a href="#pdd">PRU debug : Details</a></li>
+<li><a href="#pdc">PRU debug : Commands</a>
 
 <ul>
 <li>ppause1 and ppause0 - to pause the PRUs</li>
@@ -163,19 +163,19 @@
 <li>pregs1 and pregs0 - to read the debug register content of the PRUs</li>
 </ul></li>
 </ul></li>
-<li><a href="#tools:de018d5265887708b1682007c1f4431a">Tools</a>
+<li><a href="#tools">Tools</a>
 
 <ul>
-<li><a href="#dmesg:de018d5265887708b1682007c1f4431a">dmesg : kernel logs and the PRU</a></li>
+<li><a href="#dmesg">dmesg : kernel logs and the PRU</a></li>
 </ul></li>
-<li><a href="#fin:de018d5265887708b1682007c1f4431a">fin</a></li>
+<li><a href="#fin">fin</a></li>
 </ul>
 
 <hr />
 
 <hr />
 
-<h3 id="docs:de018d5265887708b1682007c1f4431a"><u>Documents</u></h3>
+<h3 id="docs"><u>Documents</u></h3>
 
 <ul>
 <li>You definitely know that the AM335x processor is manufactured by TI, and only they know what actually is inside the semiconductor. To tell this to the world, every semiconductor device, open to the world, comes with some kind of document explaining its internal working. For PRUs, I found the document at <a href="https://github.com/beagleboard/am335x_pru_package/">https://github.com/beagleboard/am335x_pru_package/</a>. The pdf named am335xPruReferenceGuide.pdf is the one I am talking about. Its an ultimately important and nice document to keep with you. I use it all the time, when I am working with PRUs. If you want to download this click <a href="https://github.com/beagleboard/am335x_pru_package/raw/master/am335xPruReferenceGuide.pdf">here</a>.</li>
@@ -183,7 +183,7 @@
 
 <hr />
 
-<h3 id="cmd:de018d5265887708b1682007c1f4431a"><u>Commands</u></h3>
+<h3 id="cmd"><u>Commands</u></h3>
 
 <ul>
 <li>In this section, we will add some commands to use them as our tools. <strong>Please note that these commands may not be very clean, but they definitely server the purpose. When you will execute them, they might produce some output, but dont worry much about it, we can use &lsquo;dmesg&rsquo; to do the real debugging and monitor what is happening as I have explained below in the post</strong>. There will be an explanation about the working of the commands also.</li>
@@ -191,7 +191,7 @@
 
 <hr />
 
-<h5 id="pmd:de018d5265887708b1682007c1f4431a"><u>Power management : PRUs : Details</u></h5>
+<h5 id="pmd"><u>Power management : PRUs : Details</u></h5>
 
 <ul>
 <li><p>This <a href="/post/ptp_blinky/">blinky post</a> demonstrated how the deploy.sh script reboots the PRU. Now if you are deciding to play with PRUs frequently, there needs to be a tool to shut them down and boot them up, when needed, without doing the force rmmod of the pru_rproc. Now the remoteproc driver for PRUs, pru_proc handles the PRU core. It further exposes sysfs entries to boot and shutdown PRUs. So for PRU0 you can shut it down like this :
@@ -208,7 +208,7 @@ $ echo &ldquo;4a334000.pru0&rdquo; &gt; /sys/bus/platform/drivers/pru-rproc/bind
 <li><p>So writing the device name of any of the pru cores to the &lsquo;bind&rsquo; sysfs entry will make the remoteproc driver to boot that pru core. Similarly, writing a pru device name to &lsquo;unbind&rsquo; sysfs entry will make that pru core to shutdown.</p></li>
 </ul>
 
-<h5 id="pmc:de018d5265887708b1682007c1f4431a"><u>Power management : PRUs : Commands</u></h5>
+<h5 id="pmc"><u>Power management : PRUs : Commands</u></h5>
 
 <ul>
 <li><p>While working, I really don&rsquo;t like to type this long instruction to shutdown or boot the PRU. What I do is, I have added some aliases to my ~/.bashrc script, and believe me, they really make things easy. Just open the ~/.bash.rc in your favorite editor and append it with following aliases.</p>
@@ -245,7 +245,7 @@ alias preboot=&lsquo;echo 4a338000.pru1&gt;/sys/bus/platform/drivers/pru-rproc/u
 </ul></li>
 </ul>
 
-<h5 id="pdd:de018d5265887708b1682007c1f4431a"><u>PRU debug : Details</u></h5>
+<h5 id="pdd"><u>PRU debug : Details</u></h5>
 
 <ul>
 <li><p>Now here comes the interesting section. The PRUs are usually seen as these &lsquo;black boxes&rsquo; as no one knows what is happening inside it. With the latest remoteproc, this is not true. We can actually see the content of the PRU registers or we can pru execute one instruction at a time, and then wait for the user for a instruction to execute next instruction. The pru_rproc driver exposes these debugfs entries :
@@ -349,7 +349,7 @@ In the above output</p>
 </ul></li>
 </ul>
 
-<h5 id="pdc:de018d5265887708b1682007c1f4431a"><u>PRU debug : Commands</u></h5>
+<h5 id="pdc"><u>PRU debug : Commands</u></h5>
 
 <ul>
 <li><p>So here comes the set of aliases that I use to control PRUs for debugging. Just append them to your ~/.bashrc file and the will be in effect you login next time.</p>
@@ -385,13 +385,13 @@ alias pregs0=&lsquo;cat /sys/kernel/debug/remoteproc/remoteproc0/regs&rsquo;
 
 <hr />
 
-<h3 id="tools:de018d5265887708b1682007c1f4431a"><u>Tools</u></h3>
+<h3 id="tools"><u>Tools</u></h3>
 
 <ul>
 <li>Well, after all these commands/aliases we just added in the above section, I have one tool left for you that is &lsquo;dmesg&rsquo;.</li>
 </ul>
 
-<h5 id="dmesg:de018d5265887708b1682007c1f4431a"><u>dmesg : kernel logs and the PRU</u></h5>
+<h5 id="dmesg"><u>dmesg : kernel logs and the PRU</u></h5>
 
 <ul>
 <li><p>Yeah, I know that you already know this, but believe me, this &lsquo;dmesg&rsquo; point this blog can prove to save many hours(and probably lives). OK so you think I am just wasting up space mentioning this point here ? really ? well, then just let me use some more of it :P</p></li>
@@ -480,7 +480,7 @@ This is mostly when there is no file like am335x-pru1-fw or am335x-pru0-fw avail
 </ul></li>
 </ul>
 
-<h3 id="fin:de018d5265887708b1682007c1f4431a"><u>fin</u></h3>
+<h3 id="fin"><u>fin</u></h3>
 
 <ul>
 <li>So, with these tools, I hope that that your learning speed gets faster and the process gets much easier. I would close this post with these lines of Abraham Lincoln</li>
